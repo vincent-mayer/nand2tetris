@@ -1,3 +1,4 @@
+#include <cctype>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -8,6 +9,8 @@ class Parser
 {
 public:
     Parser(std::string& file_path);
+
+    ~Parser();
 
     auto hasMoreCommands() -> bool { return !m_file.eof(); }
 
@@ -22,6 +25,8 @@ public:
     auto jump() -> std::string;
 
     auto advance() -> void;
+
+    auto startsWithDigit(std::string symbol) -> bool { return isdigit(symbol[0]); }
 
     auto reset() -> void
     {

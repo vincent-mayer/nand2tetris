@@ -22,15 +22,13 @@ auto getOutputFileName(std::string& input_file) -> std::string
 
 int main(int argc, char* argv[])
 {
-    // if (argc == 1 || argc > 2) {
-    //     throw std::invalid_argument("Usage: 'assemble <input_file_name>.asm'");
-    //     return 0;
-    // }
+    if (argc == 1 || argc > 2) {
+        throw std::invalid_argument("Usage: 'assemble <input_file_name>.asm'");
+        return 0;
+    }
 
-    // // Create the needed objects
-    // auto input_file_name  = std::string(argv[1]);
-    auto input_file_name =
-        std::string("/home/vincent/Documents/courses/nand2tetris/projects/06/assembler/input/Add.asm");
+    // Create the needed objects
+    auto input_file_name  = std::string(argv[1]);
     auto parser           = Parser(input_file_name);
     auto translator       = CodeTranslator();
     auto stable           = SymbolTable();
@@ -51,8 +49,6 @@ int main(int argc, char* argv[])
             stable.addEntry(parser.symbol(), rom_address);
     }
 
-    stable.printTable();
-
     // reset parser to beginning of file
     parser.reset();
 
@@ -62,41 +58,44 @@ int main(int argc, char* argv[])
 
     while (parser.hasMoreCommands()) {
         parser.advance();
+        if (!parser.hasMoreCommands()) {
+            break;
+        }
+
         auto command_type = parser.commandType();
 
         if (command_type == A) {
-            auto symbol = parser.symbol();
-            std::bitset<15> data(std::stoi(symbol));
+            auto symbol        = parser.symbol();
+            unsigned int value = 0;
+            if (parser.startsWithDigit(symbol)) {
+                value = std::stoi(symbol);
+            }
+            else {
+                if (stable.contains(symbol)) {
+                    value = stable.getAddress(symbol);
+                }
+                else {
+                    value = var_ram_address;
+                    stable.addEntry(symbol, var_ram_address);
+                    var_ram_address++;
+                }
+            }
 
+            std::bitset<15> data(value);
             fout << "0";
             fout << data;
             fout << "\n";
-            // if (stable.contains(symbol)) {
-            //     address = stable.getAddress(symbol);
-            // }
-            // else {
-            //     address = var_ram_address;
-            //     stable.addEntry(symbol, var_ram_address);
-            //     var_ram_address++;
-            // }
         }
         else if (command_type == C) {
             auto comp = parser.comp();
             auto dest = parser.dest();
             auto jump = parser.jump();
 
-            std::cout << "comp: " << comp << " ";
-            std::cout << "dest: " << dest << " ";
-            std::cout << "jump: " << jump << std::endl;
-
             fout << "111";
             fout << translator.comp(comp);
             fout << translator.dest(dest);
             fout << translator.jump(jump);
             fout << std::endl;
-        }
-        else {
-            throw std::runtime_error("Invalid command type");
         }
     }
     fout.close();

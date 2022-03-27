@@ -7,6 +7,11 @@ Parser::Parser(std::string& file_path)
     m_file.open(file_path);
 }
 
+Parser::~Parser()
+{
+    m_file.close();
+}
+
 auto Parser::advance() -> void
 {
     std::string line;
@@ -27,7 +32,6 @@ auto Parser::advance() -> void
         // Found a command, remove white spaces
         is_command = true;
         line.erase(std::remove_if(line.begin(), line.end(), ::isspace), line.end());
-        std::cout << line << std::endl;
 
         if (line.find("@") == 0) {
             m_command_type = A;
@@ -44,7 +48,7 @@ auto Parser::advance() -> void
 
 auto Parser::symbol() -> std::string
 {
-    assert(m_command_type == A || m_command_type == L);
+    // assert(m_command_type == A || m_command_type == L);
     unsigned int symbol_len;
 
     if (m_command.find("@") == 0) {
@@ -67,7 +71,7 @@ auto Parser::dest() -> std::string
     if (dest_pos != std::string::npos)
         return m_command.substr(0, dest_pos);
     else
-        return std::string{""};
+        return std::string{"null"};
 }
 
 auto Parser::comp() -> std::string
@@ -82,15 +86,19 @@ auto Parser::comp() -> std::string
         return m_command.substr(0, semicolon_pos);
     }
     else {
-        return "";
+        return std::string{"null"};
     }
 }
 
 auto Parser::jump() -> std::string
 {
     std::string jump;
-    if (m_command.find("=") != std::string::npos) {
-        jump = "null";
+    unsigned long semicolon_pos = m_command.find(";");
+    if (semicolon_pos != std::string::npos) {
+        return m_command.substr(semicolon_pos + 1, m_command.size() - semicolon_pos - 1);
+    }
+    else {
+        return std::string{"null"};
     }
     return jump;
 }
