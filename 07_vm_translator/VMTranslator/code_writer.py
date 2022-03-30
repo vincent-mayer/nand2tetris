@@ -27,8 +27,20 @@ class CodeWriter:
         lines += "@SP\n"
         lines += "A=M\n"
         lines += "M=D\n"
+        lines += self._increment_sp()
+        return lines
+
+    def _increment_sp(self) -> str:
+        lines = ""
         lines += "@SP\n"
         lines += "M=M+1\n"
+        return lines
+
+    def _decrement_sp(self) -> str:
+        lines = ""
+        lines += "@SP\n"
+        lines += "M=M-1\n"
+        lines += "A=M\n"
         return lines
 
     def _decrement_and_pop(self, dest="D") -> str:
@@ -40,54 +52,49 @@ class CodeWriter:
 
     def write_arithmetic(self, command: str) -> None:
         lines = ""
+        # Unitary command
+        if command in ["not", "neg"]:
+            lines += self._decrement_sp()
+        else:
+            lines += self._decrement_and_pop(dest="D")
+            lines += self._decrement_and_pop(dest="A")
+
+        # Add line for command
         if command == "add":
-            lines += self._decrement_and_pop(dest="D")
-            lines += self._decrement_and_pop(dest="A")
             lines += "D=A+D\n"
-            lines += self._push_and_increment()
         elif command == "sub":
-            lines += self._decrement_and_pop(dest="D")
-            lines += self._decrement_and_pop(dest="A")
             lines += "D=A-D\n"
-            lines += self._push_and_increment()
         elif command == "and":
-            lines += self._decrement_and_pop(dest="D")
-            lines += self._decrement_and_pop(dest="A")
             lines += "D=A&D\n"
-            lines += self._push_and_increment()
         elif command == "or":
-            lines += self._decrement_and_pop(dest="D")
-            lines += self._decrement_and_pop(dest="A")
             lines += "D=A|D\n"
-            lines += self._push_and_increment()
         elif command == "not":
-            lines += "@SP\n"
-            lines += "A=M-1\n"
             lines += "M=!M\n"
         elif command == "neg":
-            lines += "@SP\n"
-            lines += "A=M-1\n"
             lines += "M=-M\n"
         elif command in ["gt", "lt", "eq"]:
-            lines += self._decrement_and_pop(dest="D")
-            lines += self._decrement_and_pop(dest="A")
             lines += "D=A-D\n"
             lines += f"@TRUE{self.bool_count}\n"
             lines += f"D;J{command.upper()}\n"
-            lines += "@SP"
-            lines += "A=M"
-            lines += "M=0"
-            lines += f"@ENDBOOL{self.bool_count}"
-            lines += "0;JMP"
-            lines += f"(TRUE{self.bool_count})"
-            lines += "@SP"
-            lines += "A=M"
-            lines += "M=-1"
-            lines += f"(ENDBOOL{self.bool_count})"
+            lines += "@SP\n"
+            lines += "A=M\n"
+            lines += "M=0\n"
+            lines += f"@ENDBOOL{self.bool_count}\n"
+            lines += "0;JMP\n"
+            lines += f"(TRUE{self.bool_count})\n"
+            lines += "@SP\n"
+            lines += "A=M\n"
+            lines += "M=-1\n"
+            lines += f"(ENDBOOL{self.bool_count})\n"
             self.bool_count += 1
-
         else:
             raise ArgumentTypeError(f"Invalid arithmetic operation: {command}")
+
+        if command in ["gt", "lt", "eq", "neg", "not"]:
+            lines += self._increment_sp()
+        else:
+            lines += self._push_and_increment()
+
         self.f.write(lines)
 
     def write_push_pop(self, cmd_type: CmdType, segment: str, index: int) -> None:
