@@ -11,10 +11,10 @@ class CodeWriter:
                                                   Path) else Path(path_to_file)
         self.f = open(str(path_to_file.resolve()), "w")
         self.segment_to_base_address = {
-            'local': '@LCL',
-            'argument': '@ARG',
-            'this': '@THIS',
-            'that': '@THAT',
+            'local': 'LCL',
+            'argument': 'ARG',
+            'this': 'THIS',
+            'that': 'THAT',
             'static': 16,
             'temp': 5,
             'pointer': 3,
@@ -100,14 +100,15 @@ class CodeWriter:
     def write_push_pop(self, cmd_type: CmdType, segment: str, index: int) -> None:
         base_address = self.segment_to_base_address[segment]
         lines = ""
-        if isinstance(base_address, int):
-            base_address = str(base_address)
 
         if cmd_type == CmdType.C_PUSH:
             if segment != "constant":
                 # addr = base + i
-                lines += "@" + base_address + "\n"
-                lines += "D=A" + "\n"
+                lines += "@" + str(base_address) + "\n"
+                if isinstance(base_address, int):
+                    lines += "D=A" + "\n"
+                else:
+                    lines += "D=M" + "\n"
                 lines += "@" + str(index) + "\n"
                 lines += "A=D+A" + "\n"
                 # D = *addr = *(base_segment + index)
@@ -120,12 +121,14 @@ class CodeWriter:
             lines += "A=M" + "\n"
             lines += "M=D" + "\n"
             # SP++
-            lines += "@SP" + "\n"
-            lines += "M=M+1" + "\n"
+            lines += self._increment_sp()
         elif cmd_type == CmdType.C_POP:
             # Put base + offset into D
             lines += "@" + str(base_address) + "\n"
-            lines += "D=A" + "\n"
+            if isinstance(base_address, int):
+                lines += "D=A" + "\n"
+            else:
+                lines += "D=M" + "\n"
             lines += "@" + str(index) + "\n"
             lines += "D=D+A" + "\n"
             # save target address in r13
