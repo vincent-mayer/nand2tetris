@@ -1,3 +1,9 @@
+//////
+// StaticTest
+@256
+D=A
+@SP
+M=D
 @111
 D=A
 @SP

@@ -36,10 +36,10 @@ class Parser:
             cmd_type = CmdType.C_ARITHMETIC
         elif "label" in self.cmd:
             cmd_type = CmdType.C_LABEL
-        elif "goto" in self.cmd:
-            cmd_type = CmdType.C_GOTO
         elif "if-goto" in self.cmd:
             cmd_type = CmdType.C_IF
+        elif "goto" in self.cmd:
+            cmd_type = CmdType.C_GOTO
         elif "return" in self.cmd:
             cmd_type = CmdType.C_RETURN
         elif "function" in self.cmd:
@@ -72,14 +72,12 @@ class Parser:
             if self._ignore_line(line):
                 continue
             else:
-                print(line)
                 break
         if "//" in line:
             line = line.split("//")[0]
-        self.cmd = line.replace("\n", "")
+        self.cmd = line.replace("\n", "").strip()
         self.cmd_clean = self.cmd.replace(" ", "")
         print(self.cmd)
-        print(self.cmd_clean)
 
     def close(self):
         self.f.close()

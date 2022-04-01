@@ -6,10 +6,9 @@ from VMTranslator import CommandType as CmdType
 
 class CodeWriter:
 
-    def __init__(self, path_to_file: Union[str, Path]) -> None:
-        path_to_file = path_to_file if isinstance(path_to_file,
-                                                  Path) else Path(path_to_file)
-        self.f = open(str(path_to_file.resolve()), "w")
+    def __init__(self, path_to_asm: Union[str, Path]) -> None:
+        path_to_asm = path_to_asm if isinstance(path_to_asm, Path) else Path(path_to_asm)
+        self.f = open(str(path_to_asm.resolve()), "w")
         self.segment_to_base_address = {
             'local': 'LCL',
             'argument': 'ARG',
@@ -21,6 +20,12 @@ class CodeWriter:
             'constant': -1
         }
         self.bool_count = 0
+        self.curr_file = ""
+
+    def set_file_name(self, vm_file_name: str) -> None:
+        self.curr_file = vm_file_name.split("/")[-1].replace(".vm", "")
+        self.f.write('//////\n')
+        self.f.write(f'// {self.curr_file}\n')
 
     def _push_and_increment(self) -> str:
         lines = ""
@@ -49,6 +54,14 @@ class CodeWriter:
         lines += "AM=M-1\n"
         lines += f"{dest}=M\n"  # D = *SP
         return lines
+
+    def write_init(self) -> None:
+        lines = ""
+        lines += "@256\n"
+        lines += "D=A\n"
+        lines += "@SP\n"
+        lines += "M=D\n"
+        self.f.write(lines)
 
     def write_arithmetic(self, command: str) -> None:
         lines = ""
@@ -141,6 +154,30 @@ class CodeWriter:
             lines += "A=M" + "\n"
             lines += "M=D" + "\n"
         self.f.write(lines)
+
+    def write_label(self, label: str) -> None:
+        self.f.write(f"({self.curr_file}${label})\n")
+
+    def write_goto(self, label: str) -> None:
+        self.f.write(f"@{self.curr_file}${label}\n")
+        self.f.write("0;JMP\n")
+
+    def write_if(self, label: str) -> None:
+        self.f.write(self._decrement_and_pop("D"))
+        self.f.write(f"@{self.curr_file}${label}\n")
+        self.f.write("D;JNE\n")
+
+    def write_call(self, f_name: str, n_args: int) -> None:
+        self.f.write(f"@{self.curr_file}${f_name}\n")
+
+    def write_return(self) -> None:
+        pass
+
+    def write_function(self, label: str, n_locals: int) -> None:
+        self.f.write(f"{label}\n")
+        for _ in range(n_locals):
+            self.f.write("D=0\n")
+            self._push_and_increment()
 
     def close(self):
         self.f.close()
