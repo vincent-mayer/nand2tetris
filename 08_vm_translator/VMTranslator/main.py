@@ -20,7 +20,7 @@ def copy_asm_to_test(orig_save_path: str) -> str:
     if os.path.exists(new_save_path):
         os.remove(new_save_path)
     orig_save_path = str(Path(orig_save_path).resolve())
-    shutil.move(orig_save_path, new_save_path)
+    shutil.copy2(orig_save_path, new_save_path)
 
 
 if __name__ == "__main__":
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         writer = CodeWriter(build_output_path(arg))
 
         writer.set_file_name(arg)
-        writer.write_init()
+        # writer.write_init()
 
         while parser.has_more_commands():
             parser.advance()
@@ -55,10 +55,10 @@ if __name__ == "__main__":
             elif cmd_type == CmdType.C_CALL:
                 writer.write_call(parser.arg1(), parser.arg2())
 
-        copy_asm_to_test(build_output_path(arg))
-
         parser.close()
         writer.close()
+
+        copy_asm_to_test(build_output_path(arg))
 
     else:
         pass

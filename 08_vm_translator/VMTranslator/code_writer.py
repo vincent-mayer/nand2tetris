@@ -163,21 +163,61 @@ class CodeWriter:
         self.f.write("0;JMP\n")
 
     def write_if(self, label: str) -> None:
-        self.f.write(self._decrement_and_pop("D"))
-        self.f.write(f"@{self.curr_file}${label}\n")
-        self.f.write("D;JNE\n")
+        lines = ""
+        lines += self._decrement_and_pop("D")
+        lines += f"@{self.curr_file}${label}\n"
+        lines += "D;JNE\n"
+        self.f.write(lines)
 
     def write_call(self, f_name: str, n_args: int) -> None:
         self.f.write(f"@{self.curr_file}${f_name}\n")
 
     def write_return(self) -> None:
-        pass
+        lines = ""
+        # FRAME (R14) = LCL
+        lines += "@LCL\n"
+        lines += "D=M\n"
+        lines += "@R14\n"
+        lines += "M=D\n"
+        # RET (R15) = *(FRAME-5)
+        lines += "@5\n"
+        lines += "A=D-A\n"
+        lines += "D=M\n"  # D=*(FRAME-5)
+        lines += "@R15\n"
+        lines += "M=D\n"  # R15=D=(FRAME-5)
+        # *ARG = pop()
+        lines += self._decrement_and_pop(dest="D")
+        lines += "@ARG\n"
+        lines += "A=M\n"
+        lines += "M=D\n"
+        # SP = ARG+1
+        lines += "@ARG\n"
+        lines += "D=M+1\n"
+        lines += "@SP\n"
+        lines += "M=D\n"
+        # THAT/THIS/ARG/LCL = *(FRAME-i+1)
+        for i, label in enumerate(["THAT", "THIS", "ARG", "LCL"]):
+            lines += f"@{i+1}\n"
+            lines += "D=A\n"
+            lines += "@R14\n"
+            lines += "A=M-D\n"
+            lines += "D=M\n"
+            lines += f"@{label}\n"
+            lines += "M=D\n"
+        # goto RET
+        lines += "@R15\n"
+        lines += "A=M\n"
+        lines += "0;JMP\n"
+        # write
+        self.f.write(lines)
 
     def write_function(self, label: str, n_locals: int) -> None:
-        self.f.write(f"{label}\n")
+        lines = ""
+        lines += f"({label})\n"
         for _ in range(n_locals):
-            self.f.write("D=0\n")
-            self._push_and_increment()
+            lines += "D=0\n"
+            lines += self._push_and_increment()
+        self.f.write(lines)
 
     def close(self):
         self.f.close()
