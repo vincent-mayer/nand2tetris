@@ -20,6 +20,7 @@ class CodeWriter:
             'constant': -1
         }
         self.bool_count = 0
+        self.call_count = 0
         self.curr_file = ""
 
     def set_file_name(self, vm_file_name: str) -> None:
@@ -62,6 +63,7 @@ class CodeWriter:
         lines += "@SP\n"
         lines += "M=D\n"
         self.f.write(lines)
+        self.write_call("Sys.init", 0)
 
     def write_arithmetic(self, command: str) -> None:
         lines = ""
@@ -110,49 +112,47 @@ class CodeWriter:
 
         self.f.write(lines)
 
-    def write_push_pop(self, cmd_type: CmdType, segment: str, index: int) -> None:
-        base_address = self.segment_to_base_address[segment]
+    def _resolve_address(self, segment: str, index: int) -> str:
         lines = ""
-
-        if cmd_type == CmdType.C_PUSH:
-            if segment != "constant":
-                # addr = base + i
-                lines += "@" + str(base_address) + "\n"
-                if isinstance(base_address, int):
-                    lines += "D=A" + "\n"
-                else:
-                    lines += "D=M" + "\n"
-                lines += "@" + str(index) + "\n"
-                lines += "A=D+A" + "\n"
-                # D = *addr = *(base_segment + index)
-                lines += "D=M" + "\n"
-            else:
-                lines += "@" + str(index) + "\n"
-                lines += "D=A" + "\n"
-            # *SP = *addr
-            lines += "@SP" + "\n"
-            lines += "A=M" + "\n"
-            lines += "M=D" + "\n"
-            # SP++
-            lines += self._increment_sp()
-        elif cmd_type == CmdType.C_POP:
-            # Put base + offset into D
-            lines += "@" + str(base_address) + "\n"
-            if isinstance(base_address, int):
-                lines += "D=A" + "\n"
-            else:
-                lines += "D=M" + "\n"
+        base_address = self.segment_to_base_address[segment]
+        if segment == "constant":
             lines += "@" + str(index) + "\n"
-            lines += "D=D+A" + "\n"
+        elif segment == "static":
+            lines += "@" + self.curr_file + "." + str(index) + "\n"
+        elif segment in ["pointer", "temp"]:
+            lines += "@R" + str(base_address + index) + "\n"
+        elif segment in ["local", "argument", "this", "that"]:
+            lines += "@" + base_address + "\n"
+            lines += "D=M\n"
+            lines += "@" + str(index) + "\n"
+            lines += "A=D+A\n"
+        else:
+            raise ValueError(f"Invalid segment: {segment}")
+
+        return lines
+
+    def write_push_pop(self, cmd_type: CmdType, segment: str, index: int) -> None:
+        lines = ""
+        lines += self._resolve_address(segment, index)
+        if cmd_type == CmdType.C_PUSH:
+            if segment == "constant":
+                lines += "D=A\n"
+            else:
+                lines += "D=M\n"
+            lines += self._push_and_increment()
+        elif cmd_type == CmdType.C_POP:
+            lines += "D=A\n"
             # save target address in r13
-            lines += "@R13" + "\n"
-            lines += "M=D" + "\n"
+            lines += "@R13\n"
+            lines += "M=D\n"
             # SP--, D = *SP
             lines += self._decrement_and_pop(dest="D")
             # *addr = R13 = *SP
-            lines += "@R13" + "\n"  # R13 must hold target address
-            lines += "A=M" + "\n"
-            lines += "M=D" + "\n"
+            lines += "@R13\n"  # R13 must hold target address
+            lines += "A=M\n"
+            lines += "M=D\n"
+        else:
+            raise ValueError(f"Invalid command type: {cmd_type}!")
         self.f.write(lines)
 
     def write_label(self, label: str) -> None:
@@ -170,7 +170,35 @@ class CodeWriter:
         self.f.write(lines)
 
     def write_call(self, f_name: str, n_args: int) -> None:
-        self.f.write(f"@{self.curr_file}${f_name}\n")
+        ret_label = f"{self.curr_file}${f_name}RET{self.call_count}"
+        self.call_count += 1
+        lines = ""
+        # push return-address
+        lines += f"@{ret_label}\n"
+        lines += "D=A\n"
+        lines += self._push_and_increment()
+        # push "LCL", "ARG", "THIS", "THAT"
+        for label in ["LCL", "ARG", "THIS", "THAT"]:
+            lines += f"@{label}\n"
+            lines += "D=M\n"
+            lines += self._push_and_increment()
+        # LCL = SP
+        lines += "@SP\n"
+        lines += "D=M\n"
+        lines += "@LCL\n"
+        lines += "M=D\n"
+        # ARG = SP-(n+5)
+        lines += f"@{n_args+5}\n"
+        lines += "D=D-A\n"
+        lines += "@ARG\n"
+        lines += "M=D\n"
+
+        # goto f
+        lines += f"@{f_name}\n"
+        lines += "0;JMP\n"
+        lines += "(" + ret_label + ")\n"
+
+        self.f.write(lines)
 
     def write_return(self) -> None:
         lines = ""

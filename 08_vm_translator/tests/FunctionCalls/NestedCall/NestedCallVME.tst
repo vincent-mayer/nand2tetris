@@ -1,6 +1,6 @@
 // Test file for NestedCall test.
 
-load Sys.vm,
+load NestedCall.vm,
 output-file NestedCall.out,
 compare-to NestedCall.cmp,
 output-list RAM[0]%D1.6.1 RAM[1]%D1.6.1 RAM[2]%D1.6.1 RAM[3]%D1.6.1 RAM[4]%D1.6.1 RAM[5]%D1.6.1 RAM[6]%D1.6.1;
