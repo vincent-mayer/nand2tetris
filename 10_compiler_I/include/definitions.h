@@ -28,6 +28,6 @@ enum KeyWord
     RETURN,
     TRUE,
     FALSE,
-    NULL,
+    NULL_,
     THIS
 };
