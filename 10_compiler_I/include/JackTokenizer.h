@@ -10,11 +10,11 @@ private:
     std::ifstream m_file;
     std::string m_token;
     std::string m_line;
-    bool m_line_consumed;
+    std::string::iterator m_line_it;
 
 public:
     JackTokenizer(std::string input_path)
-        : m_file(input_path), m_token(""), m_line_consumed(true){};
+        : m_file(input_path), m_token(""), m_line(""), m_line_it(m_line.end()){};
 
     ~JackTokenizer()
     {
