@@ -56,7 +56,7 @@ auto JackTokenizer::advance() -> void
             m_line_it++;
             m_is_string_const = false;
             is_token = true;
-            std::cout << m_token << std::endl;
+            // std::cout << m_token << std::endl;
             break;
         }
 
@@ -88,7 +88,7 @@ auto JackTokenizer::advance() -> void
             is_token = true;
             m_line_it += string_end_pos + 1;
             m_is_string_const = true;
-            std::cout << m_token << std::endl;
+            // std::cout << m_token << std::endl;
             break;
         }
 
@@ -170,7 +170,7 @@ auto JackTokenizer::advance() -> void
             m_line_it += token_length;
         }
 
-        std::cout << m_token << std::endl;
+        // std::cout << m_token << std::endl;
     }
 };
 

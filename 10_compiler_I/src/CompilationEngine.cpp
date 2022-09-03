@@ -33,7 +33,7 @@ auto CompilationEngine::easyCompile() -> void
 auto CompilationEngine::compileClass() -> void
 {
     // class token
-    mOutputFile << "<class>\n";
+    std::cout << "<class>\n";
     mDepth++;
 
     // class Main {
@@ -64,13 +64,13 @@ auto CompilationEngine::compileClass() -> void
     mDepth--;
 
     // class
-    mOutputFile << "</class>\n";
+    std::cout << "</class>\n";
 };
 
 auto CompilationEngine::compileClassVarDecl() -> void
 {
     // classVarDec
-    mOutputFile << "<classVarDec>\n";
+    std::cout << "<classVarDec>\n";
     mDepth++;
 
     while (mTokenizer->getToken() != std::string{";"})
@@ -81,43 +81,70 @@ auto CompilationEngine::compileClassVarDecl() -> void
 
     // classVarDec
     mDepth--;
-    mOutputFile << "</classVarDec>\n";
+    std::cout << "</classVarDec>\n";
 }
 
 auto CompilationEngine::compileSubroutine() -> void
 {
-    //
     // subroutineDec
-    mOutputFile << "<subroutineDec>\n";
+    std::cout << "<subroutineDec>\n";
     mDepth++;
 
-    // function void main
-    while (mTokenizer->getToken() != std::string{"("})
-    {
-        mTokenizer->advance();
-        this->write(mTokenizer->tokenType(), mTokenizer->getToken());
-    }
+    // function void main (
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+    mTokenizer->advance();
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+    mTokenizer->advance();
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+    mTokenizer->advance();
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
 
-    // Write parameterlist
+    // Write parameterlist, there can only be one.
     this->compileParameterList();
 
-    while (mTokenizer->getToken() != std::string{"}"})
-    {
-    }
+    // )
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+
+    // call subroutinebody
+    this->compileSubroutine();
 
     // subroutineDec
     mDepth--;
-    mOutputFile << "</subroutineDec>\n";
+    std::cout << "</subroutineDec>\n";
+}
+
+auto CompilationEngine::compileSubroutine() -> void
+{
+    // subroutineBody
+    std::cout << "<subroutineBody>\n";
+    mDepth++;
+
+    // {
+    mTokenizer->advance();
+    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+
+    while (mTokenizer->getToken() != std::string{"}"})
+    {
+        mTokenizer->advance();
+        if (mTokenizer->getToken() != std::string{"var"})
+        {
+            this->compileVarDecl();
+        }
+        else
+        {
+            this->compileStatements();
+        }
+    }
+
+    // subroutineBody
+    mDepth--;
+    std::cout << "</parameterList>\n";
 }
 
 auto CompilationEngine::compileParameterList() -> void
 {
-    // (
-    mTokenizer->advance();
-    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
-
     // parameterList
-    mOutputFile << "<parameterList>\n";
+    std::cout << "<parameterList>\n";
     mDepth++;
 
     // int A, int B ...
@@ -129,10 +156,7 @@ auto CompilationEngine::compileParameterList() -> void
 
     // parameterList
     mDepth--;
-    mOutputFile << "</parameterList>\n";
-
-    // )
-    this->write(mTokenizer->tokenType(), mTokenizer->getToken());
+    std::cout << "</parameterList>\n";
 }
 
 auto CompilationEngine::write(TokenType type, std::string data) -> void
@@ -140,15 +164,15 @@ auto CompilationEngine::write(TokenType type, std::string data) -> void
     auto type_str = this->tokenTypeToString(type);
 
     for (int i = 0; i < mDepth; i++)
-        mOutputFile << "  ";
+        std::cout << "  ";
 
-    mOutputFile << "<";
-    mOutputFile << type_str;
-    mOutputFile << "> ";
+    std::cout << "<";
+    std::cout << type_str;
+    std::cout << "> ";
 
-    mOutputFile << data;
+    std::cout << data;
 
-    mOutputFile << " </";
-    mOutputFile << type_str;
-    mOutputFile << ">\n";
+    std::cout << " </";
+    std::cout << type_str;
+    std::cout << ">\n";
 };
