@@ -8,7 +8,9 @@ set(SOURCE_FILES
     src/main.cpp
     include/JackTokenizer.h
     include/definitions.h
-    src/JackTokenizer.cpp)
+    include/CompilationEngine.h
+    src/JackTokenizer.cpp
+    src/CompilationEngine.cpp)
 
 # Add executable target with source files listed in SOURCE_FILES variable
 add_executable(JackTokenizer ${SOURCE_FILES})

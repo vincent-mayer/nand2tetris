@@ -1,8 +1,9 @@
 #include <JackTokenizer.h>
+#include <cctype>
 #include <iostream>
 
 #include "definitions.h"
-
+#include <cassert>
 // Approach:
 // Get entire line
 // traverse line character by character and check when a keyword or smth is found
@@ -53,6 +54,7 @@ auto JackTokenizer::advance() -> void
         {
             m_token = *m_line_it;
             m_line_it++;
+            m_is_string_const = false;
             is_token = true;
             std::cout << m_token << std::endl;
             break;
@@ -81,10 +83,11 @@ auto JackTokenizer::advance() -> void
             // Find the second quote.
             auto string_end_pos = cur_substr.rfind("\"");
 
-            // Return token
+            // Return string const token
             m_token = std::string(m_line_it, m_line_it + string_end_pos + 1);
             is_token = true;
             m_line_it += string_end_pos + 1;
+            m_is_string_const = true;
             std::cout << m_token << std::endl;
             break;
         }
@@ -130,6 +133,7 @@ auto JackTokenizer::advance() -> void
                 }
             }
             m_token = std::string(m_line_it, m_line_it + token_end_pos + 1);
+            m_is_string_const = false;
             is_token = true;
             m_line_it += token_end_pos + 1;
         }
@@ -161,6 +165,7 @@ auto JackTokenizer::advance() -> void
             }
 
             m_token = std::string(m_line_it, m_line_it + token_length);
+            m_is_string_const = false;
             is_token = true;
             m_line_it += token_length;
         }
@@ -169,14 +174,47 @@ auto JackTokenizer::advance() -> void
     }
 };
 
-auto JackTokenizer::tokenType() -> TokenType{};
+auto JackTokenizer::tokenType() -> TokenType
+{
+    if (std::find(keywords.begin(), keywords.end(), m_token) != keywords.end())
+        m_token_type = TokenType::KEYWORD;
+    else if (std::find(symbols.begin(), symbols.end(), m_token) != symbols.end())
+        m_token_type = TokenType::SYMBOL;
+    else if (isdigit(m_token[0]))
+        m_token_type = TokenType::INT_CONST;
+    else if (m_is_string_const)
+        m_token_type = TokenType::STRING_CONST;
+    else
+        m_token_type = TokenType::IDENTIFIER;
+    return m_token_type;
+};
 
-auto JackTokenizer::keyWord() -> KeyWord{};
+auto JackTokenizer::keyWord() -> KeyWord
+{
+    assert(m_token_type == TokenType::KEYWORD);
+    return KEYWORD_MAP[m_token];
+};
 
-auto JackTokenizer::symbol() -> char{};
+auto JackTokenizer::symbol() -> std::string
+{
+    assert(m_token_type == TokenType::SYMBOL);
+    return m_token;
+};
 
-auto JackTokenizer::identifier() -> std::string{};
+auto JackTokenizer::identifier() -> std::string
+{
+    assert(m_token_type == TokenType::IDENTIFIER);
+    return m_token;
+};
 
-auto JackTokenizer::intVal() -> int{};
+auto JackTokenizer::intVal() -> int
+{
+    assert(m_token_type == TokenType::INT_CONST);
+    return std::atoi(m_token.c_str());
+};
 
-auto JackTokenizer::stringVal() -> std::string{};
+auto JackTokenizer::stringVal() -> std::string
+{
+    assert(m_token_type == TokenType::STRING_CONST);
+    return m_token;
+};

@@ -74,4 +74,12 @@ inline std::vector<std::string> tokens{
 //     "-", "*", "/", "&", "|", "<", ">", "=", "~",
 // };
 
+inline std::vector<std::string> keywords{
+    "class", "constructor", "function", "method", "field", "static", "var",
+    "int",   "char",        "boolean",  "void",   "true",  "false",  "null",
+    "this",  "let",         "do",       "if",     "else",  "while",  "return"};
+
+inline std::vector<std::string> symbols{"{", "}", "(", ")", "[", "]", ".", ",", ";", "+",
+                                        "-", "*", "/", "&", ",", "<", ">", "=", "~"};
+
 #endif

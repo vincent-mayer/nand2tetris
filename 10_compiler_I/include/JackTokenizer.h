@@ -1,3 +1,4 @@
+#pragma once
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -11,6 +12,8 @@ private:
     std::string m_token;
     std::string m_line;
     std::string::iterator m_line_it;
+    bool m_is_string_const;
+    TokenType m_token_type;
 
 public:
     JackTokenizer(std::string input_path)
@@ -32,11 +35,20 @@ public:
 
     auto keyWord() -> KeyWord;
 
-    auto symbol() -> char;
+    auto symbol() -> std::string;
 
     auto identifier() -> std::string;
 
     auto intVal() -> int;
 
     auto stringVal() -> std::string;
+
+    auto getToken() -> std::string
+    {
+        while (m_token.find("\"") != std::string::npos)
+        {
+            m_token.erase(m_token.find("\""), std::string{"\""}.length());
+        }
+        return m_token;
+    };
 };
