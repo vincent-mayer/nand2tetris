@@ -43,7 +43,7 @@ public:
 
     auto stringVal() -> std::string;
 
-    auto getToken() -> std::string
+    auto token() -> std::string
     {
         while (m_token.find("\"") != std::string::npos)
         {

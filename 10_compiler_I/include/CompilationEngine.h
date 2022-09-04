@@ -27,7 +27,7 @@ public:
 
     auto tokenTypeToString(TokenType token) -> std::string;
 
-    auto getTokenizer() -> const std::unique_ptr<JackTokenizer> &
+    auto tokenizer() -> const std::unique_ptr<JackTokenizer> &
     {
         return mTokenizer;
     };
@@ -39,6 +39,8 @@ public:
     auto compileClassVarDecl() -> void;
 
     auto compileSubroutine() -> void;
+
+    auto compileSubroutineBody() -> void;
 
     auto compileParameterList() -> void;
 
@@ -58,9 +60,11 @@ public:
 
     auto compileExpression() -> void;
 
-    auto compilTerm() -> void;
+    auto compileTerm() -> void;
 
     auto compileExpressionList() -> void;
 
     auto write(TokenType tokenType, std::string data) -> void;
+
+    auto write(std::string data) -> void;
 };
