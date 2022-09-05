@@ -46,17 +46,19 @@ auto CompilationEngine::compileClass() -> void
 
     while (mTokenizer->token() != std::string{"}"})
     {
-        // Get the next token.
-        mTokenizer->advance();
 
         // If the token is function, compile subroutine.
         if (mTokenizer->token() == std::string{"function"} ||
-            mTokenizer->token() == std::string{"method"})
+            mTokenizer->token() == std::string{"method"} ||
+            mTokenizer->token() == std::string{"constructor"})
             this->compileSubroutine();
 
         else if (mTokenizer->token() == std::string{"field"} ||
                  mTokenizer->token() == std::string{"static"})
             this->compileClassVarDecl();
+
+        // Get the next token.
+        mTokenizer->advance();
     }
 
     // }
@@ -75,9 +77,12 @@ auto CompilationEngine::compileClassVarDecl() -> void
 
     while (mTokenizer->token() != std::string{";"})
     {
-        mTokenizer->advance();
         this->write(mTokenizer->tokenType(), mTokenizer->token());
+        mTokenizer->advance();
     }
+
+    //;
+    this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // classVarDec
     mDepth--;
@@ -166,16 +171,31 @@ auto CompilationEngine::compileStatements() -> void
     while (mTokenizer->token() != std::string{"}"})
     {
         if (mTokenizer->token() == std::string{"let"})
+        {
             this->compileLet();
+            mTokenizer->advance();
+        }
         else if (mTokenizer->token() == std::string{"do"})
+        {
             this->compileDo();
+            mTokenizer->advance();
+        }
         else if (mTokenizer->token() == std::string{"while"})
+        {
             this->compileWhile();
+            mTokenizer->advance();
+        }
         else if (mTokenizer->token() == std::string{"return"})
+        {
             this->compileReturn();
+            mTokenizer->advance();
+        }
         else if (mTokenizer->token() == std::string{"if"})
+        {
             this->compileIf();
-        mTokenizer->advance();
+        }
+        else
+            mTokenizer->advance();
     }
 
     mDepth--;
@@ -213,7 +233,8 @@ auto CompilationEngine::compileLet() -> void
 auto CompilationEngine::compileExpression() -> void
 {
     mTokenizer->advance();
-    if (mTokenizer->token() == std::string{")"})
+    if (mTokenizer->token() == std::string{")"} ||
+        mTokenizer->token() == std::string{";"})
         return;
     this->write(std::string{"<expression>"});
     mDepth++;
@@ -223,6 +244,8 @@ auto CompilationEngine::compileExpression() -> void
            mTokenizer->token() != std::string{")"})
     {
         this->compileTerm();
+        if (mTokenizer->token() == std::string{","})
+            break;
         if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
         {
             this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -237,15 +260,20 @@ auto CompilationEngine::compileTerm() -> void
 {
     this->write(std::string{"<term>"});
     mDepth++;
+    int i = 0;
     while (mTokenizer->token() != std::string{")"} &&
            mTokenizer->token() != std::string{";"} &&
            mTokenizer->token() != std::string{"]"} &&
-           std::find(ops.begin(), ops.end(), mTokenizer->token()) == ops.end())
+           (std::find(ops.begin(), ops.end(), mTokenizer->token()) == ops.end() ||
+            (i == 0)))
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == std::string{"("})
         {
-            this->compileExpressionList();
+            if (mTokenizer->prevTokenType() == TokenType::IDENTIFIER)
+                this->compileExpressionList();
+            else
+                this->compileExpression();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         }
         if (mTokenizer->token() == std::string{"["})
@@ -258,6 +286,14 @@ auto CompilationEngine::compileTerm() -> void
 
         // )
         mTokenizer->advance();
+
+        if (mTokenizer->tokenType() == TokenType::INT_CONST ||
+            mTokenizer->tokenType() == TokenType::STRING_CONST ||
+            (mTokenizer->tokenType() == TokenType::IDENTIFIER && (i == 0)) ||
+            mTokenizer->token() == std::string{"("} &&
+                std::find(ops.begin(), ops.end(), mTokenizer->prevToken()) != ops.end())
+            this->compileTerm();
+        i++;
     }
     mDepth--;
     this->write(std::string{"</term>"});
@@ -268,7 +304,11 @@ auto CompilationEngine::compileExpressionList() -> void
     this->write(std::string{"<expressionList>"});
     mDepth++;
     while (mTokenizer->token() != std::string{")"})
+    {
         this->compileExpression();
+        if (mTokenizer->token() == std::string{","})
+            this->write(mTokenizer->tokenType(), mTokenizer->token());
+    }
     mDepth--;
     this->write(std::string{"</expressionList>"});
 }
@@ -327,7 +367,6 @@ auto CompilationEngine::compileReturn() -> void
 
     // return
     this->write(mTokenizer->tokenType(), mTokenizer->token());
-    mTokenizer->advance();
 
     while (mTokenizer->token() != std::string{";"})
     {
@@ -347,12 +386,41 @@ auto CompilationEngine::compileIf() -> void
     this->write(std::string{"<ifStatement>"});
     mDepth++;
 
-    // return
+    // if
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
 
+    // (
+    this->write(mTokenizer->tokenType(), mTokenizer->token());
+
+    // expression
+    this->compileExpression();
+
+    // )
+    this->write(mTokenizer->tokenType(), mTokenizer->token());
+
+    // {
+    mTokenizer->advance();
+    this->write(mTokenizer->tokenType(), mTokenizer->token());
+
+    // statements
+    this->compileStatements();
+
     // }
     this->write(mTokenizer->tokenType(), mTokenizer->token());
+
+    mTokenizer->advance();
+
+    // else
+    if (mTokenizer->token() == std::string{"else"})
+    {
+        this->write(mTokenizer->tokenType(), mTokenizer->token());
+        mTokenizer->advance();
+        this->write(mTokenizer->tokenType(), mTokenizer->token());
+        this->compileStatements();
+        this->write(mTokenizer->tokenType(), mTokenizer->token());
+        mTokenizer->advance();
+    }
 
     // ifStatement
     mDepth--;

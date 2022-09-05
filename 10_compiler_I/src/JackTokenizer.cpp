@@ -17,6 +17,15 @@ auto JackTokenizer::advance() -> void
         {
             getline(m_file, m_line);
 
+            // Skip if line starts with *
+            std::string tmp = m_line;
+            std::remove_if(tmp.begin(), tmp.end(), isspace);
+            if (tmp.rfind("*", 0) == 0)
+            {
+                m_line_it = m_line.end();
+                continue;
+            }
+
             // Remove comment section from command, by just ignoring the entire line.
             if (m_line.find("//") != std::string::npos ||
                 m_line.find("/*") != std::string::npos ||
@@ -52,6 +61,7 @@ auto JackTokenizer::advance() -> void
         if (std::find(tokens.begin(), tokens.end(), std::string{*m_line_it}) !=
             tokens.end())
         {
+            m_prev_token = m_token;
             m_token = *m_line_it;
             m_line_it++;
             m_is_string_const = false;
@@ -84,6 +94,7 @@ auto JackTokenizer::advance() -> void
             auto string_end_pos = cur_substr.rfind("\"");
 
             // Return string const token
+            m_prev_token = m_token;
             m_token = std::string(m_line_it, m_line_it + string_end_pos + 1);
             is_token = true;
             m_line_it += string_end_pos + 1;
@@ -132,6 +143,7 @@ auto JackTokenizer::advance() -> void
                     break;
                 }
             }
+            m_prev_token = m_token;
             m_token = std::string(m_line_it, m_line_it + token_end_pos + 1);
             m_is_string_const = false;
             is_token = true;
@@ -164,6 +176,7 @@ auto JackTokenizer::advance() -> void
                 }
             }
 
+            m_prev_token = m_token;
             m_token = std::string(m_line_it, m_line_it + token_length);
             m_is_string_const = false;
             is_token = true;
@@ -187,6 +200,21 @@ auto JackTokenizer::tokenType() -> TokenType
     else
         m_token_type = TokenType::IDENTIFIER;
     return m_token_type;
+};
+
+auto JackTokenizer::prevTokenType() -> TokenType
+{
+    if (std::find(keywords.begin(), keywords.end(), m_prev_token) != keywords.end())
+        m_prev_token_type = TokenType::KEYWORD;
+    else if (std::find(symbols.begin(), symbols.end(), m_prev_token) != symbols.end())
+        m_prev_token_type = TokenType::SYMBOL;
+    else if (isdigit(m_prev_token[0]))
+        m_prev_token_type = TokenType::INT_CONST;
+    else if (m_is_string_const)
+        m_prev_token_type = TokenType::STRING_CONST;
+    else
+        m_prev_token_type = TokenType::IDENTIFIER;
+    return m_prev_token_type;
 };
 
 auto JackTokenizer::keyWord() -> KeyWord

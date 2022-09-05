@@ -62,7 +62,8 @@ inline std::map<std::string, KeyWord> KEYWORD_MAP{
     {"while", KeyWord::WHILE},
 };
 
-inline std::vector<std::string> ops{"+", "-", "*", "/", "&", ",", "<", ">", "="};
+inline std::vector<std::string> ops{"+", "-", "*", "/", "&", "<",
+                                    ">", "=", "|", ",", "~"};
 
 inline std::vector<std::string> tokens{
     "class", "constructor", "function", "method", "field", "static", "var",  "int",
@@ -81,7 +82,8 @@ inline std::vector<std::string> keywords{
     "int",   "char",        "boolean",  "void",   "true",  "false",  "null",
     "this",  "let",         "do",       "if",     "else",  "while",  "return"};
 
-inline std::vector<std::string> symbols{"{", "}", "(", ")", "[", "]", ".", ",", ";", "+",
-                                        "-", "*", "/", "&", ",", "<", ">", "=", "~"};
+inline std::vector<std::string> symbols{"{", "}", "(", ")", "[", "]", ".",
+                                        ",", ";", "+", "-", "*", "/", "&",
+                                        ",", "<", ">", "=", "~", "|"};
 
 #endif

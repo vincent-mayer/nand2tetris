@@ -4,14 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    std::string path_in =
-        "/home/vincent/repos/nand2tetris/10_compiler_I/test/ArrayTest/Main.jack";
-    std::string path_out =
-        "/home/vincent/repos/nand2tetris/10_compiler_I/test/ArrayTest/MainV.xml";
+    std::string path_in = "/home/vincent/repos/nand2tetris/10_compiler_I/test/"
+                          "Square/Main.jack";
+    std::string path_out = "/home/vincent/repos/nand2tetris/10_compiler_I/test/"
+                           "Square/MainV.xml";
 
     std::unique_ptr<JackTokenizer> tokenizer = std::make_unique<JackTokenizer>(path_in);
 
-    CompilationEngine engine(std::move(tokenizer), path_out);
+    CompilationEngine engine(std::move(std::make_unique<JackTokenizer>(path_in)),
+                             path_out);
 
     engine.compileClass();
 
