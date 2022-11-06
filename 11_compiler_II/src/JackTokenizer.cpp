@@ -183,9 +183,28 @@ auto JackTokenizer::advance() -> void
             m_line_it += token_length;
         }
 
+        // Set the last kind
+        if (m_token == std::string{"static"})
+            m_last_kind = Kind::STATIC;
+        else if (m_token == std::string{"field"})
+            m_last_kind = Kind::FIELD;
+        else if (m_token == std::string{"arg"})
+            m_last_kind = Kind::ARG;
+        else if (m_token == std::string{"var"})
+            m_last_kind = Kind::VAR;
+        else if ((m_token == std::string{"class"}) ||
+                 (m_token == std::string{"function"}))
+        {
+            m_last_kind = Kind::NONE;
+        }
         // std::cout << m_token << std::endl;
     }
 };
+
+auto JackTokenizer::lastKind() -> Kind
+{
+    return m_last_kind;
+}
 
 auto JackTokenizer::tokenType() -> TokenType
 {

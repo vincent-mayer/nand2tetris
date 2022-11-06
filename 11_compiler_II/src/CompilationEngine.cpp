@@ -1,5 +1,6 @@
 #include "CompilationEngine.h"
 #include "definitions.h"
+#include <magic_enum.hpp>
 #include <string>
 
 auto CompilationEngine::tokenTypeToString(TokenType token) -> std::string
@@ -19,16 +20,55 @@ auto CompilationEngine::tokenTypeToString(TokenType token) -> std::string
     return type;
 }
 
-auto CompilationEngine::easyCompile() -> void
+auto CompilationEngine::write(TokenType type, std::string data) -> void
 {
-    while (true)
-    {
-        mTokenizer->advance();
-        if (!mTokenizer->hasMoreTokens())
-            return;
-        this->write(mTokenizer->tokenType(), mTokenizer->token());
-    }
+    auto type_str = this->tokenTypeToString(type);
+
+    for (int i = 0; i < mDepth; i++)
+        std::cout << "  ";
+
+    std::cout << "<";
+    std::cout << type_str;
+    std::cout << "> ";
+
+    std::cout << data;
+
+    // Special case handling for identifier.
+    if (type == TokenType::IDENTIFIER)
+        this->handleIdentifier(data);
+
+    std::cout << " </";
+    std::cout << type_str;
+    std::cout << ">\n";
 };
+
+auto CompilationEngine::handleIdentifier(std::string name) -> void
+{
+    // Determine kind.
+    auto kind = mTokenizer->lastKind();
+
+    // Determine type.
+    auto type = mTokenizer->prevToken();
+
+    // Insert into table.
+    mSymbolTable->define(name, type, kind);
+
+    // Get the correct index.
+    auto index = mSymbolTable->indexOf(name);
+
+    // Write all data.
+    std::cout << ";" << type << ";";
+    std::cout << magic_enum::enum_name(kind) << ";";
+    std::cout << std::to_string(index) << ";" << std::endl;
+};
+
+auto CompilationEngine::write(std::string data) -> void
+{
+    for (int i = 0; i < mDepth; i++)
+        std::cout << "  ";
+    std::cout << data;
+    std::cout << "\n";
+}
 
 auto CompilationEngine::compileClass() -> void
 {
@@ -446,30 +486,4 @@ auto CompilationEngine::compileParameterList() -> void
     // parameterList
     mDepth--;
     this->write(std::string{"</parameterList>"});
-}
-
-auto CompilationEngine::write(TokenType type, std::string data) -> void
-{
-    auto type_str = this->tokenTypeToString(type);
-
-    for (int i = 0; i < mDepth; i++)
-        mOutputFile << "  ";
-
-    mOutputFile << "<";
-    mOutputFile << type_str;
-    mOutputFile << "> ";
-
-    mOutputFile << data;
-
-    mOutputFile << " </";
-    mOutputFile << type_str;
-    mOutputFile << ">\n";
-};
-
-auto CompilationEngine::write(std::string data) -> void
-{
-    for (int i = 0; i < mDepth; i++)
-        mOutputFile << "  ";
-    mOutputFile << data;
-    mOutputFile << "\n";
 }

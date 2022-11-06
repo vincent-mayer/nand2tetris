@@ -16,11 +16,12 @@ private:
     bool m_is_string_const;
     TokenType m_token_type;
     TokenType m_prev_token_type;
+    Kind m_last_kind;
 
 public:
     JackTokenizer(std::string input_path)
         : m_file(input_path), m_token(""), m_line(""), m_prev_token(""),
-          m_line_it(m_line.end()){};
+          m_line_it(m_line.end()), m_last_kind(Kind::NONE){};
 
     ~JackTokenizer()
     {
@@ -31,6 +32,8 @@ public:
     {
         return !m_file.eof();
     }
+
+    auto lastKind() -> Kind;
 
     auto advance() -> void;
 

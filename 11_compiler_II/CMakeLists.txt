@@ -4,6 +4,7 @@ project(JackCompiler)
 
 set(CMAKE_CXX_STANDARD 20)            # Enable c++20 standard
 
+find_package(magic_enum CONFIG REQUIRED)
 
 # Add main.cpp file of project root directory as source file
 set(SOURCE_FILES
@@ -22,4 +23,5 @@ set(SOURCE_FILES
 
 # Add executable target with source files listed in SOURCE_FILES variable
 add_executable(JackCompiler ${SOURCE_FILES})
-target_include_directories(JackCompiler PRIVATE include/ /home/vincent/repos/nand2tetris/10_compiler_I/include)
+target_include_directories(JackCompiler PRIVATE include/)
+target_link_libraries(JackCompiler magic_enum::magic_enum)

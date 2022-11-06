@@ -4,13 +4,31 @@
 #include <string>
 #include <vector>
 
+enum class Category
+{
+    VAR,
+    ARGUMENT,
+    STATIC,
+    FIELD,
+    CLASS,
+    SUBROUTINE
+};
+
 enum class Kind
 {
     STATIC,
     FIELD,
     ARG,
-    VAR
+    VAR,
+    NONE
 };
+
+// std::map<std::string, Kind> KINDMAP{
+//     {std::string{"static"}, Kind::STATIC},
+//     {std::string{"field"}, Kind::FIELD},
+//     {std::string{"arg"}, Kind::ARG},
+//     {std::string{"var"}, Kind::VAR},
+// };
 
 enum class Segment
 {
@@ -69,6 +87,13 @@ enum class KeyWord
     ELSE,
     WHILE,
     RETURN,
+};
+
+struct HashData
+{
+    std::string type;
+    Kind kind;
+    int index;
 };
 
 inline std::map<std::string, KeyWord> KEYWORD_MAP{

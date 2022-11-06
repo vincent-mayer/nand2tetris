@@ -2,16 +2,23 @@
 
 #include "definitions.h"
 #include <string>
+#include <unordered_map>
 
 class SymbolTable
 {
 private:
     int i;
+    std::unordered_map<std::string, HashData> mClassTable;
+    std::unordered_map<std::string, HashData> mSubroutineTable;
 
 public:
-    SymbolTable();
+    SymbolTable(){};
 
     auto startSubroutine(std::string name, std::string type, Kind kind) -> void;
+
+    auto define(std::string name, std::string type, Kind kind) -> void;
+
+    auto decideTable(Kind kind) -> std::unordered_map<std::string, HashData> &;
 
     auto varCount(Kind kind) -> int;
 

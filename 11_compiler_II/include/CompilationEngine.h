@@ -1,23 +1,24 @@
 #pragma once
+#include "JackTokenizer.h"
+#include "SymbolTable.h"
 #include "definitions.h"
-#include <JackTokenizer.h>
 #include <fstream>
 #include <memory>
 
 class CompilationEngine
 {
 private:
+    std::unique_ptr<SymbolTable> mSymbolTable;
     std::unique_ptr<JackTokenizer> mTokenizer;
     std::ofstream mOutputFile;
     int mDepth;
 
 public:
-    CompilationEngine(std::unique_ptr<JackTokenizer> jackTokenizer,
+    CompilationEngine(std::unique_ptr<SymbolTable> symbolTable,
+                      std::unique_ptr<JackTokenizer> jackTokenizer,
                       std::string outputFileName)
-        : mTokenizer(std::move(jackTokenizer)), mOutputFile(outputFileName),
-          mDepth(0){
-              // mOutputFile << "<tokens>\n";
-          };
+        : mSymbolTable(std::move(symbolTable)), mTokenizer(std::move(jackTokenizer)),
+          mOutputFile(outputFileName), mDepth(0){};
 
     ~CompilationEngine()
     {
@@ -27,12 +28,12 @@ public:
 
     auto tokenTypeToString(TokenType token) -> std::string;
 
+    auto handleIdentifier(std::string name) -> void;
+
     auto tokenizer() -> const std::unique_ptr<JackTokenizer> &
     {
         return mTokenizer;
     };
-
-    auto easyCompile() -> void;
 
     auto compileClass() -> void;
 
