@@ -50,6 +50,14 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
     // Determine type.
     auto type = mTokenizer->prevToken();
 
+    // Edge-casing, to avoid including int, Array etc. Needs static and field and stuff
+    // too.
+    if (type == std::string{"var"})
+        return;
+
+    if (type == std::string{","})
+        type = mPrevType;
+
     // Insert into table.
     mSymbolTable->define(name, type, kind);
 
@@ -57,9 +65,12 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
     auto index = mSymbolTable->indexOf(name);
 
     // Write all data.
-    std::cout << ";" << type << ";";
-    std::cout << magic_enum::enum_name(kind) << ";";
-    std::cout << std::to_string(index) << ";" << std::endl;
+    std::cout << ";type:" << type << ";kind:";
+    std::cout << magic_enum::enum_name(kind) << ";index:";
+    std::cout << std::to_string(index) << ";";
+
+    // Remember type
+    mPrevType = type;
 };
 
 auto CompilationEngine::write(std::string data) -> void
@@ -81,6 +92,7 @@ auto CompilationEngine::compileClass() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
+    mClassName = mTokenizer->token();
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
@@ -141,11 +153,15 @@ auto CompilationEngine::compileSubroutine() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
+    std::string funcName = mTokenizer->token();
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // Write parameterlist, there can only be one.
-    this->compileParameterList();
+    int nParameters = this->compileParameterList();
+
+    // function main.Main 0 (nParameters)
+    mVMWriter->writeFunction(mClassName, funcName, nParameters);
 
     // )
     this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -270,15 +286,16 @@ auto CompilationEngine::compileLet() -> void
     this->write(std::string{"</letStatement>"});
 }
 
-auto CompilationEngine::compileExpression() -> void
+auto CompilationEngine::compileExpression() -> int
 {
     mTokenizer->advance();
     if (mTokenizer->token() == std::string{")"} ||
         mTokenizer->token() == std::string{";"})
-        return;
+        return 0;
     this->write(std::string{"<expression>"});
     mDepth++;
 
+    std::string curOperator = "";
     while (mTokenizer->token() != std::string{";"} &&
            mTokenizer->token() != std::string{"]"} &&
            mTokenizer->token() != std::string{")"})
@@ -288,12 +305,16 @@ auto CompilationEngine::compileExpression() -> void
             break;
         if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
         {
+            curOperator = mTokenizer->token();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             mTokenizer->advance();
         }
     }
+    if (curOperator != std::string{""})
+        mVMWriter->writeArithmetic(curOperator);
     mDepth--;
     this->write(std::string{"</expression>"});
+    return 1;
 }
 
 auto CompilationEngine::compileTerm() -> void
@@ -307,6 +328,10 @@ auto CompilationEngine::compileTerm() -> void
            (std::find(ops.begin(), ops.end(), mTokenizer->token()) == ops.end() ||
             (i == 0)))
     {
+        // Push integer constants on stack.
+        if (mTokenizer->tokenType() == TokenType::INT_CONST)
+            mVMWriter->writePush(Segment::CONST, std::stoi(mTokenizer->token()));
+
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == std::string{"("})
         {
@@ -357,16 +382,30 @@ auto CompilationEngine::compileDo() -> void
     this->write(std::string{"<doStatement>"});
     mDepth++;
 
+    std::string callClass;
+    std::string callMethod;
     while (mTokenizer->token() != std::string{";"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == std::string{"("})
         {
+            callMethod = mTokenizer->prevToken();
             this->compileExpressionList();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         }
         mTokenizer->advance();
+
+        // Remember the class name for function call
+        if (mTokenizer->prevToken() == std::string{"do"})
+            callClass = mTokenizer->token();
     }
+
+    // Write the function call.
+    mVMWriter->writeCall(callClass + std::string{"."} + callMethod, 1);
+
+    // Pop the implicit returned 0
+    // TODO: Only for void functions!
+    mVMWriter->writePop(Segment::TEMP, 0);
 
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mDepth--;
@@ -408,9 +447,17 @@ auto CompilationEngine::compileReturn() -> void
     // return
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
+    int terms;
     while (mTokenizer->token() != std::string{";"})
     {
-        this->compileExpression();
+        terms = this->compileExpression();
+    }
+
+    // Push return 0 constant
+    if (terms == 0)
+    {
+        mVMWriter->writePush(Segment::CONST, 0);
+        mVMWriter->writeReturn();
     }
 
     // ;
@@ -467,7 +514,7 @@ auto CompilationEngine::compileIf() -> void
     this->write(std::string{"</ifStatement>"});
 };
 
-auto CompilationEngine::compileParameterList() -> void
+auto CompilationEngine::compileParameterList() -> int
 {
     // parameterList
     this->write(std::string{"<parameterList>"});
@@ -477,13 +524,16 @@ auto CompilationEngine::compileParameterList() -> void
     mTokenizer->advance();
 
     // int A, int B ...
+    int nParameters = 0;
     while (mTokenizer->token() != std::string{")"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
+        nParameters++;
     }
 
     // parameterList
     mDepth--;
     this->write(std::string{"</parameterList>"});
+    return nParameters;
 }
