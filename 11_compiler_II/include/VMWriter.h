@@ -22,7 +22,7 @@ public:
 
     auto writePop(Segment segment, int index) -> void;
 
-    auto writeArithmetic(Command command) -> void;
+    auto writeArithmetic(std::string command) -> void;
 
     auto writeLabel(std::string label) -> void;
 
@@ -32,7 +32,8 @@ public:
 
     auto writeCall(std::string name, int nArgs) -> void;
 
-    auto writeFunction(std::string name, int nLocals) -> void;
+    auto writeFunction(std::string className, std::string functionName, int nLocals)
+        -> void;
 
     auto writeReturn() -> void;
 

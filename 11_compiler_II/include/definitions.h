@@ -42,6 +42,13 @@ enum class Segment
     TEMP
 };
 
+inline std::map<Segment, std::string> segmentToString{
+    {Segment::CONST, std::string{"constant"}}, {Segment::ARG, std::string{""}},
+    {Segment::LOCAL, std::string{""}},         {Segment::STATIC, std::string{""}},
+    {Segment::THIS, std::string{""}},          {Segment::THAT, std::string{""}},
+    {Segment::POINTER, std::string{""}},       {Segment::TEMP, std::string{"temp"}},
+};
+
 enum class Command
 {
     ADD,
@@ -53,6 +60,20 @@ enum class Command
     AND,
     OR,
     NOT
+};
+
+inline std::map<std::string, std::string> commandToString{
+    {std::string{"+"}, std::string{"add"}},
+    {std::string{"-"}, std::string{"sub"}},
+    {std::string{"~"}, std::string{"neg"}},
+    {std::string{"="}, std::string{"eq"}},
+    {std::string{">"}, std::string{"gt"}},
+    {std::string{"<"}, std::string{"lt"}},
+    {std::string{"&"}, std::string{"and"}},
+    {std::string{"|"}, std::string{"or"}},
+    {std::string{"n"}, std::string{"not"}},
+    {std::string{"*"}, std::string{"call Math.multiply 2"}},
+    {std::string{"/"}, std::string{"call Math.divide 2"}},
 };
 
 enum class TokenType

@@ -31,26 +31,29 @@ int main(int argc, char *argv[])
 
     // std::string pathOrDir = std::string(argv[1]);
     auto pathOrDir = std::string{
-        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Average/Main.jack"};
+        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Seven/Main.jack"};
 
     if (ends_with(pathOrDir, std::string{".jack"}))
     {
         // Single .jack file
         auto pathOut = create_output_path(pathOrDir);
-        boost::replace_all(pathOut, ".jack", ".xml");
+        auto pathOutXml = pathOut;
+        auto pathOutVm = pathOut;
+        boost::replace_all(pathOutXml, ".jack", ".xml");
+        boost::replace_all(pathOutXml, ".jack", ".vm");
 
         // Create tokenizer to parse file
         auto tokenizer = std::make_unique<JackTokenizer>(pathOrDir);
+
+        // Writer
+        auto vmwriter = std::make_unique<VMWriter>(pathOutVm);
 
         // Symbol table
         auto symboltable = std::make_unique<SymbolTable>();
 
         // Compilation Engine
-        auto engine =
-            CompilationEngine(std::move(symboltable), std::move(tokenizer), pathOut);
-
-        // Writer
-        // auto vmwriter = VMWriter(pathOut);
+        auto engine = CompilationEngine(std::move(symboltable), std::move(tokenizer),
+                                        std::move(vmwriter), pathOutXml);
 
         // compile a file
         engine.compileClass();
