@@ -15,7 +15,7 @@ inline auto ends_with(std::string const &value, std::string const ending) -> boo
 inline auto create_output_path(std::string in_path) -> std::string
 {
     auto dot_pos = in_path.find(".");
-    auto out_path = in_path.insert(dot_pos, std::string{"V"});
+    auto out_path = in_path.insert(dot_pos, std::string{"_old"});
     return out_path;
 }
 

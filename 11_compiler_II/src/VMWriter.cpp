@@ -21,8 +21,9 @@ auto VMWriter::writeArithmetic(std::string command) -> void
     std::cout << commandToString[command] << std::endl;
 };
 
-auto VMWriter::writeLabel(std::string label) -> void{
-
+auto VMWriter::writeLabel(std::string label) -> void
+{
+    std::cout << "label " << label << std::endl;
 };
 
 auto VMWriter::writeGoto(std::string label) -> void{

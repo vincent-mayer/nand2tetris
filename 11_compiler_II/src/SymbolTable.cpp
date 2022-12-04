@@ -1,7 +1,7 @@
 #include "SymbolTable.h"
 #include "definitions.h"
 
-auto SymbolTable::startSubroutine(std::string name, std::string type, Kind kind) -> void
+auto SymbolTable::startSubroutine() -> void
 {
     // Clear the subroutine table at each new subroutine definition.
     mSubroutineTable.clear();
@@ -13,10 +13,11 @@ auto SymbolTable::define(std::string name, std::string type, Kind kind) -> void
     auto &table = decideTable(kind);
 
     // Decide whether to insert or just increment counter.
-    if (table.find(name) != table.end())
-        table[name].index++;
-    else
-        table[name] = {.type = type, .kind = kind, .index = 0};
+    if (table.find(name) == table.end())
+    {
+        auto varCount = this->varCount(kind);
+        table[name] = {.type = type, .kind = kind, .index = varCount};
+    }
 };
 
 auto SymbolTable::decideTable(Kind kind) -> std::unordered_map<std::string, HashData> &

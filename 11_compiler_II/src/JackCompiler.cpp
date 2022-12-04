@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     // std::string pathOrDir = std::string(argv[1]);
     auto pathOrDir = std::string{
-        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Seven/Main.jack"};
+        "/home/vincent/repos/nand2tetris/11_compiler_II/test/ConvertToBin/Main.jack"};
 
     if (ends_with(pathOrDir, std::string{".jack"}))
     {
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         auto pathOutXml = pathOut;
         auto pathOutVm = pathOut;
         boost::replace_all(pathOutXml, ".jack", ".xml");
-        boost::replace_all(pathOutXml, ".jack", ".vm");
+        boost::replace_all(pathOutVm, ".jack", ".vm");
 
         // Create tokenizer to parse file
         auto tokenizer = std::make_unique<JackTokenizer>(pathOrDir);

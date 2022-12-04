@@ -46,11 +46,11 @@ public:
 
     auto compileSubroutine() -> void;
 
-    auto compileSubroutineBody() -> void;
+    auto compileSubroutineBody(std::string name) -> void;
 
     auto compileParameterList() -> int;
 
-    auto compileVarDecl() -> void;
+    auto compileVarDecl() -> int;
 
     auto compileStatements() -> void;
 
@@ -68,7 +68,7 @@ public:
 
     auto compileTerm() -> void;
 
-    auto compileExpressionList() -> void;
+    auto compileExpressionList() -> int;
 
     auto write(TokenType tokenType, std::string data) -> void;
 

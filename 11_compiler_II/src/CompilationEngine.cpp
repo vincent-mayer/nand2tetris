@@ -25,21 +25,21 @@ auto CompilationEngine::write(TokenType type, std::string data) -> void
     auto type_str = this->tokenTypeToString(type);
 
     for (int i = 0; i < mDepth; i++)
-        std::cout << "  ";
+        mOutputFile << "  ";
 
-    std::cout << "<";
-    std::cout << type_str;
-    std::cout << "> ";
+    mOutputFile << "<";
+    mOutputFile << type_str;
+    mOutputFile << "> ";
 
-    std::cout << data;
+    mOutputFile << data;
 
     // Special case handling for identifier.
     if (type == TokenType::IDENTIFIER)
         this->handleIdentifier(data);
 
-    std::cout << " </";
-    std::cout << type_str;
-    std::cout << ">\n";
+    mOutputFile << " </";
+    mOutputFile << type_str;
+    mOutputFile << ">\n";
 };
 
 auto CompilationEngine::handleIdentifier(std::string name) -> void
@@ -59,15 +59,17 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
         type = mPrevType;
 
     // Insert into table.
-    mSymbolTable->define(name, type, kind);
+    if (kind != Kind::NONE && std::all_of(name.begin(), name.end(), &::islower) &&
+        type != ".")
+        mSymbolTable->define(name, type, kind);
 
     // Get the correct index.
     auto index = mSymbolTable->indexOf(name);
 
     // Write all data.
-    std::cout << ";type:" << type << ";kind:";
-    std::cout << magic_enum::enum_name(kind) << ";index:";
-    std::cout << std::to_string(index) << ";";
+    mOutputFile << ";type:" << type << ";kind:";
+    mOutputFile << magic_enum::enum_name(kind) << ";index:";
+    mOutputFile << std::to_string(index) << ";";
 
     // Remember type
     mPrevType = type;
@@ -76,9 +78,9 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
 auto CompilationEngine::write(std::string data) -> void
 {
     for (int i = 0; i < mDepth; i++)
-        std::cout << "  ";
-    std::cout << data;
-    std::cout << "\n";
+        mOutputFile << "  ";
+    mOutputFile << data;
+    mOutputFile << "\n";
 }
 
 auto CompilationEngine::compileClass() -> void
@@ -146,6 +148,7 @@ auto CompilationEngine::compileSubroutine() -> void
     // subroutineDec
     this->write(std::string{"<subroutineDec>"});
     mDepth++;
+    mSymbolTable->startSubroutine();
 
     // function void main (
     this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -158,23 +161,20 @@ auto CompilationEngine::compileSubroutine() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // Write parameterlist, there can only be one.
-    int nParameters = this->compileParameterList();
-
-    // function main.Main 0 (nParameters)
-    mVMWriter->writeFunction(mClassName, funcName, nParameters);
+    this->compileParameterList();
 
     // )
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // call subroutinebody
-    this->compileSubroutineBody();
+    this->compileSubroutineBody(funcName);
 
     // subroutineDec
     mDepth--;
     this->write(std::string{"</subroutineDec>"});
 }
 
-auto CompilationEngine::compileSubroutineBody() -> void
+auto CompilationEngine::compileSubroutineBody(std::string name) -> void
 {
     // subroutineBody
     this->write(std::string{"<subroutineBody>"});
@@ -183,16 +183,18 @@ auto CompilationEngine::compileSubroutineBody() -> void
     // {
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
-
+    int nLocals = 0;
     while (mTokenizer->token() != std::string{"}"})
     {
         mTokenizer->advance();
         if (mTokenizer->token() == std::string{"var"})
         {
-            this->compileVarDecl();
+            nLocals += this->compileVarDecl();
         }
         else
         {
+            // function main.Main {nLocals}
+            mVMWriter->writeFunction(mClassName, name, nLocals);
             this->compileStatements();
         }
     }
@@ -205,18 +207,22 @@ auto CompilationEngine::compileSubroutineBody() -> void
     this->write(std::string{"</subroutineBody>"});
 }
 
-auto CompilationEngine::compileVarDecl() -> void
+auto CompilationEngine::compileVarDecl() -> int
 {
     this->write(std::string{"<varDec>"});
     mDepth++;
+    int mVars = 0;
     while (mTokenizer->token() != std::string{";"})
     {
+        if (mTokenizer->tokenType() == TokenType::IDENTIFIER)
+            mVars++;
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
     }
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mDepth--;
     this->write(std::string{"</varDec>"});
+    return mVars;
 };
 
 auto CompilationEngine::compileStatements() -> void
@@ -266,6 +272,7 @@ auto CompilationEngine::compileLet() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
 
+    std::string varName;
     while (mTokenizer->token() != std::string{";"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -273,6 +280,7 @@ auto CompilationEngine::compileLet() -> void
         if (mTokenizer->token() == std::string{"="} ||
             mTokenizer->token() == std::string{"["})
         {
+            varName = mTokenizer->prevToken();
             compileExpression();
         }
         else
@@ -281,7 +289,10 @@ auto CompilationEngine::compileLet() -> void
         }
     }
     // ;
+    auto kind = mSymbolTable->kindOf(varName);
+    auto varIndex = mSymbolTable->indexOf(varName);
     this->write(mTokenizer->tokenType(), mTokenizer->token());
+    mVMWriter->writePop(Segment::LOCAL, varIndex);
     mDepth--;
     this->write(std::string{"</letStatement>"});
 }
@@ -322,60 +333,109 @@ auto CompilationEngine::compileTerm() -> void
     this->write(std::string{"<term>"});
     mDepth++;
     int i = 0;
-    while (mTokenizer->token() != std::string{")"} &&
-           mTokenizer->token() != std::string{";"} &&
-           mTokenizer->token() != std::string{"]"} &&
+    int nArgs = 0;
+    bool isOp = false;
+    bool isNegNotOp = false;
+    bool isFuncCall = false;
+    std::string className;
+    std::string funcName;
+    std::string opName = "";
+    while (mTokenizer->token() != ")" && mTokenizer->token() != ";" &&
+           mTokenizer->token() != "]" &&
            (std::find(ops.begin(), ops.end(), mTokenizer->token()) == ops.end() ||
             (i == 0)))
     {
         // Push integer constants on stack.
         if (mTokenizer->tokenType() == TokenType::INT_CONST)
             mVMWriter->writePush(Segment::CONST, std::stoi(mTokenizer->token()));
+        if (mTokenizer->tokenType() == TokenType::IDENTIFIER &&
+            mSymbolTable->indexOf(mTokenizer->token()) != -1)
+        {
+            auto index = mSymbolTable->indexOf(mTokenizer->token());
+            auto kind = mSymbolTable->kindOf(mTokenizer->token());
+            mVMWriter->writePush(kindToSegment[kind], index);
+        }
+        if (mTokenizer->token() == "true")
+        {
+            mVMWriter->writePush(Segment::CONST, 0);
+            mVMWriter->writeArithmetic("~");
+        }
 
         this->write(mTokenizer->tokenType(), mTokenizer->token());
-        if (mTokenizer->token() == std::string{"("})
+        if (mTokenizer->token() == "(")
         {
+            funcName = mTokenizer->prevToken();
             if (mTokenizer->prevTokenType() == TokenType::IDENTIFIER)
-                this->compileExpressionList();
+                nArgs = this->compileExpressionList();
             else
                 this->compileExpression();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
+            if (isFuncCall)
+            {
+                mVMWriter->writeCall(className + std::string{"."} + funcName, nArgs);
+                isFuncCall = false;
+            }
         }
-        if (mTokenizer->token() == std::string{"["})
+        if (mTokenizer->token() == "[")
         {
             this->compileExpression();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             mTokenizer->advance();
             break;
         }
-
+        if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
+        {
+            isOp = true;
+            isNegNotOp =
+                (mTokenizer->prevTokenType() == TokenType::SYMBOL) ? true : false;
+        }
+        if (mTokenizer->token() == ".")
+        {
+            isFuncCall = true;
+            className = mTokenizer->prevToken();
+        }
         // )
+        auto opName = mTokenizer->token();
         mTokenizer->advance();
 
         if (mTokenizer->tokenType() == TokenType::INT_CONST ||
             mTokenizer->tokenType() == TokenType::STRING_CONST ||
             (mTokenizer->tokenType() == TokenType::IDENTIFIER && (i == 0)) ||
-            mTokenizer->token() == std::string{"("} &&
+            mTokenizer->token() == "(" &&
                 std::find(ops.begin(), ops.end(), mTokenizer->prevToken()) != ops.end())
+        {
             this->compileTerm();
+            if (isOp)
+            {
+                if (isNegNotOp)
+                    mVMWriter->writeArithmetic(commandToString["neg"]);
+                else
+                    mVMWriter->writeArithmetic(commandToString[opName]);
+                isOp = false;
+            }
+        }
+
         i++;
     }
     mDepth--;
     this->write(std::string{"</term>"});
 }
 
-auto CompilationEngine::compileExpressionList() -> void
+auto CompilationEngine::compileExpressionList() -> int
 {
     this->write(std::string{"<expressionList>"});
     mDepth++;
+    int nArgs = 0;
     while (mTokenizer->token() != std::string{")"})
     {
         this->compileExpression();
         if (mTokenizer->token() == std::string{","})
             this->write(mTokenizer->tokenType(), mTokenizer->token());
+        nArgs++;
     }
     mDepth--;
     this->write(std::string{"</expressionList>"});
+    return nArgs;
 }
 auto CompilationEngine::compileDo() -> void
 {
@@ -384,13 +444,14 @@ auto CompilationEngine::compileDo() -> void
 
     std::string callClass;
     std::string callMethod;
+    int nArgs = 0;
     while (mTokenizer->token() != std::string{";"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == std::string{"("})
         {
             callMethod = mTokenizer->prevToken();
-            this->compileExpressionList();
+            nArgs = this->compileExpressionList();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         }
         mTokenizer->advance();
@@ -401,7 +462,7 @@ auto CompilationEngine::compileDo() -> void
     }
 
     // Write the function call.
-    mVMWriter->writeCall(callClass + std::string{"."} + callMethod, 1);
+    mVMWriter->writeCall(callClass + std::string{"."} + callMethod, nArgs);
 
     // Pop the implicit returned 0
     // TODO: Only for void functions!
@@ -417,6 +478,7 @@ auto CompilationEngine::compileWhile() -> void
     mDepth++;
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
+    mVMWriter->writeLabel("while0");
     while (mTokenizer->token() != std::string{"}"})
     {
 

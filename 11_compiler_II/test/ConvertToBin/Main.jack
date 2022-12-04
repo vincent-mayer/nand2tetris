@@ -39,7 +39,7 @@ class Main {
     	var boolean loop;
     	
     	let loop = true;
-    	while (loop) {
+    	while (loop > 0) {
     	    let position = position + 1;
     	    let mask = Main.nextMask(mask);
     	

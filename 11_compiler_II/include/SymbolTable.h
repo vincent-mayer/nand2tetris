@@ -14,7 +14,7 @@ private:
 public:
     SymbolTable(){};
 
-    auto startSubroutine(std::string name, std::string type, Kind kind) -> void;
+    auto startSubroutine() -> void;
 
     auto define(std::string name, std::string type, Kind kind) -> void;
 
