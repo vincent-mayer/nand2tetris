@@ -26,12 +26,14 @@ auto VMWriter::writeLabel(std::string label) -> void
     std::cout << "label " << label << std::endl;
 };
 
-auto VMWriter::writeGoto(std::string label) -> void{
-
+auto VMWriter::writeGoto(std::string label) -> void
+{
+    std::cout << "goto " << label << std::endl;
 };
 
-auto VMWriter::writeIf(std::string label) -> void{
-
+auto VMWriter::writeIf(std::string label) -> void
+{
+    std::cout << "if-goto " << label << std::endl;
 };
 
 auto VMWriter::writeCall(std::string name, int nArgs) -> void

@@ -35,6 +35,8 @@ public:
 
     auto lastKind() -> Kind;
 
+    auto setKind(Kind kind) -> void;
+
     auto advance() -> void;
 
     auto tokenType() -> TokenType;

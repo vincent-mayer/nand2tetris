@@ -206,6 +206,11 @@ auto JackTokenizer::lastKind() -> Kind
     return m_last_kind;
 }
 
+auto JackTokenizer::setKind(Kind kind) -> void
+{
+    m_last_kind = kind;
+}
+
 auto JackTokenizer::tokenType() -> TokenType
 {
     if (std::find(keywords.begin(), keywords.end(), m_token) != keywords.end())

@@ -16,6 +16,7 @@ private:
     int mDepth;
     std::string mPrevType;
     std::string mClassName;
+    int mLabelCounter;
 
 public:
     CompilationEngine(std::unique_ptr<SymbolTable> symbolTable,
@@ -23,7 +24,7 @@ public:
                       std::unique_ptr<VMWriter> vmWriter, std::string outputFileName)
         : mSymbolTable(std::move(symbolTable)), mTokenizer(std::move(jackTokenizer)),
           mVMWriter(std::move(vmWriter)), mOutputFile(outputFileName),
-          mDepth(0), mPrevType{""}, mClassName{""} {};
+          mDepth(0), mPrevType{""}, mClassName{""}, mLabelCounter(0){};
 
     ~CompilationEngine()
     {

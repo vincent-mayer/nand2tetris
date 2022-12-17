@@ -39,10 +39,11 @@ class Main {
     	var boolean loop;
     	
     	let loop = true;
-    	while (loop > 0) {
+    	while (loop) {
     	    let position = position + 1;
     	    let mask = Main.nextMask(mask);
-    	
+            do Memory.poke(9000 + position, mask);
+               	
     	    if (~(position > 16)) {
     	
     	        if (~((value & mask) = 0)) {

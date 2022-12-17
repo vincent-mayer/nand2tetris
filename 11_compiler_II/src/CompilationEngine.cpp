@@ -62,6 +62,8 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
     if (kind != Kind::NONE && std::all_of(name.begin(), name.end(), &::islower) &&
         type != ".")
         mSymbolTable->define(name, type, kind);
+    else if (kind == Kind::ARG)
+        mSymbolTable->define(name, type, kind);
 
     // Get the correct index.
     auto index = mSymbolTable->indexOf(name);
@@ -292,7 +294,7 @@ auto CompilationEngine::compileLet() -> void
     auto kind = mSymbolTable->kindOf(varName);
     auto varIndex = mSymbolTable->indexOf(varName);
     this->write(mTokenizer->tokenType(), mTokenizer->token());
-    mVMWriter->writePop(Segment::LOCAL, varIndex);
+    mVMWriter->writePop(kindToSegment[kind], varIndex);
     mDepth--;
     this->write(std::string{"</letStatement>"});
 }
@@ -355,10 +357,11 @@ auto CompilationEngine::compileTerm() -> void
             auto kind = mSymbolTable->kindOf(mTokenizer->token());
             mVMWriter->writePush(kindToSegment[kind], index);
         }
-        if (mTokenizer->token() == "true")
+        if (mTokenizer->token() == "true" || mTokenizer->token() == "false")
         {
             mVMWriter->writePush(Segment::CONST, 0);
-            mVMWriter->writeArithmetic("~");
+            if (mTokenizer->token() == "true")
+                mVMWriter->writeArithmetic("~");
         }
 
         this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -386,8 +389,11 @@ auto CompilationEngine::compileTerm() -> void
         if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
         {
             isOp = true;
-            isNegNotOp =
-                (mTokenizer->prevTokenType() == TokenType::SYMBOL) ? true : false;
+            if (mTokenizer->prevTokenType() == TokenType::SYMBOL &&
+                mTokenizer->token() != "~")
+                isNegNotOp = true;
+            else
+                isNegNotOp = false;
         }
         if (mTokenizer->token() == ".")
         {
@@ -478,7 +484,9 @@ auto CompilationEngine::compileWhile() -> void
     mDepth++;
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
-    mVMWriter->writeLabel("while0");
+    mVMWriter->writeLabel("WHILE_START" + std::to_string(mLabelCounter));
+    int localLabelCounter = mLabelCounter;
+    mLabelCounter++;
     while (mTokenizer->token() != std::string{"}"})
     {
 
@@ -486,7 +494,10 @@ auto CompilationEngine::compileWhile() -> void
         {
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             this->compileExpression();
+            // Write explicit not, because expression must be not'ed in while.
+            mVMWriter->writeArithmetic("not");
             this->write(mTokenizer->tokenType(), mTokenizer->token());
+            mVMWriter->writeIf("WHILE_END" + std::to_string(localLabelCounter));
             mTokenizer->advance();
         }
         else if (mTokenizer->token() == std::string{"{"})
@@ -496,6 +507,13 @@ auto CompilationEngine::compileWhile() -> void
             this->compileStatements();
         }
     }
+    // goto L1
+    mVMWriter->writeGoto("WHILE_START" + std::to_string(localLabelCounter));
+
+    // label L2
+    mVMWriter->writeLabel("WHILE_END" + std::to_string(localLabelCounter));
+
+    // rest
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mDepth--;
     this->write(std::string{"</whileStatement>"});
@@ -519,8 +537,8 @@ auto CompilationEngine::compileReturn() -> void
     if (terms == 0)
     {
         mVMWriter->writePush(Segment::CONST, 0);
-        mVMWriter->writeReturn();
     }
+    mVMWriter->writeReturn();
 
     // ;
     this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -531,6 +549,8 @@ auto CompilationEngine::compileReturn() -> void
 };
 auto CompilationEngine::compileIf() -> void
 {
+    int localLabelCounter = mLabelCounter;
+    mLabelCounter++;
     // ifStatement
     this->write(std::string{"<ifStatement>"});
     mDepth++;
@@ -544,6 +564,13 @@ auto CompilationEngine::compileIf() -> void
 
     // expression
     this->compileExpression();
+
+    // if-goto L1:
+    mVMWriter->writeIf("IF_TRUE" + std::to_string(localLabelCounter));
+    // goto L2
+    mVMWriter->writeGoto("IF_FALSE" + std::to_string(localLabelCounter));
+    // label L1:
+    mVMWriter->writeLabel("IF_TRUE" + std::to_string(localLabelCounter));
 
     // )
     this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -560,9 +587,15 @@ auto CompilationEngine::compileIf() -> void
 
     mTokenizer->advance();
 
+    // goto IF_END
+    mVMWriter->writeGoto("IF_END" + std::to_string(localLabelCounter));
+
     // else
     if (mTokenizer->token() == std::string{"else"})
     {
+        // label IF_FALSE
+        mVMWriter->writeLabel("IF_FALSE" + std::to_string(localLabelCounter));
+
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
         this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -570,6 +603,9 @@ auto CompilationEngine::compileIf() -> void
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
     }
+
+    // label IF_END
+    mVMWriter->writeLabel("IF_END" + std::to_string(localLabelCounter));
 
     // ifStatement
     mDepth--;
@@ -586,6 +622,7 @@ auto CompilationEngine::compileParameterList() -> int
     mTokenizer->advance();
 
     // int A, int B ...
+    mTokenizer->setKind(Kind::ARG);
     int nParameters = 0;
     while (mTokenizer->token() != std::string{")"})
     {
