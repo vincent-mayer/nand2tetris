@@ -41,7 +41,7 @@
 //         for (const auto &dirEntry :
 //              std::filesystem::recursive_directory_iterator(pathOrDir))
 //         {
-//             std::cout << dirEntry << std::endl;
+//             mOutputFile << dirEntry << std::endl;
 
 //             // If not a jack file skip.
 //             if (!ends_with(dirEntry.path().string(), std::string{".jack"}))

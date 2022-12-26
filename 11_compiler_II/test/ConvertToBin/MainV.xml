@@ -50,6 +50,28 @@
           <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Memory;type:do;kind:VAR;index:-1; </identifier>
+          <symbol> . </symbol>
+          <identifier> poke;type:.;kind:VAR;index:-1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <integerConstant> 8000 </integerConstant>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <integerConstant> 69 </integerConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
         <letStatement>
           <keyword> let </keyword>
           <identifier> value;type:let;kind:VAR;index:0; </identifier>
@@ -182,32 +204,6 @@
               </expression>
               <symbol> ; </symbol>
             </letStatement>
-            <doStatement>
-              <keyword> do </keyword>
-              <identifier> Memory;type:do;kind:VAR;index:-1; </identifier>
-              <symbol> . </symbol>
-              <identifier> poke;type:.;kind:VAR;index:-1; </identifier>
-              <symbol> ( </symbol>
-              <expressionList>
-                <expression>
-                  <term>
-                    <integerConstant> 9000 </integerConstant>
-                  </term>
-                  <symbol> + </symbol>
-                  <term>
-                    <identifier> position;type:+;kind:VAR;index:1; </identifier>
-                  </term>
-                </expression>
-                <symbol> , </symbol>
-                <expression>
-                  <term>
-                    <identifier> mask;type:+;kind:VAR;index:0; </identifier>
-                  </term>
-                </expression>
-              </expressionList>
-              <symbol> ) </symbol>
-              <symbol> ; </symbol>
-            </doStatement>
             <ifStatement>
               <keyword> if </keyword>
               <symbol> ( </symbol>
@@ -235,4 +231,285 @@
                 <ifStatement>
                   <keyword> if </keyword>
                   <symbol> ( </symbol>
-        
+                  <expression>
+                    <term>
+                      <symbol> ~ </symbol>
+                      <term>
+                        <symbol> ( </symbol>
+                        <expression>
+                          <term>
+                            <symbol> ( </symbol>
+                            <expression>
+                              <term>
+                                <identifier> value;type:(;kind:VAR;index:0; </identifier>
+                              </term>
+                              <symbol> & </symbol>
+                              <term>
+                                <identifier> mask;type:&;kind:VAR;index:0; </identifier>
+                              </term>
+                            </expression>
+                            <symbol> ) </symbol>
+                          </term>
+                          <symbol> = </symbol>
+                          <term>
+                            <integerConstant> 0 </integerConstant>
+                          </term>
+                        </expression>
+                        <symbol> ) </symbol>
+                      </term>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                  <symbol> { </symbol>
+                  <statements>
+                    <doStatement>
+                      <keyword> do </keyword>
+                      <identifier> Memory;type:do;kind:VAR;index:-1; </identifier>
+                      <symbol> . </symbol>
+                      <identifier> poke;type:.;kind:VAR;index:-1; </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+                        <expression>
+                          <term>
+                            <integerConstant> 8000 </integerConstant>
+                          </term>
+                          <symbol> + </symbol>
+                          <term>
+                            <identifier> position;type:+;kind:VAR;index:1; </identifier>
+                          </term>
+                        </expression>
+                        <symbol> , </symbol>
+                        <expression>
+                          <term>
+                            <integerConstant> 1 </integerConstant>
+                          </term>
+                        </expression>
+                      </expressionList>
+                      <symbol> ) </symbol>
+                      <symbol> ; </symbol>
+                    </doStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                  <keyword> else </keyword>
+                  <symbol> { </symbol>
+                  <statements>
+                    <doStatement>
+                      <keyword> do </keyword>
+                      <identifier> Memory;type:do;kind:VAR;index:-1; </identifier>
+                      <symbol> . </symbol>
+                      <identifier> poke;type:.;kind:VAR;index:-1; </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+                        <expression>
+                          <term>
+                            <integerConstant> 8000 </integerConstant>
+                          </term>
+                          <symbol> + </symbol>
+                          <term>
+                            <identifier> position;type:+;kind:VAR;index:1; </identifier>
+                          </term>
+                        </expression>
+                        <symbol> , </symbol>
+                        <expression>
+                          <term>
+                            <integerConstant> 0 </integerConstant>
+                          </term>
+                        </expression>
+                      </expressionList>
+                      <symbol> ) </symbol>
+                      <symbol> ; </symbol>
+                    </doStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                </ifStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> loop;type:let;kind:VAR;index:2; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <keyword> false </keyword>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+        </whileStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> function </keyword>
+    <keyword> int </keyword>
+    <identifier> nextMask;type:int;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier> mask;type:int;kind:ARG;index:0; </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> mask;type:(;kind:ARG;index:0; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <returnStatement>
+              <keyword> return </keyword>
+              <expression>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </returnStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <returnStatement>
+              <keyword> return </keyword>
+              <expression>
+                <term>
+                  <identifier> mask;type:return;kind:ARG;index:0; </identifier>
+                </term>
+                <symbol> * </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </returnStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> function </keyword>
+    <keyword> void </keyword>
+    <identifier> fillMemory;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier> startAddress;type:int;kind:ARG;index:0; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> length;type:int;kind:ARG;index:1; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> value;type:int;kind:ARG;index:2; </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <whileStatement>
+          <keyword> while </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> length;type:(;kind:ARG;index:1; </identifier>
+            </term>
+            <symbol> > </symbol>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <doStatement>
+              <keyword> do </keyword>
+              <identifier> Memory;type:do;kind:ARG;index:3; </identifier>
+              <symbol> . </symbol>
+              <identifier> poke;type:.;kind:ARG;index:4; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> startAddress;type:(;kind:ARG;index:0; </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> value;type:(;kind:ARG;index:2; </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+              <symbol> ; </symbol>
+            </doStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> length;type:let;kind:ARG;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> length;type:=;kind:ARG;index:1; </identifier>
+                </term>
+                <symbol> - </symbol>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> startAddress;type:let;kind:ARG;index:0; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> startAddress;type:=;kind:ARG;index:0; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </whileStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>
