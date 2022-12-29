@@ -16,15 +16,15 @@ public:
 
     auto startSubroutine() -> void;
 
-    auto define(std::string name, std::string type, Kind kind) -> void;
+    auto define(std::string const &name, std::string const &type, Kind const &kind) -> void;
 
-    auto decideTable(Kind kind) -> std::unordered_map<std::string, HashData> &;
+    auto decideTable(Kind const &kind) -> std::unordered_map<std::string, HashData> &;
 
-    auto varCount(Kind kind) -> int;
+    auto varCount(Kind const &kind) -> int;
 
-    auto kindOf(std::string name) -> Kind;
+    auto kindOf(std::string const &name) -> Kind;
 
-    auto typeOf(std::string name) -> std::string;
+    auto typeOf(std::string const &name) -> std::string;
 
-    auto indexOf(std::string name) -> int;
+    auto indexOf(std::string const &name) -> int;
 };

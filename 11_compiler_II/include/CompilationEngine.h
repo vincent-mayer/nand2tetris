@@ -43,11 +43,12 @@ public:
 
     auto compileClass() -> void;
 
-    auto compileClassVarDecl() -> void;
+    auto compileClassVarDecl() -> int;
 
-    auto compileSubroutine() -> void;
+    auto compileSubroutine(int nFields, bool isConstructor) -> void;
 
-    auto compileSubroutineBody(std::string name) -> void;
+    auto compileSubroutineBody(std::string name, int nFields, bool isConstructor)
+        -> void;
 
     auto compileParameterList() -> int;
 

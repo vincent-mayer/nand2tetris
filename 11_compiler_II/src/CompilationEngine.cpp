@@ -100,18 +100,16 @@ auto CompilationEngine::compileClass() -> void
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
+    int nFields = 0;
     while (mTokenizer->token() != std::string{"}"})
     {
+        if (mTokenizer->token() == "field" || mTokenizer->token() == "static")
+            nFields += this->compileClassVarDecl();
 
-        // If the token is function, compile subroutine.
-        if (mTokenizer->token() == std::string{"function"} ||
-            mTokenizer->token() == std::string{"method"} ||
-            mTokenizer->token() == std::string{"constructor"})
-            this->compileSubroutine();
-
-        else if (mTokenizer->token() == std::string{"field"} ||
-                 mTokenizer->token() == std::string{"static"})
-            this->compileClassVarDecl();
+        else if (mTokenizer->token() == "constructor")
+            this->compileSubroutine(nFields, true);
+        else if (mTokenizer->token() == "function" || mTokenizer->token() == "method")
+            this->compileSubroutine(nFields, false);
 
         // Get the next token.
         mTokenizer->advance();
@@ -125,15 +123,19 @@ auto CompilationEngine::compileClass() -> void
     this->write(std::string{"</class>"});
 };
 
-auto CompilationEngine::compileClassVarDecl() -> void
+auto CompilationEngine::compileClassVarDecl() -> int
 {
     // classVarDec
     this->write(std::string{"<classVarDec>"});
     mDepth++;
 
+    int nFields = 0;
     while (mTokenizer->token() != std::string{";"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
+        // Need to know number of attributes for the class.
+        if (mSymbolTable->indexOf(mTokenizer->token()) > -1)
+            nFields++;
         mTokenizer->advance();
     }
 
@@ -143,9 +145,11 @@ auto CompilationEngine::compileClassVarDecl() -> void
     // classVarDec
     mDepth--;
     this->write(std::string{"</classVarDec>"});
+
+    return nFields;
 }
 
-auto CompilationEngine::compileSubroutine() -> void
+auto CompilationEngine::compileSubroutine(int nFields, bool isConstructor) -> void
 {
     // subroutineDec
     this->write(std::string{"<subroutineDec>"});
@@ -169,14 +173,15 @@ auto CompilationEngine::compileSubroutine() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // call subroutinebody
-    this->compileSubroutineBody(funcName);
+    this->compileSubroutineBody(funcName, nFields, isConstructor);
 
     // subroutineDec
     mDepth--;
     this->write(std::string{"</subroutineDec>"});
 }
 
-auto CompilationEngine::compileSubroutineBody(std::string name) -> void
+auto CompilationEngine::compileSubroutineBody(std::string name, int nFields,
+                                              bool isConstructor) -> void
 {
     // subroutineBody
     this->write(std::string{"<subroutineBody>"});
@@ -197,6 +202,14 @@ auto CompilationEngine::compileSubroutineBody(std::string name) -> void
         {
             // function main.Main {nLocals}
             mVMWriter->writeFunction(mClassName, name, nLocals);
+            // Special case constructor.
+            if (isConstructor)
+            {
+                // Allocate memory for the class and set pointer.
+                mVMWriter->writePush(Segment::CONST, nFields);
+                mVMWriter->writeCall("Memory.alloc", 1);
+                mVMWriter->writePop(Segment::POINTER, 0);
+            }
             this->compileStatements();
         }
     }
@@ -216,7 +229,8 @@ auto CompilationEngine::compileVarDecl() -> int
     int mVars = 0;
     while (mTokenizer->token() != std::string{";"})
     {
-        if (mTokenizer->tokenType() == TokenType::IDENTIFIER)
+        if ((mTokenizer->tokenType() == TokenType::IDENTIFIER) &&
+            (std::islower(mTokenizer->token()[0])))
             mVars++;
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
@@ -398,7 +412,12 @@ auto CompilationEngine::compileTerm() -> void
         if (mTokenizer->token() == ".")
         {
             isFuncCall = true;
-            className = mTokenizer->prevToken();
+            auto token = mTokenizer->prevToken();
+            // Class names must start with caps.
+            if (std::isupper(token[0]))
+                className = token;
+            else
+                className = mSymbolTable->typeOf(token);
         }
         // )
         auto opName = mTokenizer->token();
@@ -451,6 +470,7 @@ auto CompilationEngine::compileDo() -> void
     std::string callClass;
     std::string callMethod;
     int nArgs = 0;
+    bool callClassIsVar = false;
     while (mTokenizer->token() != std::string{";"})
     {
         this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -464,7 +484,30 @@ auto CompilationEngine::compileDo() -> void
 
         // Remember the class name for function call
         if (mTokenizer->prevToken() == std::string{"do"})
-            callClass = mTokenizer->token();
+        {
+            // Class names must start with caps.
+            std::string token = mTokenizer->token();
+            if (std::isupper(token[0]))
+                callClass = token;
+            else
+            {
+                // TODO: Note sure this is correct.
+                callClass = mSymbolTable->typeOf(token);
+                auto kind = mSymbolTable->kindOf(token);
+                auto index = mSymbolTable->indexOf(token);
+
+                // Handle the special case where the called method belongs to this.
+                if (index == -1)
+                {
+                    callClass = mClassName;
+                    mVMWriter->writePush(Segment::POINTER, 0);
+                }
+                else
+                {
+                    mVMWriter->writePush(kindToSegment[kind], index);
+                }
+            }
+        }
     }
 
     // Write the function call.

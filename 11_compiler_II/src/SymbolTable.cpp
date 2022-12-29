@@ -7,7 +7,8 @@ auto SymbolTable::startSubroutine() -> void
     mSubroutineTable.clear();
 };
 
-auto SymbolTable::define(std::string name, std::string type, Kind kind) -> void
+auto SymbolTable::define(std::string const &name, std::string const &type,
+                         Kind const &kind) -> void
 {
     // Decide which table to use.
     auto &table = decideTable(kind);
@@ -20,7 +21,8 @@ auto SymbolTable::define(std::string name, std::string type, Kind kind) -> void
     }
 };
 
-auto SymbolTable::decideTable(Kind kind) -> std::unordered_map<std::string, HashData> &
+auto SymbolTable::decideTable(Kind const &kind)
+    -> std::unordered_map<std::string, HashData> &
 {
     // Decide which table to use.
     std::unordered_map<std::string, HashData> table;
@@ -30,7 +32,7 @@ auto SymbolTable::decideTable(Kind kind) -> std::unordered_map<std::string, Hash
         return mSubroutineTable;
 };
 
-auto SymbolTable::varCount(Kind kind) -> int
+auto SymbolTable::varCount(Kind const &kind) -> int
 {
     auto table = decideTable(kind);
     int counter = 0;
@@ -40,7 +42,7 @@ auto SymbolTable::varCount(Kind kind) -> int
     return counter;
 }
 
-auto SymbolTable::kindOf(std::string name) -> Kind
+auto SymbolTable::kindOf(std::string const &name) -> Kind
 {
     Kind kind = Kind::NONE;
     if (mClassTable.find(name) != mClassTable.end())
@@ -50,7 +52,7 @@ auto SymbolTable::kindOf(std::string name) -> Kind
     return kind;
 };
 
-auto SymbolTable::typeOf(std::string name) -> std::string
+auto SymbolTable::typeOf(std::string const &name) -> std::string
 {
     std::string type = "";
     if (mClassTable.find(name) != mClassTable.end())
@@ -60,7 +62,7 @@ auto SymbolTable::typeOf(std::string name) -> std::string
     return type;
 }
 
-auto SymbolTable::indexOf(std::string name) -> int
+auto SymbolTable::indexOf(std::string const &name) -> int
 {
     int index = -1;
     if (mClassTable.find(name) != mClassTable.end())

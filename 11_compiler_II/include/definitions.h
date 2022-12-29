@@ -23,13 +23,6 @@ enum class Kind
     NONE
 };
 
-// std::map<std::string, Kind> KINDMAP{
-//     {std::string{"static"}, Kind::STATIC},
-//     {std::string{"field"}, Kind::FIELD},
-//     {std::string{"arg"}, Kind::ARG},
-//     {std::string{"var"}, Kind::VAR},
-// };
-
 enum class Segment
 {
     CONST,
@@ -45,6 +38,7 @@ enum class Segment
 inline std::map<Kind, Segment> kindToSegment{
     {Kind::VAR, Segment::LOCAL},
     {Kind::ARG, Segment::ARG},
+    {Kind::FIELD, Segment::THIS},
 };
 
 inline std::map<Segment, std::string> segmentToString{
