@@ -405,7 +405,8 @@ auto CompilationEngine::compileTerm(bool isLet) -> void
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             if (isFuncCall)
             {
-                if (isLet)
+                // TODO: This hack should not be necessary. Missing key insight...
+                if (isLet && (nArgs == 1))
                     nArgs--;
                 mVMWriter->writeCall(className + std::string{"."} + funcName, nArgs);
                 isFuncCall = false;
