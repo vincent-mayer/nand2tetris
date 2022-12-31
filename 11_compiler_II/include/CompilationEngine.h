@@ -66,11 +66,11 @@ public:
 
     auto compileIf() -> void;
 
-    auto compileExpression(bool isLet) -> int;
+    auto compileExpression() -> int;
 
-    auto compileTerm(bool isLet) -> void;
+    auto compileTerm() -> void;
 
-    auto compileExpressionList(bool isLet) -> int;
+    auto compileExpressionList() -> int;
 
     auto write(TokenType tokenType, std::string data) -> void;
 

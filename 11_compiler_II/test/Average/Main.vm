@@ -1,0 +1,37 @@
+function Main.main 4
+call Keyboard.readInt 0
+pop local 1
+push local 1
+call Array.new 0
+pop local 0
+push constant 0
+pop local 2
+label WHILE_START0
+push local 2
+push local 1
+lt
+not
+if-goto WHILE_END0
+push local 2
+call Keyboard.readInt 0
+pop constant -1
+push local 3
+push local 0
+push local 2
+add
+pop local 3
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_START0
+label WHILE_END0
+call Output.printString 1
+pop temp 0
+push local 3
+push local 1
+call Math.divide 2
+call Output.printInt 1
+pop temp 0
+push constant 0
+return

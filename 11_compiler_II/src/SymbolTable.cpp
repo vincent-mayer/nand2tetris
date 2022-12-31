@@ -71,3 +71,15 @@ auto SymbolTable::indexOf(std::string const &name) -> int
         index = mSubroutineTable[name].index;
     return index;
 }
+
+auto SymbolTable::knownType(std::string const &type) -> bool
+{
+    bool isKnown = false;
+    for (auto &it : mSubroutineTable)
+        if (it.second.type == type)
+            isKnown = true;
+    for (auto &it : mClassTable)
+        if (it.second.type == type)
+            isKnown = true;
+    return isKnown;
+}

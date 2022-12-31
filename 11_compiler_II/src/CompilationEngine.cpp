@@ -309,7 +309,7 @@ auto CompilationEngine::compileLet() -> void
             mTokenizer->token() == std::string{"["})
         {
             varName = mTokenizer->prevToken();
-            compileExpression(true);
+            compileExpression();
         }
         else
         {
@@ -325,7 +325,7 @@ auto CompilationEngine::compileLet() -> void
     this->write(std::string{"</letStatement>"});
 }
 
-auto CompilationEngine::compileExpression(bool isLet) -> int
+auto CompilationEngine::compileExpression() -> int
 {
     mTokenizer->advance();
     if (mTokenizer->token() == std::string{")"} ||
@@ -339,7 +339,7 @@ auto CompilationEngine::compileExpression(bool isLet) -> int
            mTokenizer->token() != std::string{"]"} &&
            mTokenizer->token() != std::string{")"})
     {
-        this->compileTerm(isLet);
+        this->compileTerm();
         if (mTokenizer->token() == std::string{","})
             break;
         if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
@@ -356,7 +356,7 @@ auto CompilationEngine::compileExpression(bool isLet) -> int
     return 1;
 }
 
-auto CompilationEngine::compileTerm(bool isLet) -> void
+auto CompilationEngine::compileTerm() -> void
 {
     this->write(std::string{"<term>"});
     mDepth++;
@@ -399,22 +399,19 @@ auto CompilationEngine::compileTerm(bool isLet) -> void
         {
             funcName = mTokenizer->prevToken();
             if (mTokenizer->prevTokenType() == TokenType::IDENTIFIER)
-                nArgs = this->compileExpressionList(isLet);
+                nArgs = this->compileExpressionList();
             else
-                this->compileExpression(isLet);
+                this->compileExpression();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             if (isFuncCall)
             {
-                // TODO: This hack should not be necessary. Missing key insight...
-                if (isLet && (nArgs == 1))
-                    nArgs--;
                 mVMWriter->writeCall(className + std::string{"."} + funcName, nArgs);
                 isFuncCall = false;
             }
         }
         if (mTokenizer->token() == "[")
         {
-            this->compileExpression(isLet);
+            this->compileExpression();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             mTokenizer->advance();
             break;
@@ -448,7 +445,7 @@ auto CompilationEngine::compileTerm(bool isLet) -> void
             mTokenizer->token() == "(" &&
                 std::find(ops.begin(), ops.end(), mTokenizer->prevToken()) != ops.end())
         {
-            this->compileTerm(isLet);
+            this->compileTerm();
             if (isOp)
             {
                 if (isNegNotOp)
@@ -465,17 +462,16 @@ auto CompilationEngine::compileTerm(bool isLet) -> void
     this->write(std::string{"</term>"});
 }
 
-auto CompilationEngine::compileExpressionList(bool isLet) -> int
+auto CompilationEngine::compileExpressionList() -> int
 {
     this->write(std::string{"<expressionList>"});
     mDepth++;
     int nArgs = 0;
     while (mTokenizer->token() != std::string{")"})
     {
-        this->compileExpression(isLet);
+        nArgs += this->compileExpression();
         if (mTokenizer->token() == std::string{","})
             this->write(mTokenizer->tokenType(), mTokenizer->token());
-        nArgs++;
     }
     mDepth--;
     this->write(std::string{"</expressionList>"});
@@ -496,7 +492,7 @@ auto CompilationEngine::compileDo() -> void
         if (mTokenizer->token() == std::string{"("})
         {
             callMethod = mTokenizer->prevToken();
-            nArgs = this->compileExpressionList(false);
+            nArgs = this->compileExpressionList();
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         }
         mTokenizer->advance();
@@ -529,6 +525,12 @@ auto CompilationEngine::compileDo() -> void
         }
     }
 
+    // We increment the function call by 1 because of the implicit this pointer.
+    // However for OS/built-on functions this should not happen.
+    if (mSymbolTable->knownType(callClass) || (mClassName == callClass))
+        nArgs++;
+    else
+        std::cout << "Known class" << std::endl;
     // Write the function call.
     mVMWriter->writeCall(callClass + std::string{"."} + callMethod, nArgs);
 
@@ -555,7 +557,7 @@ auto CompilationEngine::compileWhile() -> void
         if (mTokenizer->token() == std::string{"("})
         {
             this->write(mTokenizer->tokenType(), mTokenizer->token());
-            this->compileExpression(false);
+            this->compileExpression();
             // Write explicit not, because expression must be not'ed in while.
             mVMWriter->writeArithmetic("not");
             this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -592,7 +594,7 @@ auto CompilationEngine::compileReturn() -> void
     int terms;
     while (mTokenizer->token() != std::string{";"})
     {
-        terms = this->compileExpression(false);
+        terms = this->compileExpression();
     }
 
     // Push return 0 constant
@@ -623,7 +625,7 @@ auto CompilationEngine::compileIf() -> void
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // cond
-    this->compileExpression(false);
+    this->compileExpression();
 
     // ~(cond)
     mVMWriter->writeArithmetic("not"); // ~(cond)

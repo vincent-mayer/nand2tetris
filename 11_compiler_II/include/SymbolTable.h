@@ -16,7 +16,8 @@ public:
 
     auto startSubroutine() -> void;
 
-    auto define(std::string const &name, std::string const &type, Kind const &kind) -> void;
+    auto define(std::string const &name, std::string const &type, Kind const &kind)
+        -> void;
 
     auto decideTable(Kind const &kind) -> std::unordered_map<std::string, HashData> &;
 
@@ -27,4 +28,6 @@ public:
     auto typeOf(std::string const &name) -> std::string;
 
     auto indexOf(std::string const &name) -> int;
+
+    auto knownType(std::string const &type) -> bool;
 };
