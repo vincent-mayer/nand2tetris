@@ -105,11 +105,12 @@ auto CompilationEngine::compileClass() -> void
     {
         if (mTokenizer->token() == "field" || mTokenizer->token() == "static")
             nFields += this->compileClassVarDecl();
-
         else if (mTokenizer->token() == "constructor")
-            this->compileSubroutine(nFields, true);
-        else if (mTokenizer->token() == "function" || mTokenizer->token() == "method")
-            this->compileSubroutine(nFields, false);
+            this->compileSubroutine(nFields, FunctionType::CONSTRUCTOR);
+        else if (mTokenizer->token() == "function")
+            this->compileSubroutine(nFields, FunctionType::FUNCTION);
+        else if (mTokenizer->token() == "method")
+            this->compileSubroutine(nFields, FunctionType::METHOD);
 
         // Get the next token.
         mTokenizer->advance();
@@ -149,7 +150,7 @@ auto CompilationEngine::compileClassVarDecl() -> int
     return nFields;
 }
 
-auto CompilationEngine::compileSubroutine(int nFields, bool isConstructor) -> void
+auto CompilationEngine::compileSubroutine(int nFields, FunctionType functionType) -> void
 {
     // subroutineDec
     this->write(std::string{"<subroutineDec>"});
@@ -161,6 +162,7 @@ auto CompilationEngine::compileSubroutine(int nFields, bool isConstructor) -> vo
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     mTokenizer->advance();
+    mTokenizer->setKind(Kind::NONE); // Hacky way to prevent constr. entry in symboltable
     this->write(mTokenizer->tokenType(), mTokenizer->token());
     std::string funcName = mTokenizer->token();
     mTokenizer->advance();
@@ -173,7 +175,7 @@ auto CompilationEngine::compileSubroutine(int nFields, bool isConstructor) -> vo
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
     // call subroutinebody
-    this->compileSubroutineBody(funcName, nFields, isConstructor);
+    this->compileSubroutineBody(funcName, nFields, functionType);
 
     // subroutineDec
     mDepth--;
@@ -181,7 +183,7 @@ auto CompilationEngine::compileSubroutine(int nFields, bool isConstructor) -> vo
 }
 
 auto CompilationEngine::compileSubroutineBody(std::string name, int nFields,
-                                              bool isConstructor) -> void
+                                              FunctionType functionType) -> void
 {
     // subroutineBody
     this->write(std::string{"<subroutineBody>"});
@@ -203,12 +205,22 @@ auto CompilationEngine::compileSubroutineBody(std::string name, int nFields,
             // function main.Main {nLocals}
             mVMWriter->writeFunction(mClassName, name, nLocals);
             // Special case constructor.
-            if (isConstructor)
+            if (functionType == FunctionType::CONSTRUCTOR)
             {
                 // Allocate memory for the class and set pointer.
                 mVMWriter->writePush(Segment::CONST, nFields);
                 mVMWriter->writeCall("Memory.alloc", 1);
                 mVMWriter->writePop(Segment::POINTER, 0);
+            }
+            // First argument is implicit this.
+            else if (functionType == FunctionType::METHOD)
+            {
+                mVMWriter->writePush(Segment::ARG, 0);
+                mVMWriter->writePop(Segment::POINTER, 0);
+            }
+            // Else just do nothing at all
+            else
+            {
             }
             this->compileStatements();
         }
@@ -297,7 +309,7 @@ auto CompilationEngine::compileLet() -> void
             mTokenizer->token() == std::string{"["})
         {
             varName = mTokenizer->prevToken();
-            compileExpression();
+            compileExpression(true);
         }
         else
         {
@@ -313,7 +325,7 @@ auto CompilationEngine::compileLet() -> void
     this->write(std::string{"</letStatement>"});
 }
 
-auto CompilationEngine::compileExpression() -> int
+auto CompilationEngine::compileExpression(bool isLet) -> int
 {
     mTokenizer->advance();
     if (mTokenizer->token() == std::string{")"} ||
@@ -327,7 +339,7 @@ auto CompilationEngine::compileExpression() -> int
            mTokenizer->token() != std::string{"]"} &&
            mTokenizer->token() != std::string{")"})
     {
-        this->compileTerm();
+        this->compileTerm(isLet);
         if (mTokenizer->token() == std::string{","})
             break;
         if (std::find(ops.begin(), ops.end(), mTokenizer->token()) != ops.end())
@@ -344,7 +356,7 @@ auto CompilationEngine::compileExpression() -> int
     return 1;
 }
 
-auto CompilationEngine::compileTerm() -> void
+auto CompilationEngine::compileTerm(bool isLet) -> void
 {
     this->write(std::string{"<term>"});
     mDepth++;
@@ -377,25 +389,31 @@ auto CompilationEngine::compileTerm() -> void
             if (mTokenizer->token() == "true")
                 mVMWriter->writeArithmetic("~");
         }
+        if (mTokenizer->token() == "this")
+        {
+            mVMWriter->writePush(Segment::POINTER, 0);
+        }
 
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == "(")
         {
             funcName = mTokenizer->prevToken();
             if (mTokenizer->prevTokenType() == TokenType::IDENTIFIER)
-                nArgs = this->compileExpressionList();
+                nArgs = this->compileExpressionList(isLet);
             else
-                this->compileExpression();
+                this->compileExpression(isLet);
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             if (isFuncCall)
             {
+                if (isLet)
+                    nArgs--;
                 mVMWriter->writeCall(className + std::string{"."} + funcName, nArgs);
                 isFuncCall = false;
             }
         }
         if (mTokenizer->token() == "[")
         {
-            this->compileExpression();
+            this->compileExpression(isLet);
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             mTokenizer->advance();
             break;
@@ -429,7 +447,7 @@ auto CompilationEngine::compileTerm() -> void
             mTokenizer->token() == "(" &&
                 std::find(ops.begin(), ops.end(), mTokenizer->prevToken()) != ops.end())
         {
-            this->compileTerm();
+            this->compileTerm(isLet);
             if (isOp)
             {
                 if (isNegNotOp)
@@ -446,14 +464,14 @@ auto CompilationEngine::compileTerm() -> void
     this->write(std::string{"</term>"});
 }
 
-auto CompilationEngine::compileExpressionList() -> int
+auto CompilationEngine::compileExpressionList(bool isLet) -> int
 {
     this->write(std::string{"<expressionList>"});
     mDepth++;
     int nArgs = 0;
     while (mTokenizer->token() != std::string{")"})
     {
-        this->compileExpression();
+        this->compileExpression(isLet);
         if (mTokenizer->token() == std::string{","})
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         nArgs++;
@@ -477,7 +495,7 @@ auto CompilationEngine::compileDo() -> void
         if (mTokenizer->token() == std::string{"("})
         {
             callMethod = mTokenizer->prevToken();
-            nArgs = this->compileExpressionList();
+            nArgs = this->compileExpressionList(false);
             this->write(mTokenizer->tokenType(), mTokenizer->token());
         }
         mTokenizer->advance();
@@ -536,7 +554,7 @@ auto CompilationEngine::compileWhile() -> void
         if (mTokenizer->token() == std::string{"("})
         {
             this->write(mTokenizer->tokenType(), mTokenizer->token());
-            this->compileExpression();
+            this->compileExpression(false);
             // Write explicit not, because expression must be not'ed in while.
             mVMWriter->writeArithmetic("not");
             this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -573,14 +591,12 @@ auto CompilationEngine::compileReturn() -> void
     int terms;
     while (mTokenizer->token() != std::string{";"})
     {
-        terms = this->compileExpression();
+        terms = this->compileExpression(false);
     }
 
     // Push return 0 constant
     if (terms == 0)
-    {
         mVMWriter->writePush(Segment::CONST, 0);
-    }
     mVMWriter->writeReturn();
 
     // ;
@@ -605,40 +621,34 @@ auto CompilationEngine::compileIf() -> void
     // (
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
-    // expression
-    this->compileExpression();
+    // cond
+    this->compileExpression(false);
 
-    // if-goto L1:
-    mVMWriter->writeIf("IF_TRUE" + std::to_string(localLabelCounter));
-    // goto L2
-    mVMWriter->writeGoto("IF_FALSE" + std::to_string(localLabelCounter));
-    // label L1:
-    mVMWriter->writeLabel("IF_TRUE" + std::to_string(localLabelCounter));
+    // ~(cond)
+    mVMWriter->writeArithmetic("not"); // ~(cond)
 
-    // )
+    // if-goto L1: L1 = IF_FALSE; L2 = IF_END
+    mVMWriter->writeIf("IF_FALSE" + std::to_string(localLabelCounter));
+
+    // ) {
     this->write(mTokenizer->tokenType(), mTokenizer->token());
-
-    // {
     mTokenizer->advance();
     this->write(mTokenizer->tokenType(), mTokenizer->token());
 
-    // statements
+    // s1; }
     this->compileStatements();
-
-    // }
     this->write(mTokenizer->tokenType(), mTokenizer->token());
-
     mTokenizer->advance();
 
-    // goto IF_END
+    // goto label L2 = IF_END
     mVMWriter->writeGoto("IF_END" + std::to_string(localLabelCounter));
+
+    // label L1
+    mVMWriter->writeLabel("IF_FALSE" + std::to_string(localLabelCounter));
 
     // else
     if (mTokenizer->token() == std::string{"else"})
     {
-        // label IF_FALSE
-        mVMWriter->writeLabel("IF_FALSE" + std::to_string(localLabelCounter));
-
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         mTokenizer->advance();
         this->write(mTokenizer->tokenType(), mTokenizer->token());
@@ -647,7 +657,7 @@ auto CompilationEngine::compileIf() -> void
         mTokenizer->advance();
     }
 
-    // label IF_END
+    // label L2 = IF_END
     mVMWriter->writeLabel("IF_END" + std::to_string(localLabelCounter));
 
     // ifStatement

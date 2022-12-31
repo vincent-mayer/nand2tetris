@@ -4,6 +4,13 @@
 #include <string>
 #include <vector>
 
+enum class FunctionType
+{
+    CONSTRUCTOR,
+    METHOD,
+    FUNCTION
+};
+
 enum class Category
 {
     VAR,

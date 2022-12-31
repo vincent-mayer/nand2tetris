@@ -45,9 +45,9 @@ public:
 
     auto compileClassVarDecl() -> int;
 
-    auto compileSubroutine(int nFields, bool isConstructor) -> void;
+    auto compileSubroutine(int nFields, FunctionType functionType) -> void;
 
-    auto compileSubroutineBody(std::string name, int nFields, bool isConstructor)
+    auto compileSubroutineBody(std::string name, int nFields, FunctionType functionType)
         -> void;
 
     auto compileParameterList() -> int;
@@ -66,11 +66,11 @@ public:
 
     auto compileIf() -> void;
 
-    auto compileExpression() -> int;
+    auto compileExpression(bool isLet) -> int;
 
-    auto compileTerm() -> void;
+    auto compileTerm(bool isLet) -> void;
 
-    auto compileExpressionList() -> int;
+    auto compileExpressionList(bool isLet) -> int;
 
     auto write(TokenType tokenType, std::string data) -> void;
 

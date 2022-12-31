@@ -1,23 +1,23 @@
 <class>
   <keyword> class </keyword>
-  <identifier> SquareGame </identifier>
+  <identifier> SquareGame;type:class;kind:NONE;index:-1; </identifier>
   <symbol> { </symbol>
   <classVarDec>
     <keyword> field </keyword>
-    <identifier> Square </identifier>
-    <identifier> square </identifier>
+    <identifier> Square;type:field;kind:FIELD;index:-1; </identifier>
+    <identifier> square;type:Square;kind:FIELD;index:0; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
-    <identifier> direction </identifier>
+    <identifier> direction;type:int;kind:FIELD;index:1; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
     <keyword> constructor </keyword>
-    <identifier> SquareGame </identifier>
-    <identifier> new </identifier>
+    <identifier> SquareGame;type:constructor;kind:FIELD;index:-1; </identifier>
+    <identifier> new;type:SquareGame;kind:NONE;index:-1; </identifier>
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -27,22 +27,45 @@
       <statements>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> square </identifier>
+          <identifier> square;type:let;kind:ARG;index:0; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> square </identifier>
+              <identifier> Square;type:=;kind:ARG;index:1; </identifier>
+              <symbol> . </symbol>
+              <identifier> new;type:.;kind:ARG;index:2; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <integerConstant> 0 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <integerConstant> 0 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <integerConstant> 30 </integerConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
             </term>
           </expression>
           <symbol> ; </symbol>
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> direction </identifier>
+          <identifier> direction;type:let;kind:ARG;index:1; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
+              <integerConstant> 0 </integerConstant>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -51,7 +74,7 @@
           <keyword> return </keyword>
           <expression>
             <term>
-              <identifier> square </identifier>
+              <keyword> this </keyword>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -63,7 +86,7 @@
   <subroutineDec>
     <keyword> method </keyword>
     <keyword> void </keyword>
-    <identifier> dispose </identifier>
+    <identifier> dispose;type:void;kind:NONE;index:-1; </identifier>
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -73,9 +96,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> square </identifier>
+          <identifier> square;type:do;kind:ARG;index:0; </identifier>
           <symbol> . </symbol>
-          <identifier> dispose </identifier>
+          <identifier> dispose;type:.;kind:ARG;index:1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -84,14 +107,14 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Memory </identifier>
+          <identifier> Memory;type:do;kind:ARG;index:2; </identifier>
           <symbol> . </symbol>
-          <identifier> deAlloc </identifier>
+          <identifier> deAlloc;type:.;kind:ARG;index:3; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
               <term>
-                <identifier> square </identifier>
+                <keyword> this </keyword>
               </term>
             </expression>
           </expressionList>
@@ -109,7 +132,7 @@
   <subroutineDec>
     <keyword> method </keyword>
     <keyword> void </keyword>
-    <identifier> moveSquare </identifier>
+    <identifier> moveSquare;type:void;kind:NONE;index:-1; </identifier>
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -122,7 +145,11 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
+              <identifier> direction;type:(;kind:ARG;index:1; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 1 </integerConstant>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -130,9 +157,9 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> square </identifier>
+              <identifier> square;type:do;kind:ARG;index:0; </identifier>
               <symbol> . </symbol>
-              <identifier> moveUp </identifier>
+              <identifier> moveUp;type:.;kind:ARG;index:2; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -147,7 +174,11 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
+              <identifier> direction;type:(;kind:ARG;index:1; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 2 </integerConstant>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -155,9 +186,9 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> square </identifier>
+              <identifier> square;type:do;kind:ARG;index:0; </identifier>
               <symbol> . </symbol>
-              <identifier> moveDown </identifier>
+              <identifier> moveDown;type:.;kind:ARG;index:3; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -172,7 +203,11 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
+              <identifier> direction;type:(;kind:ARG;index:1; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 3 </integerConstant>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -180,9 +215,9 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> square </identifier>
+              <identifier> square;type:do;kind:ARG;index:0; </identifier>
               <symbol> . </symbol>
-              <identifier> moveLeft </identifier>
+              <identifier> moveLeft;type:.;kind:ARG;index:4; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -197,7 +232,11 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> direction </identifier>
+              <identifier> direction;type:(;kind:ARG;index:1; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 4 </integerConstant>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -205,9 +244,9 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> square </identifier>
+              <identifier> square;type:do;kind:ARG;index:0; </identifier>
               <symbol> . </symbol>
-              <identifier> moveRight </identifier>
+              <identifier> moveRight;type:.;kind:ARG;index:5; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -219,14 +258,14 @@
         </ifStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Sys </identifier>
+          <identifier> Sys;type:do;kind:ARG;index:6; </identifier>
           <symbol> . </symbol>
-          <identifier> wait </identifier>
+          <identifier> wait;type:.;kind:ARG;index:7; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
               <term>
-                <identifier> direction </identifier>
+                <integerConstant> 5 </integerConstant>
               </term>
             </expression>
           </expressionList>
@@ -244,7 +283,7 @@
   <subroutineDec>
     <keyword> method </keyword>
     <keyword> void </keyword>
-    <identifier> run </identifier>
+    <identifier> run;type:void;kind:NONE;index:-1; </identifier>
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -254,23 +293,23 @@
       <varDec>
         <keyword> var </keyword>
         <keyword> char </keyword>
-        <identifier> key </identifier>
+        <identifier> key;type:char;kind:VAR;index:0; </identifier>
         <symbol> ; </symbol>
       </varDec>
       <varDec>
         <keyword> var </keyword>
         <keyword> boolean </keyword>
-        <identifier> exit </identifier>
+        <identifier> exit;type:boolean;kind:VAR;index:1; </identifier>
         <symbol> ; </symbol>
       </varDec>
       <statements>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> exit </identifier>
+          <identifier> exit;type:let;kind:VAR;index:1; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> key </identifier>
+              <keyword> false </keyword>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -280,7 +319,10 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> exit </identifier>
+              <symbol> ~ </symbol>
+              <term>
+                <identifier> exit;type:~;kind:VAR;index:1; </identifier>
+              </term>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -291,7 +333,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 0 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -299,18 +345,24 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> key </identifier>
+                  <identifier> key;type:let;kind:VAR;index:0; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> key </identifier>
+                      <identifier> Keyboard;type:=;kind:VAR;index:-1; </identifier>
+                      <symbol> . </symbol>
+                      <identifier> keyPressed;type:.;kind:VAR;index:-1; </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+                      </expressionList>
+                      <symbol> ) </symbol>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
                 </letStatement>
                 <doStatement>
                   <keyword> do </keyword>
-                  <identifier> moveSquare </identifier>
+                  <identifier> moveSquare;type:do;kind:VAR;index:-1; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>
@@ -325,7 +377,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 81 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -333,11 +389,11 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> exit </identifier>
+                  <identifier> exit;type:let;kind:VAR;index:1; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> exit </identifier>
+                      <keyword> true </keyword>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -350,7 +406,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 90 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -358,9 +418,9 @@
               <statements>
                 <doStatement>
                   <keyword> do </keyword>
-                  <identifier> square </identifier>
+                  <identifier> square;type:do;kind:VAR;index:0; </identifier>
                   <symbol> . </symbol>
-                  <identifier> decSize </identifier>
+                  <identifier> decSize;type:.;kind:VAR;index:-1; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>
@@ -375,7 +435,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 88 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -383,9 +447,9 @@
               <statements>
                 <doStatement>
                   <keyword> do </keyword>
-                  <identifier> square </identifier>
+                  <identifier> square;type:do;kind:VAR;index:0; </identifier>
                   <symbol> . </symbol>
-                  <identifier> incSize </identifier>
+                  <identifier> incSize;type:.;kind:VAR;index:-1; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>
@@ -400,7 +464,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 131 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -408,11 +476,11 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> direction </identifier>
+                  <identifier> direction;type:let;kind:VAR;index:1; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> exit </identifier>
+                      <integerConstant> 1 </integerConstant>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -425,7 +493,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 133 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -433,11 +505,11 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> direction </identifier>
+                  <identifier> direction;type:let;kind:VAR;index:1; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> key </identifier>
+                      <integerConstant> 2 </integerConstant>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -450,7 +522,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 130 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -458,11 +534,11 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> direction </identifier>
+                  <identifier> direction;type:let;kind:VAR;index:1; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> square </identifier>
+                      <integerConstant> 3 </integerConstant>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -475,7 +551,11 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 132 </integerConstant>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -483,11 +563,11 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> direction </identifier>
+                  <identifier> direction;type:let;kind:VAR;index:1; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> direction </identifier>
+                      <integerConstant> 4 </integerConstant>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -500,7 +580,20 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> key </identifier>
+                  <symbol> ~ </symbol>
+                  <term>
+                    <symbol> ( </symbol>
+                    <expression>
+                      <term>
+                        <identifier> key;type:(;kind:VAR;index:0; </identifier>
+                      </term>
+                      <symbol> = </symbol>
+                      <term>
+                        <integerConstant> 0 </integerConstant>
+                      </term>
+                    </expression>
+                    <symbol> ) </symbol>
+                  </term>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -508,18 +601,24 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> key </identifier>
+                  <identifier> key;type:let;kind:VAR;index:0; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
-                      <identifier> key </identifier>
+                      <identifier> Keyboard;type:=;kind:VAR;index:-1; </identifier>
+                      <symbol> . </symbol>
+                      <identifier> keyPressed;type:.;kind:VAR;index:-1; </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+                      </expressionList>
+                      <symbol> ) </symbol>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
                 </letStatement>
                 <doStatement>
                   <keyword> do </keyword>
-                  <identifier> moveSquare </identifier>
+                  <identifier> moveSquare;type:do;kind:VAR;index:-1; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>

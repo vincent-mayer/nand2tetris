@@ -8,3 +8,6 @@
 ## Todo
 
 - [ ] Compile square game
+  - [ ] Fix missing not's
+  - [ ] Check if else compilation logic.
+  
