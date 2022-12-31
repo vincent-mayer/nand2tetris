@@ -1,11 +1,11 @@
 <class>
   <keyword> class </keyword>
-  <identifier> Main;type:class;kind:NONE;index:0; </identifier>
+  <identifier> Main;type:class;kind:NONE;index:-1; </identifier>
   <symbol> { </symbol>
   <subroutineDec>
     <keyword> function </keyword>
     <keyword> void </keyword>
-    <identifier> main;type:void;kind:NONE;index:0; </identifier>
+    <identifier> main;type:void;kind:NONE;index:-1; </identifier>
     <symbol> ( </symbol>
     <parameterList>
     </parameterList>
@@ -15,9 +15,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:NONE;index:0; </identifier>
+          <identifier> Output;type:do;kind:ARG;index:0; </identifier>
           <symbol> . </symbol>
-          <identifier> printInt;type:.;kind:NONE;index:0; </identifier>
+          <identifier> printInt;type:.;kind:ARG;index:1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>

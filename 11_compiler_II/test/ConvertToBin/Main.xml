@@ -50,28 +50,6 @@
           <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
-        <doStatement>
-          <keyword> do </keyword>
-          <identifier> Memory;type:do;kind:VAR;index:-1; </identifier>
-          <symbol> . </symbol>
-          <identifier> poke;type:.;kind:VAR;index:-1; </identifier>
-          <symbol> ( </symbol>
-          <expressionList>
-            <expression>
-              <term>
-                <integerConstant> 8000 </integerConstant>
-              </term>
-            </expression>
-            <symbol> , </symbol>
-            <expression>
-              <term>
-                <integerConstant> 69 </integerConstant>
-              </term>
-            </expression>
-          </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
-        </doStatement>
         <letStatement>
           <keyword> let </keyword>
           <identifier> value;type:let;kind:VAR;index:0; </identifier>

@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
     // std::string pathOrDir = std::string(argv[1]);
     auto pathOrDir = std::string{
-        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Square"};
+        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Square/SquareGame.jack"};
 
     if (ends_with(pathOrDir, std::string{".jack"}))
     {
