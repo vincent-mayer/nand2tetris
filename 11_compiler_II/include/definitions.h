@@ -23,11 +23,11 @@ enum class Category
 
 enum class Kind
 {
-    STATIC,
-    FIELD,
     ARG,
+    FIELD,
+    NONE,
+    STATIC,
     VAR,
-    NONE
 };
 
 enum class Segment
@@ -43,9 +43,9 @@ enum class Segment
 };
 
 inline std::map<Kind, Segment> kindToSegment{
-    {Kind::VAR, Segment::LOCAL},
     {Kind::ARG, Segment::ARG},
     {Kind::FIELD, Segment::THIS},
+    {Kind::VAR, Segment::LOCAL},
 };
 
 inline std::map<Segment, std::string> segmentToString{

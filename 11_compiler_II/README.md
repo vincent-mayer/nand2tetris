@@ -1,13 +1,14 @@
-## Continuing work
+# nand2tetris
 
-1. Debug label creation for while
-2. Use Main.jack of ConvertToBin
-3. Use line 42 of that file.
-4. Use this <https://github.com/mmmries/nand2tetris/blob/master/projects/11/jc/test/fixtures/ConvertToBin/Main.vm> to compare
+This is a Python/C++ implementation of the course Nand2Tetris from Nisan and Schocken.
 
 ## Todo
 
 - [ ] Compile square game
   - [ ] Fix missing not's
   - [ ] Check if else compilation logic.
-  
+- [ ] Compile Average
+  - [ ] Add support for strings
+- [ ] Compile Pong
+- [ ] Compile ComplexArrays
+- [ ] Start Project 12

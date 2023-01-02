@@ -52,6 +52,8 @@ public:
 
     auto compileParameterList() -> int;
 
+    auto compileString() -> void;
+
     auto compileVarDecl() -> int;
 
     auto compileStatements() -> void;
@@ -64,7 +66,7 @@ public:
 
     auto compileReturn() -> void;
 
-    auto compileIf() -> void;
+    auto compileIf() -> bool;
 
     auto compileExpression() -> int;
 
