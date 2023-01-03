@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
     }
 
     // std::string pathOrDir = std::string(argv[1]);
-    auto pathOrDir = std::string{
-        "/home/vincent/repos/nand2tetris/11_compiler_II/test/Average/Main.jack"};
+    auto pathOrDir =
+        std::string{"/home/vincent/repos/nand2tetris/11_compiler_II/test/ComplexArrays"};
 
     if (ends_with(pathOrDir, std::string{".jack"}))
     {

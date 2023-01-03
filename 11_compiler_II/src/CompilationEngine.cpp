@@ -63,7 +63,7 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
     if (kind != Kind::NONE && std::all_of(name.begin(), name.end(), &::islower) &&
         type != ".")
         mSymbolTable->define(name, type, kind);
-    else if (kind == Kind::ARG)
+    else if ((kind == Kind::ARG) && (std::islower(name[0])))
         mSymbolTable->define(name, type, kind);
 
     // Get the correct index.
@@ -415,7 +415,8 @@ auto CompilationEngine::compileTerm() -> void
             auto kind = mSymbolTable->kindOf(mTokenizer->token());
             mVMWriter->writePush(kindToSegment[kind], index);
         }
-        if (mTokenizer->token() == "true" || mTokenizer->token() == "false")
+        if (mTokenizer->token() == "true" || mTokenizer->token() == "false" ||
+            mTokenizer->token() == "null")
         {
             mVMWriter->writePush(Segment::CONST, 0);
             if (mTokenizer->token() == "true")
@@ -425,7 +426,6 @@ auto CompilationEngine::compileTerm() -> void
         {
             mVMWriter->writePush(Segment::POINTER, 0);
         }
-
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         if (mTokenizer->token() == "(")
         {
