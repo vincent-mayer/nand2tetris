@@ -565,7 +565,8 @@ auto CompilationEngine::compileDo() -> void
 
     // We increment the function call by 1 because of the implicit this pointer.
     // However for OS/built-on functions this should not happen.
-    if (mSymbolTable->knownType(callClass) || (mClassName == callClass))
+    if ((mSymbolTable->knownType(callClass) || (mClassName == callClass)) &&
+        callClass != "Main")
         nArgs++;
 
     // Write the function call.
@@ -699,7 +700,6 @@ auto CompilationEngine::compileIf() -> bool
         this->write(mTokenizer->tokenType(), mTokenizer->token());
         this->compileStatements();
         this->write(mTokenizer->tokenType(), mTokenizer->token());
-        mTokenizer->advance();
         ifOnly = false;
     }
 
