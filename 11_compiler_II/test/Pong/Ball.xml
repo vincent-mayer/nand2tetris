@@ -1,0 +1,1859 @@
+<class>
+  <keyword> class </keyword>
+  <identifier> Ball;type:class;kind:NONE;index:-1; </identifier>
+  <symbol> { </symbol>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier> x;type:int;kind:FIELD;index:0; </identifier>
+    <symbol> , </symbol>
+    <identifier> y;type:int;kind:FIELD;index:1; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier> lengthx;type:int;kind:FIELD;index:2; </identifier>
+    <symbol> , </symbol>
+    <identifier> lengthy;type:int;kind:FIELD;index:3; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier> d;type:int;kind:FIELD;index:4; </identifier>
+    <symbol> , </symbol>
+    <identifier> straightD;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> , </symbol>
+    <identifier> diagonalD;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> boolean </keyword>
+    <identifier> invert;type:boolean;kind:FIELD;index:5; </identifier>
+    <symbol> , </symbol>
+    <identifier> positivex;type:boolean;kind:FIELD;index:6; </identifier>
+    <symbol> , </symbol>
+    <identifier> positivey;type:boolean;kind:FIELD;index:7; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier> leftWall;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> , </symbol>
+    <identifier> rightWall;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> , </symbol>
+    <identifier> topWall;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> , </symbol>
+    <identifier> bottomWall;type:int;kind:FIELD;index:-1; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <classVarDec>
+    <keyword> field </keyword>
+    <keyword> int </keyword>
+    <identifier> wall;type:int;kind:FIELD;index:8; </identifier>
+    <symbol> ; </symbol>
+  </classVarDec>
+  <subroutineDec>
+    <keyword> constructor </keyword>
+    <identifier> Ball;type:constructor;kind:FIELD;index:-1; </identifier>
+    <identifier> new;type:Ball;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier> xA;type:int;kind:ARG;index:0; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> yA;type:int;kind:ARG;index:1; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> leftWallA;type:int;kind:ARG;index:2; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> rightWallA;type:int;kind:ARG;index:3; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> topWallA;type:int;kind:ARG;index:4; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> bottomWallA;type:int;kind:ARG;index:5; </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> x;type:let;kind:ARG;index:0; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> xA;type:=;kind:ARG;index:0; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> y;type:let;kind:ARG;index:1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> yA;type:=;kind:ARG;index:1; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> leftWall;type:let;kind:ARG;index:8; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> leftWallA;type:=;kind:ARG;index:2; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> rightWall;type:let;kind:ARG;index:9; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> rightWallA;type:=;kind:ARG;index:3; </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <integerConstant> 6 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> topWall;type:let;kind:ARG;index:10; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> topWallA;type:=;kind:ARG;index:4; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> bottomWall;type:let;kind:ARG;index:11; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> bottomWallA;type:=;kind:ARG;index:5; </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <integerConstant> 6 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> show;type:do;kind:ARG;index:13; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <keyword> this </keyword>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> dispose;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
+          <symbol> . </symbol>
+          <identifier> deAlloc;type:.;kind:ARG;index:0; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> this </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> show;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <symbol> . </symbol>
+          <identifier> setColor;type:.;kind:ARG;index:0; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> true </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> draw;type:do;kind:ARG;index:1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> hide;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <symbol> . </symbol>
+          <identifier> setColor;type:.;kind:ARG;index:0; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> false </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> draw;type:do;kind:ARG;index:1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> draw;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <symbol> . </symbol>
+          <identifier> drawRectangle;type:.;kind:ARG;index:0; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> x;type:(;kind:ARG;index:0; </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y;type:(;kind:ARG;index:1; </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> x;type:(;kind:ARG;index:0; </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <integerConstant> 5 </integerConstant>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y;type:(;kind:ARG;index:1; </identifier>
+              </term>
+              <symbol> + </symbol>
+              <term>
+                <integerConstant> 5 </integerConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> int </keyword>
+    <identifier> getLeft;type:int;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <identifier> x;type:return;kind:ARG;index:0; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> int </keyword>
+    <identifier> getRight;type:int;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <identifier> x;type:return;kind:ARG;index:0; </identifier>
+            </term>
+            <symbol> + </symbol>
+            <term>
+              <integerConstant> 5 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> setDestination;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier> destx;type:int;kind:ARG;index:0; </identifier>
+      <symbol> , </symbol>
+      <keyword> int </keyword>
+      <identifier> desty;type:int;kind:ARG;index:1; </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> dx;type:int;kind:VAR;index:0; </identifier>
+        <symbol> , </symbol>
+        <identifier> dy;type:int;kind:VAR;index:1; </identifier>
+        <symbol> , </symbol>
+        <identifier> temp;type:int;kind:VAR;index:2; </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> lengthx;type:let;kind:VAR;index:2; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> destx;type:=;kind:VAR;index:0; </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <identifier> x;type:-;kind:VAR;index:0; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> lengthy;type:let;kind:VAR;index:3; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> desty;type:=;kind:VAR;index:1; </identifier>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <identifier> y;type:-;kind:VAR;index:1; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> dx;type:let;kind:VAR;index:0; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> Math;type:=;kind:VAR;index:-1; </identifier>
+              <symbol> . </symbol>
+              <identifier> abs;type:.;kind:VAR;index:-1; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> lengthx;type:(;kind:VAR;index:2; </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> dy;type:let;kind:VAR;index:1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> Math;type:=;kind:VAR;index:-1; </identifier>
+              <symbol> . </symbol>
+              <identifier> abs;type:.;kind:VAR;index:-1; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> lengthy;type:(;kind:VAR;index:3; </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> invert;type:let;kind:VAR;index:5; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> dx;type:(;kind:VAR;index:0; </identifier>
+                </term>
+                <symbol> < </symbol>
+                <term>
+                  <identifier> dy;type:<;kind:VAR;index:1; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> invert;type:(;kind:VAR;index:5; </identifier>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> temp;type:let;kind:VAR;index:2; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> dx;type:=;kind:VAR;index:0; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> dx;type:let;kind:VAR;index:0; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> dy;type:=;kind:VAR;index:1; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> dy;type:let;kind:VAR;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> temp;type:=;kind:VAR;index:2; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> positivex;type:let;kind:VAR;index:6; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> y;type:(;kind:VAR;index:1; </identifier>
+                    </term>
+                    <symbol> < </symbol>
+                    <term>
+                      <identifier> desty;type:<;kind:VAR;index:1; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> positivey;type:let;kind:VAR;index:7; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> x;type:(;kind:VAR;index:0; </identifier>
+                    </term>
+                    <symbol> < </symbol>
+                    <term>
+                      <identifier> destx;type:<;kind:VAR;index:0; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> positivex;type:let;kind:VAR;index:6; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> x;type:(;kind:VAR;index:0; </identifier>
+                    </term>
+                    <symbol> < </symbol>
+                    <term>
+                      <identifier> destx;type:<;kind:VAR;index:0; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> positivey;type:let;kind:VAR;index:7; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> y;type:(;kind:VAR;index:1; </identifier>
+                    </term>
+                    <symbol> < </symbol>
+                    <term>
+                      <identifier> desty;type:<;kind:VAR;index:1; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> d;type:let;kind:VAR;index:4; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+                <symbol> * </symbol>
+                <term>
+                  <identifier> dy;type:*;kind:VAR;index:1; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+            <symbol> - </symbol>
+            <term>
+              <identifier> dx;type:-;kind:VAR;index:0; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> straightD;type:let;kind:VAR;index:-1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <integerConstant> 2 </integerConstant>
+            </term>
+            <symbol> * </symbol>
+            <term>
+              <identifier> dy;type:*;kind:VAR;index:1; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> diagonalD;type:let;kind:VAR;index:-1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <integerConstant> 2 </integerConstant>
+            </term>
+            <symbol> * </symbol>
+            <term>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> dy;type:(;kind:VAR;index:1; </identifier>
+                </term>
+                <symbol> - </symbol>
+                <term>
+                  <identifier> dx;type:-;kind:VAR;index:0; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> int </keyword>
+    <identifier> move;type:int;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <statements>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> hide;type:do;kind:ARG;index:0; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> d;type:(;kind:ARG;index:4; </identifier>
+            </term>
+            <symbol> < </symbol>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> d;type:let;kind:ARG;index:4; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> d;type:=;kind:ARG;index:4; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <identifier> straightD;type:+;kind:ARG;index:2; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> d;type:let;kind:ARG;index:4; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> d;type:=;kind:ARG;index:4; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <identifier> diagonalD;type:+;kind:ARG;index:3; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <ifStatement>
+              <keyword> if </keyword>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> positivey;type:(;kind:ARG;index:7; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+              <symbol> { </symbol>
+              <statements>
+                <ifStatement>
+                  <keyword> if </keyword>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> x;type:let;kind:ARG;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> x;type:=;kind:ARG;index:0; </identifier>
+                        </term>
+                        <symbol> + </symbol>
+                        <term>
+                          <integerConstant> 4 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                  <keyword> else </keyword>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> y;type:let;kind:ARG;index:1; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> y;type:=;kind:ARG;index:1; </identifier>
+                        </term>
+                        <symbol> + </symbol>
+                        <term>
+                          <integerConstant> 4 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                </ifStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <ifStatement>
+                  <keyword> if </keyword>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> x;type:let;kind:ARG;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> x;type:=;kind:ARG;index:0; </identifier>
+                        </term>
+                        <symbol> - </symbol>
+                        <term>
+                          <integerConstant> 4 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                  <keyword> else </keyword>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> y;type:let;kind:ARG;index:1; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> y;type:=;kind:ARG;index:1; </identifier>
+                        </term>
+                        <symbol> - </symbol>
+                        <term>
+                          <integerConstant> 4 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                </ifStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> positivex;type:(;kind:ARG;index:6; </identifier>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <ifStatement>
+              <keyword> if </keyword>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> y;type:let;kind:ARG;index:1; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <identifier> y;type:=;kind:ARG;index:1; </identifier>
+                    </term>
+                    <symbol> + </symbol>
+                    <term>
+                      <integerConstant> 4 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> x;type:let;kind:ARG;index:0; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <identifier> x;type:=;kind:ARG;index:0; </identifier>
+                    </term>
+                    <symbol> + </symbol>
+                    <term>
+                      <integerConstant> 4 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <ifStatement>
+              <keyword> if </keyword>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> y;type:let;kind:ARG;index:1; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <identifier> y;type:=;kind:ARG;index:1; </identifier>
+                    </term>
+                    <symbol> - </symbol>
+                    <term>
+                      <integerConstant> 4 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> x;type:let;kind:ARG;index:0; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <identifier> x;type:=;kind:ARG;index:0; </identifier>
+                    </term>
+                    <symbol> - </symbol>
+                    <term>
+                      <integerConstant> 4 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ~ </symbol>
+              <term>
+                <symbol> ( </symbol>
+                <expression>
+                  <term>
+                    <identifier> x;type:(;kind:ARG;index:0; </identifier>
+                  </term>
+                  <symbol> > </symbol>
+                  <term>
+                    <identifier> leftWall;type:>;kind:ARG;index:9; </identifier>
+                  </term>
+                </expression>
+                <symbol> ) </symbol>
+              </term>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> x;type:let;kind:ARG;index:0; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> leftWall;type:=;kind:ARG;index:9; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ~ </symbol>
+              <term>
+                <symbol> ( </symbol>
+                <expression>
+                  <term>
+                    <identifier> x;type:(;kind:ARG;index:0; </identifier>
+                  </term>
+                  <symbol> < </symbol>
+                  <term>
+                    <identifier> rightWall;type:<;kind:ARG;index:11; </identifier>
+                  </term>
+                </expression>
+                <symbol> ) </symbol>
+              </term>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> x;type:let;kind:ARG;index:0; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> rightWall;type:=;kind:ARG;index:11; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ~ </symbol>
+              <term>
+                <symbol> ( </symbol>
+                <expression>
+                  <term>
+                    <identifier> y;type:(;kind:ARG;index:1; </identifier>
+                  </term>
+                  <symbol> > </symbol>
+                  <term>
+                    <identifier> topWall;type:>;kind:ARG;index:12; </identifier>
+                  </term>
+                </expression>
+                <symbol> ) </symbol>
+              </term>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 3 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> y;type:let;kind:ARG;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> topWall;type:=;kind:ARG;index:12; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <symbol> ~ </symbol>
+              <term>
+                <symbol> ( </symbol>
+                <expression>
+                  <term>
+                    <identifier> y;type:(;kind:ARG;index:1; </identifier>
+                  </term>
+                  <symbol> < </symbol>
+                  <term>
+                    <identifier> bottomWall;type:<;kind:ARG;index:13; </identifier>
+                  </term>
+                </expression>
+                <symbol> ) </symbol>
+              </term>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 4 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> y;type:let;kind:ARG;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> bottomWall;type:=;kind:ARG;index:13; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> show;type:do;kind:ARG;index:14; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <expression>
+            <term>
+              <identifier> wall;type:return;kind:ARG;index:8; </identifier>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <subroutineDec>
+    <keyword> method </keyword>
+    <keyword> void </keyword>
+    <identifier> bounce;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+      <keyword> int </keyword>
+      <identifier> bouncingDirection;type:int;kind:ARG;index:0; </identifier>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> newx;type:int;kind:VAR;index:0; </identifier>
+        <symbol> , </symbol>
+        <identifier> newy;type:int;kind:VAR;index:1; </identifier>
+        <symbol> , </symbol>
+        <identifier> divLengthx;type:int;kind:VAR;index:-1; </identifier>
+        <symbol> , </symbol>
+        <identifier> divLengthy;type:int;kind:VAR;index:-1; </identifier>
+        <symbol> , </symbol>
+        <identifier> factor;type:int;kind:VAR;index:2; </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> divLengthx;type:let;kind:VAR;index:-1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> lengthx;type:=;kind:VAR;index:2; </identifier>
+            </term>
+            <symbol> / </symbol>
+            <term>
+              <integerConstant> 10 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> divLengthy;type:let;kind:VAR;index:-1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> lengthy;type:=;kind:VAR;index:3; </identifier>
+            </term>
+            <symbol> / </symbol>
+            <term>
+              <integerConstant> 10 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 10 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <ifStatement>
+              <keyword> if </keyword>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <symbol> ~ </symbol>
+                          <term>
+                            <symbol> ( </symbol>
+                            <expression>
+                              <term>
+                                <identifier> lengthx;type:(;kind:VAR;index:2; </identifier>
+                              </term>
+                              <symbol> < </symbol>
+                              <term>
+                                <integerConstant> 0 </integerConstant>
+                              </term>
+                            </expression>
+                            <symbol> ) </symbol>
+                          </term>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                    <symbol> & </symbol>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+                        </term>
+                        <symbol> = </symbol>
+                        <term>
+                          <integerConstant> 1 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+                <symbol> | </symbol>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <identifier> lengthx;type:(;kind:VAR;index:2; </identifier>
+                        </term>
+                        <symbol> < </symbol>
+                        <term>
+                          <integerConstant> 0 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                    <symbol> & </symbol>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+                        </term>
+                        <symbol> = </symbol>
+                        <term>
+                          <symbol> ( </symbol>
+                          <expression>
+                            <term>
+                              <symbol> - </symbol>
+                              <term>
+                                <integerConstant> 1 </integerConstant>
+                              </term>
+                            </term>
+                          </expression>
+                          <symbol> ) </symbol>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <integerConstant> 20 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <integerConstant> 5 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <ifStatement>
+          <keyword> if </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+            </term>
+            <symbol> = </symbol>
+            <term>
+              <integerConstant> 1 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <integerConstant> 506 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> divLengthy;type:(;kind:VAR;index:-1; </identifier>
+                    </term>
+                    <symbol> * </symbol>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <symbol> - </symbol>
+                          <term>
+                            <integerConstant> 50 </integerConstant>
+                          </term>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+                <symbol> / </symbol>
+                <term>
+                  <identifier> divLengthx;type:/;kind:VAR;index:-1; </identifier>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> y;type:=;kind:VAR;index:1; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> newy;type:(;kind:VAR;index:1; </identifier>
+                    </term>
+                    <symbol> * </symbol>
+                    <term>
+                      <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+          <keyword> else </keyword>
+          <symbol> { </symbol>
+          <statements>
+            <ifStatement>
+              <keyword> if </keyword>
+              <symbol> ( </symbol>
+              <expression>
+                <term>
+                  <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+                </term>
+                <symbol> = </symbol>
+                <term>
+                  <integerConstant> 2 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ) </symbol>
+              <symbol> { </symbol>
+              <statements>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <integerConstant> 0 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <identifier> divLengthy;type:(;kind:VAR;index:-1; </identifier>
+                        </term>
+                        <symbol> * </symbol>
+                        <term>
+                          <integerConstant> 50 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                    <symbol> / </symbol>
+                    <term>
+                      <identifier> divLengthx;type:/;kind:VAR;index:-1; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+                <letStatement>
+                  <keyword> let </keyword>
+                  <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+                  <symbol> = </symbol>
+                  <expression>
+                    <term>
+                      <identifier> y;type:=;kind:VAR;index:1; </identifier>
+                    </term>
+                    <symbol> + </symbol>
+                    <term>
+                      <symbol> ( </symbol>
+                      <expression>
+                        <term>
+                          <identifier> newy;type:(;kind:VAR;index:1; </identifier>
+                        </term>
+                        <symbol> * </symbol>
+                        <term>
+                          <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                        </term>
+                      </expression>
+                      <symbol> ) </symbol>
+                    </term>
+                  </expression>
+                  <symbol> ; </symbol>
+                </letStatement>
+              </statements>
+              <symbol> } </symbol>
+              <keyword> else </keyword>
+              <symbol> { </symbol>
+              <statements>
+                <ifStatement>
+                  <keyword> if </keyword>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+                    </term>
+                    <symbol> = </symbol>
+                    <term>
+                      <integerConstant> 3 </integerConstant>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <integerConstant> 250 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <symbol> ( </symbol>
+                          <expression>
+                            <term>
+                              <identifier> divLengthx;type:(;kind:VAR;index:-1; </identifier>
+                            </term>
+                            <symbol> * </symbol>
+                            <term>
+                              <symbol> ( </symbol>
+                              <expression>
+                                <term>
+                                  <symbol> - </symbol>
+                                  <term>
+                                    <integerConstant> 25 </integerConstant>
+                                  </term>
+                                </term>
+                              </expression>
+                              <symbol> ) </symbol>
+                            </term>
+                          </expression>
+                          <symbol> ) </symbol>
+                        </term>
+                        <symbol> / </symbol>
+                        <term>
+                          <identifier> divLengthy;type:/;kind:VAR;index:-1; </identifier>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> x;type:=;kind:VAR;index:0; </identifier>
+                        </term>
+                        <symbol> + </symbol>
+                        <term>
+                          <symbol> ( </symbol>
+                          <expression>
+                            <term>
+                              <identifier> newx;type:(;kind:VAR;index:0; </identifier>
+                            </term>
+                            <symbol> * </symbol>
+                            <term>
+                              <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                            </term>
+                          </expression>
+                          <symbol> ) </symbol>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                  <keyword> else </keyword>
+                  <symbol> { </symbol>
+                  <statements>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newy;type:let;kind:VAR;index:1; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <integerConstant> 0 </integerConstant>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <symbol> ( </symbol>
+                          <expression>
+                            <term>
+                              <identifier> divLengthx;type:(;kind:VAR;index:-1; </identifier>
+                            </term>
+                            <symbol> * </symbol>
+                            <term>
+                              <integerConstant> 25 </integerConstant>
+                            </term>
+                          </expression>
+                          <symbol> ) </symbol>
+                        </term>
+                        <symbol> / </symbol>
+                        <term>
+                          <identifier> divLengthy;type:/;kind:VAR;index:-1; </identifier>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                    <letStatement>
+                      <keyword> let </keyword>
+                      <identifier> newx;type:let;kind:VAR;index:0; </identifier>
+                      <symbol> = </symbol>
+                      <expression>
+                        <term>
+                          <identifier> x;type:=;kind:VAR;index:0; </identifier>
+                        </term>
+                        <symbol> + </symbol>
+                        <term>
+                          <symbol> ( </symbol>
+                          <expression>
+                            <term>
+                              <identifier> newx;type:(;kind:VAR;index:0; </identifier>
+                            </term>
+                            <symbol> * </symbol>
+                            <term>
+                              <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                            </term>
+                          </expression>
+                          <symbol> ) </symbol>
+                        </term>
+                      </expression>
+                      <symbol> ; </symbol>
+                    </letStatement>
+                  </statements>
+                  <symbol> } </symbol>
+                </ifStatement>
+              </statements>
+              <symbol> } </symbol>
+            </ifStatement>
+          </statements>
+          <symbol> } </symbol>
+        </ifStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> setDestination;type:do;kind:VAR;index:-1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> newx;type:(;kind:VAR;index:0; </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> newy;type:(;kind:VAR;index:1; </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>
