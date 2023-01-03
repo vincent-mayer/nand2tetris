@@ -20,11 +20,11 @@ class Bat {
     field int direction;      // direction of the bat's movement (1 = left, 2 = right)
 
     /** Constructs a new bat with the given location and width. */
-    constructor Bat new(int Ax, int Ay, int Awidth, int Aheight) {
-        let x = Ax;
-        let y = Ay;
-        let width = Awidth;
-        let height = Aheight;
+    constructor Bat new(int xA, int yA, int widthA, int heightA) {
+        let x = xA;
+        let y = yA;
+        let width = widthA;
+        let height = heightA;
         let direction = 2;
         do show();
         return this;
@@ -57,8 +57,8 @@ class Bat {
     }
 
     /** Sets the bat's direction (0=stop, 1=left, 2=right). */
-    method void setDirection(int Adirection) {
-        let direction = Adirection;
+    method void setDirection(int directionA) {
+        let direction = directionA;
         return;
     }
 
@@ -73,9 +73,9 @@ class Bat {
     }
 
     /** Sets the bat's width. */
-    method void setWidth(int Awidth) {
+    method void setWidth(int widthA) {
         do hide();
-        let width = Awidth;
+        let width = widthA;
         do show();
         return;
     }

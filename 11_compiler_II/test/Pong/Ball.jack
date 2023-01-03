@@ -6,7 +6,7 @@
 /**
  * A graphical ball. Characterized by a screen location and distance of 
  * last destination. Has methods for drawing, erasing and moving on the screen.
- * The ball is displayed as a filled, 6-by-6 pixles rectangle. 
+ * The ball is displyAed as a filled, 6-by-6 pixles rectangle. 
  */
 class Ball {
 
@@ -21,14 +21,14 @@ class Ball {
     field int wall;   // last wall that the ball was bounced off of
 
     /** Constructs a new ball with the given initial location and wall locations. */
-    constructor Ball new(int Ax, int Ay,
-                         int AleftWall, int ArightWall, int AtopWall, int AbottomWall) {    	
-	    let x = Ax;		
-	    let y = Ay;
-	    let leftWall = AleftWall;
-	    let rightWall = ArightWall - 6;    // -6 for ball size
-	    let topWall = AtopWall; 
-	    let bottomWall = AbottomWall - 6;  // -6 for ball size
+    constructor Ball new(int xA, int yA,
+                         int leftWallA, int rightWallA, int topWallA, int bottomWallA) {    	
+	    let x = xA;		
+	    let y = yA;
+	    let leftWall = leftWallA;
+	    let rightWall = rightWallA - 6;    // -6 for ball size
+	    let topWall = topWallA; 
+	    let bottomWall = bottomWallA - 6;  // -6 for ball size
 	    let wall = 0;
         do show();
         return this;
