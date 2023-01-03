@@ -156,7 +156,7 @@ auto CompilationEngine::compileSubroutine(int nFields, FunctionType functionType
     // subroutineDec
     this->write("<subroutineDec>");
     mDepth++;
-    mSymbolTable->startSubroutine();
+    mSymbolTable->startSubroutine(mTokenizer->token(), mClassName);
 
     // function void main (
     this->write(mTokenizer->tokenType(), mTokenizer->token());

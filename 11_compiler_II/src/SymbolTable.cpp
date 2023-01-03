@@ -1,10 +1,21 @@
 #include "SymbolTable.h"
 #include "definitions.h"
 
-auto SymbolTable::startSubroutine() -> void
+auto SymbolTable::startSubroutine(std::string keyword, std::string className) -> void
 {
     // Clear the subroutine table at each new subroutine definition.
     mSubroutineTable.clear();
+
+    if (keyword == "method")
+        this->define("this", className, Kind::ARG);
+    else if (keyword == "function")
+    {
+    }
+    else if (keyword == "constructor")
+    {
+    }
+    else
+        std::runtime_error("Unexpected keyword: " + keyword);
 };
 
 auto SymbolTable::define(std::string const &name, std::string const &type,
