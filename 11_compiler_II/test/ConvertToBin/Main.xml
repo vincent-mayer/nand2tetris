@@ -428,9 +428,9 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Memory;type:do;kind:ARG;index:3; </identifier>
+              <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
               <symbol> . </symbol>
-              <identifier> poke;type:.;kind:ARG;index:4; </identifier>
+              <identifier> poke;type:.;kind:ARG;index:3; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>

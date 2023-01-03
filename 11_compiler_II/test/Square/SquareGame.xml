@@ -31,9 +31,9 @@
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> Square;type:=;kind:ARG;index:1; </identifier>
+              <identifier> Square;type:=;kind:ARG;index:-1; </identifier>
               <symbol> . </symbol>
-              <identifier> new;type:.;kind:ARG;index:2; </identifier>
+              <identifier> new;type:.;kind:ARG;index:1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -107,9 +107,9 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Memory;type:do;kind:ARG;index:2; </identifier>
+          <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> deAlloc;type:.;kind:ARG;index:3; </identifier>
+          <identifier> deAlloc;type:.;kind:ARG;index:2; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -258,9 +258,9 @@
         </ifStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Sys;type:do;kind:ARG;index:6; </identifier>
+          <identifier> Sys;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> wait;type:.;kind:ARG;index:7; </identifier>
+          <identifier> wait;type:.;kind:ARG;index:6; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>

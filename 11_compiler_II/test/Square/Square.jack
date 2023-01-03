@@ -12,10 +12,10 @@ class Square {
    field int size; // length of this square, in pixels
 
    /** Constructs a new square with a given location and size. */
-   constructor Square new(int Ax, int Ay, int Asize) {
-      let x = Ax;
-      let y = Ay;
-      let size = Asize;
+   constructor Square new(int xA, int yA, int sizeA) {
+      let x = xA;
+      let y = yA;
+      let size = sizeA;
       do draw();
       return this;
    }
