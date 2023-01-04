@@ -103,7 +103,7 @@
         </letStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> show;type:do;kind:ARG;index:9; </identifier>
+          <identifier> show </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -136,9 +136,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
+          <identifier> Memory </identifier>
           <symbol> . </symbol>
-          <identifier> deAlloc;type:.;kind:ARG;index:1; </identifier>
+          <identifier> deAlloc;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -171,9 +171,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <identifier> Screen </identifier>
           <symbol> . </symbol>
-          <identifier> setColor;type:.;kind:ARG;index:1; </identifier>
+          <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -187,7 +187,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> draw;type:do;kind:ARG;index:2; </identifier>
+          <identifier> draw </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -215,9 +215,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <identifier> Screen </identifier>
           <symbol> . </symbol>
-          <identifier> setColor;type:.;kind:ARG;index:1; </identifier>
+          <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -231,7 +231,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> draw;type:do;kind:ARG;index:2; </identifier>
+          <identifier> draw </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -259,9 +259,9 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+          <identifier> Screen </identifier>
           <symbol> . </symbol>
-          <identifier> drawRectangle;type:.;kind:ARG;index:1; </identifier>
+          <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -406,7 +406,7 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> hide;type:do;kind:ARG;index:2; </identifier>
+          <identifier> hide </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -426,7 +426,7 @@
         </letStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> show;type:do;kind:ARG;index:4; </identifier>
+          <identifier> show </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -513,9 +513,9 @@
             </ifStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> setColor;type:.;kind:ARG;index:3; </identifier>
+              <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -529,9 +529,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> drawRectangle;type:.;kind:ARG;index:4; </identifier>
+              <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -595,9 +595,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> setColor;type:.;kind:ARG;index:3; </identifier>
+              <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -611,9 +611,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> drawRectangle;type:.;kind:ARG;index:4; </identifier>
+              <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -716,9 +716,9 @@
             </ifStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> setColor;type:.;kind:ARG;index:3; </identifier>
+              <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -732,9 +732,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> drawRectangle;type:.;kind:ARG;index:4; </identifier>
+              <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -778,9 +778,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> setColor;type:.;kind:ARG;index:3; </identifier>
+              <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -794,9 +794,9 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
+              <identifier> Screen </identifier>
               <symbol> . </symbol>
-              <identifier> drawRectangle;type:.;kind:ARG;index:4; </identifier>
+              <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>

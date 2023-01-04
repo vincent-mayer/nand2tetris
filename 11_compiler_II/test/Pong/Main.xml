@@ -21,7 +21,7 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> PongGame;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> PongGame </identifier>
           <symbol> . </symbol>
           <identifier> newInstance;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -49,7 +49,7 @@
         </letStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> game;type:do;kind:VAR;index:0; </identifier>
+          <identifier> game </identifier>
           <symbol> . </symbol>
           <identifier> run;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -60,7 +60,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> game;type:do;kind:VAR;index:0; </identifier>
+          <identifier> game </identifier>
           <symbol> . </symbol>
           <identifier> dispose;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
