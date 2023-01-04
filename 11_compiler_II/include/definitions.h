@@ -46,6 +46,7 @@ inline std::map<Kind, Segment> kindToSegment{
     {Kind::ARG, Segment::ARG},
     {Kind::FIELD, Segment::THIS},
     {Kind::VAR, Segment::LOCAL},
+    {Kind::STATIC, Segment::STATIC},
 };
 
 inline std::map<Segment, std::string> segmentToString{
