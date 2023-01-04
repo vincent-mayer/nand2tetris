@@ -41,13 +41,13 @@
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
-    <identifier> lastWall;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> lastWall;type:int;kind:FIELD;index:5; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
-    <identifier> batWidth;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> batWidth;type:int;kind:FIELD;index:6; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
@@ -65,7 +65,7 @@
           <keyword> do </keyword>
           <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> clearScreen;type:.;kind:ARG;index:0; </identifier>
+          <identifier> clearScreen;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -74,7 +74,7 @@
         </doStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> batWidth;type:let;kind:ARG;index:1; </identifier>
+          <identifier> batWidth;type:let;kind:ARG;index:6; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -91,7 +91,7 @@
             <term>
               <identifier> Bat;type:=;kind:ARG;index:-1; </identifier>
               <symbol> . </symbol>
-              <identifier> new;type:.;kind:ARG;index:3; </identifier>
+              <identifier> new;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -108,7 +108,7 @@
                 <symbol> , </symbol>
                 <expression>
                   <term>
-                    <identifier> batWidth;type:.;kind:ARG;index:1; </identifier>
+                    <identifier> batWidth;type:.;kind:ARG;index:6; </identifier>
                   </term>
                 </expression>
                 <symbol> , </symbol>
@@ -131,7 +131,7 @@
             <term>
               <identifier> Ball;type:=;kind:ARG;index:-1; </identifier>
               <symbol> . </symbol>
-              <identifier> new;type:.;kind:ARG;index:3; </identifier>
+              <identifier> new;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
                 <expression>
@@ -179,7 +179,7 @@
           <keyword> do </keyword>
           <identifier> ball;type:do;kind:ARG;index:1; </identifier>
           <symbol> . </symbol>
-          <identifier> setDestination;type:.;kind:ARG;index:5; </identifier>
+          <identifier> setDestination;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -201,7 +201,7 @@
           <keyword> do </keyword>
           <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> drawRectangle;type:.;kind:ARG;index:6; </identifier>
+          <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -235,7 +235,7 @@
           <keyword> do </keyword>
           <identifier> Output;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> moveCursor;type:.;kind:ARG;index:7; </identifier>
+          <identifier> moveCursor;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -257,7 +257,7 @@
           <keyword> do </keyword>
           <identifier> Output;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> printString;type:.;kind:ARG;index:8; </identifier>
+          <identifier> printString;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -304,7 +304,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> lastWall;type:let;kind:ARG;index:12; </identifier>
+          <identifier> lastWall;type:let;kind:ARG;index:5; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -341,7 +341,7 @@
           <keyword> do </keyword>
           <identifier> bat;type:do;kind:ARG;index:0; </identifier>
           <symbol> . </symbol>
-          <identifier> dispose;type:.;kind:ARG;index:1; </identifier>
+          <identifier> dispose;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -352,7 +352,7 @@
           <keyword> do </keyword>
           <identifier> ball;type:do;kind:ARG;index:1; </identifier>
           <symbol> . </symbol>
-          <identifier> dispose;type:.;kind:ARG;index:1; </identifier>
+          <identifier> dispose;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -363,7 +363,7 @@
           <keyword> do </keyword>
           <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> deAlloc;type:.;kind:ARG;index:3; </identifier>
+          <identifier> deAlloc;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -402,7 +402,7 @@
             <term>
               <identifier> PongGame;type:=;kind:ARG;index:-1; </identifier>
               <symbol> . </symbol>
-              <identifier> new;type:.;kind:ARG;index:1; </identifier>
+              <identifier> new;type:.;kind:ARG;index:-1; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>
@@ -538,7 +538,7 @@
                 </doStatement>
                 <doStatement>
                   <keyword> do </keyword>
-                  <identifier> moveBall;type:do;kind:VAR;index:-1; </identifier>
+                  <identifier> moveBall;type:do;kind:VAR;index:3; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                   </expressionList>
@@ -742,7 +742,7 @@
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> moveBall;type:do;kind:VAR;index:-1; </identifier>
+              <identifier> moveBall;type:do;kind:VAR;index:3; </identifier>
               <symbol> ( </symbol>
               <expressionList>
               </expressionList>

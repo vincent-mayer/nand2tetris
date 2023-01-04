@@ -23,37 +23,37 @@
     <keyword> int </keyword>
     <identifier> d;type:int;kind:FIELD;index:4; </identifier>
     <symbol> , </symbol>
-    <identifier> straightD;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> straightD;type:int;kind:FIELD;index:5; </identifier>
     <symbol> , </symbol>
-    <identifier> diagonalD;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> diagonalD;type:int;kind:FIELD;index:6; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> boolean </keyword>
-    <identifier> invert;type:boolean;kind:FIELD;index:5; </identifier>
+    <identifier> invert;type:boolean;kind:FIELD;index:7; </identifier>
     <symbol> , </symbol>
-    <identifier> positivex;type:boolean;kind:FIELD;index:6; </identifier>
+    <identifier> positivex;type:boolean;kind:FIELD;index:8; </identifier>
     <symbol> , </symbol>
-    <identifier> positivey;type:boolean;kind:FIELD;index:7; </identifier>
+    <identifier> positivey;type:boolean;kind:FIELD;index:9; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
-    <identifier> leftWall;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> leftWall;type:int;kind:FIELD;index:10; </identifier>
     <symbol> , </symbol>
-    <identifier> rightWall;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> rightWall;type:int;kind:FIELD;index:11; </identifier>
     <symbol> , </symbol>
-    <identifier> topWall;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> topWall;type:int;kind:FIELD;index:12; </identifier>
     <symbol> , </symbol>
-    <identifier> bottomWall;type:int;kind:FIELD;index:-1; </identifier>
+    <identifier> bottomWall;type:int;kind:FIELD;index:13; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <classVarDec>
     <keyword> field </keyword>
     <keyword> int </keyword>
-    <identifier> wall;type:int;kind:FIELD;index:8; </identifier>
+    <identifier> wall;type:int;kind:FIELD;index:14; </identifier>
     <symbol> ; </symbol>
   </classVarDec>
   <subroutineDec>
@@ -108,7 +108,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> leftWall;type:let;kind:ARG;index:8; </identifier>
+          <identifier> leftWall;type:let;kind:ARG;index:10; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -119,7 +119,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> rightWall;type:let;kind:ARG;index:9; </identifier>
+          <identifier> rightWall;type:let;kind:ARG;index:11; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -134,7 +134,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> topWall;type:let;kind:ARG;index:10; </identifier>
+          <identifier> topWall;type:let;kind:ARG;index:12; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -145,7 +145,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> bottomWall;type:let;kind:ARG;index:11; </identifier>
+          <identifier> bottomWall;type:let;kind:ARG;index:13; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -160,7 +160,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+          <identifier> wall;type:let;kind:ARG;index:14; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -206,7 +206,7 @@
           <keyword> do </keyword>
           <identifier> Memory;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> deAlloc;type:.;kind:ARG;index:0; </identifier>
+          <identifier> deAlloc;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -241,7 +241,7 @@
           <keyword> do </keyword>
           <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> setColor;type:.;kind:ARG;index:0; </identifier>
+          <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -285,7 +285,7 @@
           <keyword> do </keyword>
           <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> setColor;type:.;kind:ARG;index:0; </identifier>
+          <identifier> setColor;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -329,7 +329,7 @@
           <keyword> do </keyword>
           <identifier> Screen;type:do;kind:ARG;index:-1; </identifier>
           <symbol> . </symbol>
-          <identifier> drawRectangle;type:.;kind:ARG;index:0; </identifier>
+          <identifier> drawRectangle;type:.;kind:ARG;index:-1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
             <expression>
@@ -434,10 +434,10 @@
     <symbol> ( </symbol>
     <parameterList>
       <keyword> int </keyword>
-      <identifier> destx;type:int;kind:ARG;index:0; </identifier>
+      <identifier> destx;type:int;kind:ARG;index:1; </identifier>
       <symbol> , </symbol>
       <keyword> int </keyword>
-      <identifier> desty;type:int;kind:ARG;index:1; </identifier>
+      <identifier> desty;type:int;kind:ARG;index:2; </identifier>
     </parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
@@ -459,7 +459,7 @@
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> destx;type:=;kind:VAR;index:0; </identifier>
+              <identifier> destx;type:=;kind:VAR;index:1; </identifier>
             </term>
             <symbol> - </symbol>
             <term>
@@ -474,7 +474,7 @@
           <symbol> = </symbol>
           <expression>
             <term>
-              <identifier> desty;type:=;kind:VAR;index:1; </identifier>
+              <identifier> desty;type:=;kind:VAR;index:2; </identifier>
             </term>
             <symbol> - </symbol>
             <term>
@@ -529,7 +529,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> invert;type:let;kind:VAR;index:5; </identifier>
+          <identifier> invert;type:let;kind:VAR;index:7; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -553,7 +553,7 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> invert;type:(;kind:VAR;index:5; </identifier>
+              <identifier> invert;type:(;kind:VAR;index:7; </identifier>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -594,7 +594,7 @@
             </letStatement>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> positivex;type:let;kind:VAR;index:6; </identifier>
+              <identifier> positivex;type:let;kind:VAR;index:8; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -605,7 +605,7 @@
                     </term>
                     <symbol> < </symbol>
                     <term>
-                      <identifier> desty;type:<;kind:VAR;index:1; </identifier>
+                      <identifier> desty;type:<;kind:VAR;index:2; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -615,7 +615,7 @@
             </letStatement>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> positivey;type:let;kind:VAR;index:7; </identifier>
+              <identifier> positivey;type:let;kind:VAR;index:9; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -626,7 +626,7 @@
                     </term>
                     <symbol> < </symbol>
                     <term>
-                      <identifier> destx;type:<;kind:VAR;index:0; </identifier>
+                      <identifier> destx;type:<;kind:VAR;index:1; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -641,7 +641,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> positivex;type:let;kind:VAR;index:6; </identifier>
+              <identifier> positivex;type:let;kind:VAR;index:8; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -652,7 +652,7 @@
                     </term>
                     <symbol> < </symbol>
                     <term>
-                      <identifier> destx;type:<;kind:VAR;index:0; </identifier>
+                      <identifier> destx;type:<;kind:VAR;index:1; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -662,7 +662,7 @@
             </letStatement>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> positivey;type:let;kind:VAR;index:7; </identifier>
+              <identifier> positivey;type:let;kind:VAR;index:9; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -673,7 +673,7 @@
                     </term>
                     <symbol> < </symbol>
                     <term>
-                      <identifier> desty;type:<;kind:VAR;index:1; </identifier>
+                      <identifier> desty;type:<;kind:VAR;index:2; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -711,7 +711,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> straightD;type:let;kind:VAR;index:-1; </identifier>
+          <identifier> straightD;type:let;kind:VAR;index:5; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -726,7 +726,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> diagonalD;type:let;kind:VAR;index:-1; </identifier>
+          <identifier> diagonalD;type:let;kind:VAR;index:6; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -770,7 +770,7 @@
       <statements>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> hide;type:do;kind:ARG;index:0; </identifier>
+          <identifier> hide;type:do;kind:ARG;index:1; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -802,7 +802,7 @@
                 </term>
                 <symbol> + </symbol>
                 <term>
-                  <identifier> straightD;type:+;kind:ARG;index:2; </identifier>
+                  <identifier> straightD;type:+;kind:ARG;index:5; </identifier>
                 </term>
               </expression>
               <symbol> ; </symbol>
@@ -822,7 +822,7 @@
                 </term>
                 <symbol> + </symbol>
                 <term>
-                  <identifier> diagonalD;type:+;kind:ARG;index:3; </identifier>
+                  <identifier> diagonalD;type:+;kind:ARG;index:6; </identifier>
                 </term>
               </expression>
               <symbol> ; </symbol>
@@ -832,7 +832,7 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> positivey;type:(;kind:ARG;index:7; </identifier>
+                  <identifier> positivey;type:(;kind:ARG;index:9; </identifier>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -843,7 +843,7 @@
                   <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                      <identifier> invert;type:(;kind:ARG;index:7; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -897,7 +897,7 @@
                   <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                      <identifier> invert;type:(;kind:ARG;index:7; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -952,7 +952,7 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> positivex;type:(;kind:ARG;index:6; </identifier>
+              <identifier> positivex;type:(;kind:ARG;index:8; </identifier>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -963,7 +963,7 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                  <identifier> invert;type:(;kind:ARG;index:7; </identifier>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -1017,7 +1017,7 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> invert;type:(;kind:ARG;index:5; </identifier>
+                  <identifier> invert;type:(;kind:ARG;index:7; </identifier>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -1078,7 +1078,7 @@
                   </term>
                   <symbol> > </symbol>
                   <term>
-                    <identifier> leftWall;type:>;kind:ARG;index:9; </identifier>
+                    <identifier> leftWall;type:>;kind:ARG;index:10; </identifier>
                   </term>
                 </expression>
                 <symbol> ) </symbol>
@@ -1090,7 +1090,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <identifier> wall;type:let;kind:ARG;index:14; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -1105,7 +1105,7 @@
               <symbol> = </symbol>
               <expression>
                 <term>
-                  <identifier> leftWall;type:=;kind:ARG;index:9; </identifier>
+                  <identifier> leftWall;type:=;kind:ARG;index:10; </identifier>
                 </term>
               </expression>
               <symbol> ; </symbol>
@@ -1139,7 +1139,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <identifier> wall;type:let;kind:ARG;index:14; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -1188,7 +1188,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <identifier> wall;type:let;kind:ARG;index:14; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -1237,7 +1237,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> wall;type:let;kind:ARG;index:8; </identifier>
+              <identifier> wall;type:let;kind:ARG;index:14; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -1262,7 +1262,7 @@
         </ifStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> show;type:do;kind:ARG;index:14; </identifier>
+          <identifier> show;type:do;kind:ARG;index:15; </identifier>
           <symbol> ( </symbol>
           <expressionList>
           </expressionList>
@@ -1273,7 +1273,7 @@
           <keyword> return </keyword>
           <expression>
             <term>
-              <identifier> wall;type:return;kind:ARG;index:8; </identifier>
+              <identifier> wall;type:return;kind:ARG;index:14; </identifier>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -1289,7 +1289,7 @@
     <symbol> ( </symbol>
     <parameterList>
       <keyword> int </keyword>
-      <identifier> bouncingDirection;type:int;kind:ARG;index:0; </identifier>
+      <identifier> bouncingDirection;type:int;kind:ARG;index:1; </identifier>
     </parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
@@ -1301,17 +1301,17 @@
         <symbol> , </symbol>
         <identifier> newy;type:int;kind:VAR;index:1; </identifier>
         <symbol> , </symbol>
-        <identifier> divLengthx;type:int;kind:VAR;index:-1; </identifier>
+        <identifier> divLengthx;type:int;kind:VAR;index:2; </identifier>
         <symbol> , </symbol>
-        <identifier> divLengthy;type:int;kind:VAR;index:-1; </identifier>
+        <identifier> divLengthy;type:int;kind:VAR;index:3; </identifier>
         <symbol> , </symbol>
-        <identifier> factor;type:int;kind:VAR;index:2; </identifier>
+        <identifier> factor;type:int;kind:VAR;index:4; </identifier>
         <symbol> ; </symbol>
       </varDec>
       <statements>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> divLengthx;type:let;kind:VAR;index:-1; </identifier>
+          <identifier> divLengthx;type:let;kind:VAR;index:2; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -1326,7 +1326,7 @@
         </letStatement>
         <letStatement>
           <keyword> let </keyword>
-          <identifier> divLengthy;type:let;kind:VAR;index:-1; </identifier>
+          <identifier> divLengthy;type:let;kind:VAR;index:3; </identifier>
           <symbol> = </symbol>
           <expression>
             <term>
@@ -1344,7 +1344,7 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+              <identifier> bouncingDirection;type:(;kind:VAR;index:1; </identifier>
             </term>
             <symbol> = </symbol>
             <term>
@@ -1356,7 +1356,7 @@
           <statements>
             <letStatement>
               <keyword> let </keyword>
-              <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+              <identifier> factor;type:let;kind:VAR;index:4; </identifier>
               <symbol> = </symbol>
               <expression>
                 <term>
@@ -1404,7 +1404,7 @@
                       <symbol> ( </symbol>
                       <expression>
                         <term>
-                          <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+                          <identifier> bouncingDirection;type:(;kind:VAR;index:1; </identifier>
                         </term>
                         <symbol> = </symbol>
                         <term>
@@ -1438,7 +1438,7 @@
                       <symbol> ( </symbol>
                       <expression>
                         <term>
-                          <identifier> bouncingDirection;type:(;kind:VAR;index:0; </identifier>
+                          <identifier> bouncingDirection;type:(;kind:VAR;index:1; </identifier>
                         </term>
                         <symbol> = </symbol>
                         <term>
@@ -1465,7 +1465,7 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+                  <identifier> factor;type:let;kind:VAR;index:4; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -1481,7 +1481,7 @@
               <statements>
                 <letStatement>
                   <keyword> let </keyword>
-                  <identifier> factor;type:let;kind:VAR;index:2; </identifier>
+                  <identifier> factor;type:let;kind:VAR;index:4; </identifier>
                   <symbol> = </symbol>
                   <expression>
                     <term>
@@ -1501,7 +1501,7 @@
           <symbol> ( </symbol>
           <expression>
             <term>
-              <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+              <identifier> wall;type:(;kind:VAR;index:14; </identifier>
             </term>
             <symbol> = </symbol>
             <term>
@@ -1531,7 +1531,7 @@
                   <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> divLengthy;type:(;kind:VAR;index:-1; </identifier>
+                      <identifier> divLengthy;type:(;kind:VAR;index:3; </identifier>
                     </term>
                     <symbol> * </symbol>
                     <term>
@@ -1551,7 +1551,7 @@
                 </term>
                 <symbol> / </symbol>
                 <term>
-                  <identifier> divLengthx;type:/;kind:VAR;index:-1; </identifier>
+                  <identifier> divLengthx;type:/;kind:VAR;index:2; </identifier>
                 </term>
               </expression>
               <symbol> ; </symbol>
@@ -1573,7 +1573,7 @@
                     </term>
                     <symbol> * </symbol>
                     <term>
-                      <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                      <identifier> factor;type:*;kind:VAR;index:4; </identifier>
                     </term>
                   </expression>
                   <symbol> ) </symbol>
@@ -1591,7 +1591,7 @@
               <symbol> ( </symbol>
               <expression>
                 <term>
-                  <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+                  <identifier> wall;type:(;kind:VAR;index:14; </identifier>
                 </term>
                 <symbol> = </symbol>
                 <term>
@@ -1621,7 +1621,7 @@
                       <symbol> ( </symbol>
                       <expression>
                         <term>
-                          <identifier> divLengthy;type:(;kind:VAR;index:-1; </identifier>
+                          <identifier> divLengthy;type:(;kind:VAR;index:3; </identifier>
                         </term>
                         <symbol> * </symbol>
                         <term>
@@ -1632,7 +1632,7 @@
                     </term>
                     <symbol> / </symbol>
                     <term>
-                      <identifier> divLengthx;type:/;kind:VAR;index:-1; </identifier>
+                      <identifier> divLengthx;type:/;kind:VAR;index:2; </identifier>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -1654,7 +1654,7 @@
                         </term>
                         <symbol> * </symbol>
                         <term>
-                          <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                          <identifier> factor;type:*;kind:VAR;index:4; </identifier>
                         </term>
                       </expression>
                       <symbol> ) </symbol>
@@ -1672,7 +1672,7 @@
                   <symbol> ( </symbol>
                   <expression>
                     <term>
-                      <identifier> wall;type:(;kind:VAR;index:8; </identifier>
+                      <identifier> wall;type:(;kind:VAR;index:14; </identifier>
                     </term>
                     <symbol> = </symbol>
                     <term>
@@ -1702,7 +1702,7 @@
                           <symbol> ( </symbol>
                           <expression>
                             <term>
-                              <identifier> divLengthx;type:(;kind:VAR;index:-1; </identifier>
+                              <identifier> divLengthx;type:(;kind:VAR;index:2; </identifier>
                             </term>
                             <symbol> * </symbol>
                             <term>
@@ -1722,7 +1722,7 @@
                         </term>
                         <symbol> / </symbol>
                         <term>
-                          <identifier> divLengthy;type:/;kind:VAR;index:-1; </identifier>
+                          <identifier> divLengthy;type:/;kind:VAR;index:3; </identifier>
                         </term>
                       </expression>
                       <symbol> ; </symbol>
@@ -1744,7 +1744,7 @@
                             </term>
                             <symbol> * </symbol>
                             <term>
-                              <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                              <identifier> factor;type:*;kind:VAR;index:4; </identifier>
                             </term>
                           </expression>
                           <symbol> ) </symbol>
@@ -1777,7 +1777,7 @@
                           <symbol> ( </symbol>
                           <expression>
                             <term>
-                              <identifier> divLengthx;type:(;kind:VAR;index:-1; </identifier>
+                              <identifier> divLengthx;type:(;kind:VAR;index:2; </identifier>
                             </term>
                             <symbol> * </symbol>
                             <term>
@@ -1788,7 +1788,7 @@
                         </term>
                         <symbol> / </symbol>
                         <term>
-                          <identifier> divLengthy;type:/;kind:VAR;index:-1; </identifier>
+                          <identifier> divLengthy;type:/;kind:VAR;index:3; </identifier>
                         </term>
                       </expression>
                       <symbol> ; </symbol>
@@ -1810,7 +1810,7 @@
                             </term>
                             <symbol> * </symbol>
                             <term>
-                              <identifier> factor;type:*;kind:VAR;index:2; </identifier>
+                              <identifier> factor;type:*;kind:VAR;index:4; </identifier>
                             </term>
                           </expression>
                           <symbol> ) </symbol>
@@ -1829,31 +1829,5 @@
         </ifStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> setDestination;type:do;kind:VAR;index:-1; </identifier>
-          <symbol> ( </symbol>
-          <expressionList>
-            <expression>
-              <term>
-                <identifier> newx;type:(;kind:VAR;index:0; </identifier>
-              </term>
-            </expression>
-            <symbol> , </symbol>
-            <expression>
-              <term>
-                <identifier> newy;type:(;kind:VAR;index:1; </identifier>
-              </term>
-            </expression>
-          </expressionList>
-          <symbol> ) </symbol>
-          <symbol> ; </symbol>
-        </doStatement>
-        <returnStatement>
-          <keyword> return </keyword>
-          <symbol> ; </symbol>
-        </returnStatement>
-      </statements>
-      <symbol> } </symbol>
-    </subroutineBody>
-  </subroutineDec>
-  <symbol> } </symbol>
-</class>
+          <identifier> setDestination;type:do;kind:VAR;index:10; </identifier>
+    
