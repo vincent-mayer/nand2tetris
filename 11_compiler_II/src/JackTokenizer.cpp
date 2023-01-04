@@ -27,9 +27,9 @@ auto JackTokenizer::advance() -> void
             }
 
             // Remove comment section from command, by just ignoring the entire line.
-            if (m_line.find("//") != std::string::npos ||
-                m_line.find("/*") != std::string::npos ||
-                m_line.find("*/") != std::string::npos)
+            while (m_line.find("//") != std::string::npos ||
+                   m_line.find("/*") != std::string::npos ||
+                   m_line.find("*/") != std::string::npos)
             {
                 m_line = m_line.substr(0, m_line.find("//"));
                 m_line = m_line.substr(0, m_line.find("/*"));
@@ -37,11 +37,11 @@ auto JackTokenizer::advance() -> void
             }
 
             // Remove the \r token.
-            if (m_line.find("\r") != std::string::npos)
+            while (m_line.find("\r") != std::string::npos)
             {
                 m_line.erase(m_line.find("\r"), std::string{"\r"}.length());
             }
-            if (m_line.find("\t") != std::string::npos)
+            while (m_line.find("\t") != std::string::npos)
             {
                 m_line.erase(m_line.find("\t"), std::string{"\t"}.length());
             }
