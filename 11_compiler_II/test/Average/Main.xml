@@ -1,0 +1,219 @@
+<class>
+  <keyword> class </keyword>
+  <identifier> Main;type:class;kind:NONE;index:-1; </identifier>
+  <symbol> { </symbol>
+  <subroutineDec>
+    <keyword> function </keyword>
+    <keyword> void </keyword>
+    <identifier> main;type:void;kind:NONE;index:-1; </identifier>
+    <symbol> ( </symbol>
+    <parameterList>
+    </parameterList>
+    <symbol> ) </symbol>
+    <subroutineBody>
+      <symbol> { </symbol>
+      <varDec>
+        <keyword> var </keyword>
+        <identifier> Array </identifier>
+        <identifier> a;type:Array;kind:VAR;index:0; </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> length;type:int;kind:VAR;index:1; </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <varDec>
+        <keyword> var </keyword>
+        <keyword> int </keyword>
+        <identifier> i;type:int;kind:VAR;index:2; </identifier>
+        <symbol> , </symbol>
+        <identifier> sum;type:int;kind:VAR;index:3; </identifier>
+        <symbol> ; </symbol>
+      </varDec>
+      <statements>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> length;type:let;kind:VAR;index:1; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> Keyboard;type:=;kind:VAR;index:-1; </identifier>
+              <symbol> . </symbol>
+              <identifier> readInt;type:.;kind:VAR;index:-1; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <stringConstant> How many numbers?  </stringConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> a;type:let;kind:VAR;index:0; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <identifier> Array;type:=;kind:VAR;index:-1; </identifier>
+              <symbol> . </symbol>
+              <identifier> new;type:.;kind:VAR;index:-1; </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> length;type:(;kind:VAR;index:1; </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <letStatement>
+          <keyword> let </keyword>
+          <identifier> i;type:let;kind:VAR;index:2; </identifier>
+          <symbol> = </symbol>
+          <expression>
+            <term>
+              <integerConstant> 0 </integerConstant>
+            </term>
+          </expression>
+          <symbol> ; </symbol>
+        </letStatement>
+        <whileStatement>
+          <keyword> while </keyword>
+          <symbol> ( </symbol>
+          <expression>
+            <term>
+              <identifier> i;type:(;kind:VAR;index:2; </identifier>
+            </term>
+            <symbol> < </symbol>
+            <term>
+              <identifier> length;type:<;kind:VAR;index:1; </identifier>
+            </term>
+          </expression>
+          <symbol> ) </symbol>
+          <symbol> { </symbol>
+          <statements>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> a;type:let;kind:VAR;index:0; </identifier>
+              <symbol> [ </symbol>
+              <expression>
+                <term>
+                  <identifier> i;type:[;kind:VAR;index:2; </identifier>
+                </term>
+              </expression>
+              <symbol> ] </symbol>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> Keyboard;type:=;kind:VAR;index:-1; </identifier>
+                  <symbol> . </symbol>
+                  <identifier> readInt;type:.;kind:VAR;index:-1; </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+                    <expression>
+                      <term>
+                        <stringConstant> Enter a number:  </stringConstant>
+                      </term>
+                    </expression>
+                  </expressionList>
+                  <symbol> ) </symbol>
+                </term>
+              </expression>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> sum;type:let;kind:VAR;index:3; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> sum;type:=;kind:VAR;index:3; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <identifier> a;type:+;kind:VAR;index:0; </identifier>
+                  <symbol> [ </symbol>
+                  <expression>
+                    <term>
+                      <identifier> i;type:[;kind:VAR;index:2; </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ] </symbol>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+            <letStatement>
+              <keyword> let </keyword>
+              <identifier> i;type:let;kind:VAR;index:2; </identifier>
+              <symbol> = </symbol>
+              <expression>
+                <term>
+                  <identifier> i;type:=;kind:VAR;index:2; </identifier>
+                </term>
+                <symbol> + </symbol>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
+              </expression>
+              <symbol> ; </symbol>
+            </letStatement>
+          </statements>
+          <symbol> } </symbol>
+        </whileStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <stringConstant> The average is  </stringConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <doStatement>
+          <keyword> do </keyword>
+          <identifier> Output </identifier>
+          <symbol> . </symbol>
+          <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> sum;type:(;kind:VAR;index:3; </identifier>
+              </term>
+              <symbol> / </symbol>
+              <term>
+                <identifier> length;type:/;kind:VAR;index:1; </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
+          <symbol> ; </symbol>
+        </doStatement>
+        <returnStatement>
+          <keyword> return </keyword>
+          <symbol> ; </symbol>
+        </returnStatement>
+      </statements>
+      <symbol> } </symbol>
+    </subroutineBody>
+  </subroutineDec>
+  <symbol> } </symbol>
+</class>

@@ -310,7 +310,7 @@
         </letStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -326,7 +326,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -349,7 +349,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> println;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -360,7 +360,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -376,7 +376,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -399,7 +399,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> println;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -410,7 +410,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -426,7 +426,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -442,7 +442,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> println;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -479,7 +479,7 @@
           <statements>
             <doStatement>
               <keyword> do </keyword>
-              <identifier> Main;type:do;kind:VAR;index:-1; </identifier>
+              <identifier> Main </identifier>
               <symbol> . </symbol>
               <identifier> fill;type:.;kind:VAR;index:-1; </identifier>
               <symbol> ( </symbol>
@@ -627,7 +627,7 @@
         </ifStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -643,7 +643,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -666,7 +666,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> println;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -677,7 +677,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printString;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -693,7 +693,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> printInt;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -716,7 +716,7 @@
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
-          <identifier> Output;type:do;kind:VAR;index:-1; </identifier>
+          <identifier> Output </identifier>
           <symbol> . </symbol>
           <identifier> println;type:.;kind:VAR;index:-1; </identifier>
           <symbol> ( </symbol>
@@ -824,7 +824,7 @@
                 <term>
                   <identifier> Array;type:=;kind:ARG;index:-1; </identifier>
                   <symbol> . </symbol>
-                  <identifier> new;type:.;kind:ARG;index:2; </identifier>
+                  <identifier> new;type:.;kind:ARG;index:-1; </identifier>
                   <symbol> ( </symbol>
                   <expressionList>
                     <expression>
