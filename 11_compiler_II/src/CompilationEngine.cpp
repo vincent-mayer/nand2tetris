@@ -53,17 +53,14 @@ auto CompilationEngine::handleIdentifier(std::string name) -> void
 
     // Edge-casing, to avoid including int, Array etc. Needs static and field and stuff
     // too.
-    if (type == "var")
+    if (type == "var" || type == "do")
         return;
 
     if (type == ",")
         type = mPrevType;
 
     // Insert into table.
-    if (kind != Kind::NONE && std::all_of(name.begin(), name.end(), &::islower) &&
-        type != ".")
-        mSymbolTable->define(name, type, kind);
-    else if ((kind == Kind::ARG) && (std::islower(name[0])))
+    if (kind != Kind::NONE && (std::islower(name[0])) && type != ".")
         mSymbolTable->define(name, type, kind);
 
     // Get the correct index.
@@ -104,8 +101,10 @@ auto CompilationEngine::compileClass() -> void
     int nFields = 0;
     while (mTokenizer->token() != "}")
     {
-        if (mTokenizer->token() == "field" || mTokenizer->token() == "static")
+        if (mTokenizer->token() == "field")
             nFields += this->compileClassVarDecl();
+        else if (mTokenizer->token() == "static")
+            this->compileClassVarDecl();
         else if (mTokenizer->token() == "constructor")
             this->compileSubroutine(nFields, FunctionType::CONSTRUCTOR);
         else if (mTokenizer->token() == "function")
@@ -437,6 +436,11 @@ auto CompilationEngine::compileTerm() -> void
             this->write(mTokenizer->tokenType(), mTokenizer->token());
             if (isFuncCall)
             {
+                // This is a weird edge-casing hack, I failed elsewhere.
+                if ((mSymbolTable->knownType(className) || (mClassName == className)) &&
+                    (className != "Main") && (nArgs == 0) &&
+                    (funcName.find("new") == std::string::npos))
+                    nArgs++;
                 mVMWriter->writeCall(className + "." + funcName, nArgs);
                 isFuncCall = false;
             }
