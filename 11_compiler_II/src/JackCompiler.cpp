@@ -54,9 +54,7 @@ int main(int argc, char *argv[])
         throw std::invalid_argument("Please provide a path or filename.");
     }
 
-    // std::string pathOrDir = std::string(argv[1]);
-    auto pathOrDir =
-        std::string{"/home/vincent/repos/nand2tetris/11_compiler_II/test/ComplexArrays"};
+    std::string pathOrDir = std::string(argv[1]);
 
     if (ends_with(pathOrDir, std::string{".jack"}))
     {
