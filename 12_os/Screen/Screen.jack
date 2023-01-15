@@ -132,17 +132,6 @@ class Screen {
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      * and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
-        // var int dx, ct, temp;
-        // let dx = x2 - x1;
-        // let ct = 0;
-        // let temp = dx;
-        // while (temp > 16) {
-        //     let ct = ct + 1;
-        //     let temp = temp - 16;
-        // }
-        // while (~(y1 > y2)) {
-
-        // }
         var int b, y;
         let b = 0;
         while(~((y1 + b) > y2)) {

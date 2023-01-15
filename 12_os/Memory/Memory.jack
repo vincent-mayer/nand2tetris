@@ -10,25 +10,68 @@
  */ 
 class Memory {
 
+    static int freeList;
+    static Array memory;
+    static Array heap;
+
     /** Initializes the class. */
     function void init() {
+        let memory = 0;
+        let freeList = 2048;
+        let heap = 2048;
+        let heap[0] = 14335;
+        let heap[1] = 2048;
+        return;
     }
 
     /** Returns the RAM value at the given address. */
     function int peek(int address) {
+        return memory[address];
     }
 
     /** Sets the RAM value at the given address to the given value. */
     function void poke(int address, int value) {
+        let memory[address] = value;
+        return;
     }
 
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
+        var int block, next, length, temp;
+        let length = 0;
+        let next = freeList;
+        while (~(length > size)) {
+            let length = Memory.peek(next);
+            let next = Memory.peek(next + 1);
+        }
+        // next points to cur_segment-length, set length to 0 i.e. consumed.
+        // cur_seg.length = -1
+        do Memory.poke(next, size + 1);
+        // cur_seg.next = 5 (if len = 3)
+        do Memory.poke(next + 1, next + size + 2);
+        // next_seg.length = 
+        do Memory.poke(next + size + 2, length - (size + 1));
+        // next_seg.next = next_seg
+        do Memory.poke(next + size + 3, next + size + 2);
+        let block = next + 2;
+        let freeList = next + size + 2;
+        return block;
     }
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
     function void deAlloc(Array o) {
+        var int temp, len, j;
+        let len = o[-2];
+        let j = 0;
+        while (j < (len - 1)) {
+            let o[j] = -1;
+            let j = j + 1;
+        }
+        let temp = freeList; // Holds current freelist
+        let freeList = o - 2; // o-1 is address of length of segment
+        let o[-1] = temp;
+        return;
     }    
 }
