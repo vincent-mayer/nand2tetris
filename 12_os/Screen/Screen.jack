@@ -51,28 +51,58 @@ class Screen {
 
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
-        var int temp, ix;
-        let temp = x;
-        while (temp > 15) {
-            let temp = temp - 16;
-        }
-        let ix = y * 32 + x / 16;
+        var int ix;
+        let ix = (y * 32) + (x / 16);
         if (color) {
-            let screen[ix] = screen[ix] | twoToThe[temp];
+            let screen[ix] = screen[ix] | twoToThe[x & 15];
         }
         else {
-            let screen[ix] = screen[ix] & (~twoToThe[temp]);
+            let screen[ix] = screen[ix] & (~twoToThe[x & 15]);
         }
         return;
     }
 
+    function void drawHorizontalLine(int x1, int x2, int y) {
+        var int dx, x, i;
+        let dx = Math.abs(x1 - x2);
+        let x = Math.min(x1, x2);
+        let i = 0;
+        while (~(i > dx)) {
+            do Screen.drawPixel(x + i, y);
+            let i = i + 1;
+        }
+        return;
+    }
+
+    function void drawVerticalLine(int y1, int y2, int x) {
+        var int dy, y, i;
+        let dy = Math.abs(y1 - y2);
+        let y = Math.min(y1, y2);
+        let i = 0;
+        while (~(i > dy)) {
+            do Screen.drawPixel(x, y + i);
+            let i = i + 1;
+        }
+        return;
+    }
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    // x1=280,y1=90,x2=345,y2=35
     function void drawLine(int x1, int y1, int x2, int y2) {
         var int a, b, dx, dy, adyMinusbdx;
         let dx = Math.abs(x2 - x1);
         let dy = Math.abs(y2 - y1);
         let a = 0;
         let b = 0;
+        let adyMinusbdx = 0;
+
+        // Vertical and horizontal special cases;
+        if (dy = 0) {
+            do Screen.drawHorizontalLine(x1, x2, y1);
+            return;
+        }
+        if (dx = 0) {
+            do Screen.drawVerticalLine(y1, y2, x1);
+        }
 
         while ((~(Math.abs(a) > dx)) & (~(Math.abs(b) > dy))) {
             do Screen.drawPixel(x1 + a, y1 + b);
@@ -113,26 +143,25 @@ class Screen {
         // while (~(y1 > y2)) {
 
         // }
-        var int a, b;
-        let a = 0;
+        var int b, y;
         let b = 0;
-        while(~((y1 + a) > y2)) {
-            while (~((x1 + a) > x2)) {
-                do Screen.drawPixel(x1 + a, y1 + b);
-                let a = a + 1;
-            }
+        while(~((y1 + b) > y2)) {
+            let y = y1 + b;
+            do Screen.drawLine(x1, y1 + b, x2, y1 + b);
             let b = b + 1;
         }
         return;
     }
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    // x = 140, y = 60, r = 30;
     function void drawCircle(int x, int y, int r) {
         var int dy, t;
+        let r = Math.min(r, 181);
         let dy = -r;
         while (~(dy > r)) {
-            let t = Math.sqrt(r * r + dy * dy);
-            do Screen.drawRectangle(x - t, y + dy, x + t, y + dy);
+            let t = Math.sqrt((r * r) - (dy * dy));
+            do Screen.drawLine(x - t, y + dy, x + t, y + dy);
             let dy = dy + 1;
         }
         return;
