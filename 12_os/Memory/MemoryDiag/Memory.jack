@@ -8,7 +8,7 @@
  * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
  * consists of 32,768 words, each holding a 16-bit binary number.
  */ 
-class Memory {
+ class Memory {
 
     static int freeList;
     static Array memory;
@@ -35,33 +35,39 @@ class Memory {
         return;
     }
 
+    function int getFreeList() {
+        return freeList;
+    }
+
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
-        var int block, next, length, temp;
-        let length = 0;
+        var int temp, len, next, block, tempAddr;
+        var boolean isEnd;
+        let isEnd = false;
+        let len = Memory.peek(freeList);
         let next = freeList;
-        while (~(length > size)) {
-            let length = Memory.peek(next);
+        while (~(len > (size + 3))) {
+            let len = Memory.peek(next);
             let next = Memory.peek(next + 1);
         }
+        let freeList = next;
         // next points to cur_segment-length, set length to 0 i.e. consumed.
-        // cur_seg.length = -1
-        do Memory.poke(next, size + 1);
-        // cur_seg.next = 5 (if len = 3)
-        do Memory.poke(next + 1, next + size + 2);
-        // next_seg.length = 
-        do Memory.poke(next + size + 2, length - (size + 1));
-        // next_seg.next = next_seg
-        do Memory.poke(next + size + 3, next + size + 2);
-        let block = next + 2;
-        let freeList = next + size + 2;
-
+        do Memory.poke(freeList, size + 1);
+        // Set freelist to next ptr
+        let freeList = freeList + 1;
+        do Memory.poke(freeList, freeList + size + 1);
+        let block = freeList + 1;
+        let freeList = freeList + size + 1;
+        // Initialize the memory
         let temp = 0;
         while (temp < size) {
             do Memory.poke(block + temp, 88);
             let temp = temp + 1;
         }
+        // Set the length and next of the new start segment of Freelist
+        do Memory.poke(freeList, len - (size + 1));
+        do Memory.poke(freeList + 1, freeList);
 
         return block;
     }
