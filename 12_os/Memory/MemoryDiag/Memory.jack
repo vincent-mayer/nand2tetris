@@ -48,8 +48,8 @@
         let len = Memory.peek(freeList);
         let next = freeList;
         while (~(len > (size + 3))) {
-            let len = Memory.peek(next);
             let next = Memory.peek(next + 1);
+            let len = Memory.peek(next);
         }
         let freeList = next;
         // next points to cur_segment-length, set length to 0 i.e. consumed.

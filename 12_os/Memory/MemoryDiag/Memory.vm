@@ -62,13 +62,13 @@ not
 not
 if-goto WHILE_END0
 push local 2
-call Memory.peek 1
-pop local 1
-push local 2
 push constant 1
 add
 call Memory.peek 1
 pop local 2
+push local 2
+call Memory.peek 1
+pop local 1
 goto WHILE_EXP0
 label WHILE_END0
 push local 2
